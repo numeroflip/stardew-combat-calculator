@@ -1,3 +1,6 @@
+export const FIGHTER_DMG_MULTIPLIER = 0.1;
+export const BRUTE_DMG_MULTIPLIER = 0.15;
+
 export type FighterLine = {
 	line: 'fighter';
 	specialization?: FighterSpecialization;

@@ -1,7 +1,7 @@
 import type { Stats } from './weapon';
 
 export type Gem = {
-	name: string;
+	name: GemName;
 	stats: [Stats, Stats, Stats]; // 3 level
 };
 
