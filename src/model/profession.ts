@@ -1,11 +1,15 @@
-type FighterLine = {
+export type FighterLine = {
 	line: 'fighter';
-	specialization?: 'brute' | 'defender';
+	specialization?: FighterSpecialization;
 };
 
-type ScoutLine = {
+export type FighterSpecialization = 'brute' | 'defender';
+export type ScoutSpecialization = 'acrobat' | 'desperado';
+export type ScoutLine = {
 	line: 'scout';
-	specialization?: 'acrobat' | 'desperado';
+	specialization?: ScoutSpecialization;
 };
 
-export type CombatProfession = FighterLine | ScoutLine | null;
+export const combatProfessionLines = ['fighter', 'scout'] as const;
+
+export type CombatProfession = FighterLine | ScoutLine;

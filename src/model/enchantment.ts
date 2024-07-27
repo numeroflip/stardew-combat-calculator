@@ -12,12 +12,15 @@ export const innateEnchantment = {
 	},
 	guaranteed: {
 		critPower: {
+			name: 'Crit. Power',
 			options: [nameAndValue(25, 0.5), nameAndValue(50, 1), nameAndValue(75, 1.5)]
 		},
 		critChance: {
+			name: 'Crit. Chance',
 			options: [nameAndValue(1, 0.02), nameAndValue(2, 0.04), nameAndValue(3, 0.06)]
 		},
 		attack: {
+			name: ' Attack',
 			options: [
 				nameAndValue(1, 3),
 				nameAndValue(2, 6),
@@ -27,6 +30,7 @@ export const innateEnchantment = {
 			] as const
 		},
 		speed: {
+			name: 'Speed',
 			options: [
 				nameAndValue(1, 0.01),
 				nameAndValue(2, 0.02),
