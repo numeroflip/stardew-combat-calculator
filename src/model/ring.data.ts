@@ -1,36 +1,46 @@
 import type { Ring } from './ring';
 
-export const rings: Ring[] = [
-	{
-		name: 'iridium_band',
+type RingName =
+	| 'iridiumBand'
+	| 'amethyst'
+	| 'topaz'
+	| 'aquamarine'
+	| 'jade'
+	| 'emerald'
+	| 'ruby'
+	| 'crabshell';
+
+export const rings: Record<RingName, Ring> = {
+	iridiumBand: {
+		name: 'Iridium Band',
 		effect: { damage: 0.1 }
 	},
-	{
-		name: 'amethyst_ring',
+	amethyst: {
+		name: 'Amethyst Ring',
 		effect: { weight: 0.1 }
 	},
-	{
-		name: 'topaz_ring',
+	topaz: {
+		name: 'Topaz Ring',
 		effect: { defense: 1 }
 	},
-	{
-		name: 'aquamarine_ring',
+	aquamarine: {
+		name: 'Aquamarine Ring',
 		effect: { critChance: 0.1 }
 	},
-	{
-		name: 'jade_ring',
-		effect: { critPower: 0.1 }
+	jade: {
+		name: 'Jade Ring',
+		effect: { critMultiplier: 0.1 }
 	},
-	{
-		name: 'emerald_ring',
+	emerald: {
+		name: 'Emerald Ring',
 		effect: { speed: 0.1 }
 	},
-	{
-		name: 'ruby_ring',
+	ruby: {
+		name: 'Ruby Ring',
 		effect: { damage: 0.1 }
 	},
-	{
-		name: 'crabshell_ring',
+	crabshell: {
+		name: 'Crabshell Ring',
 		effect: { defense: 5 }
 	}
-];
+};

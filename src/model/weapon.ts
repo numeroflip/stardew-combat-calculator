@@ -2,6 +2,7 @@ export type Stats = {
 	speed?: number;
 	damage?: number;
 	critPower?: number;
+	critMultiplier?: number;
 	critChance?: number;
 	defense?: number;
 	weight?: number;

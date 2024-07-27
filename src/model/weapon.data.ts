@@ -203,7 +203,8 @@ const swords: WeaponBase[] = [
 		critStrikeChance: 0.015,
 		stats: {
 			defense: 3,
-			weight: 3
+			weight: 3,
+			critPower: 25
 		}
 	},
 	{
@@ -271,7 +272,6 @@ const swords: WeaponBase[] = [
 		critStrikeChance: 0.02,
 		stats: {
 			speed: 4,
-
 			weight: 2
 		}
 	}
