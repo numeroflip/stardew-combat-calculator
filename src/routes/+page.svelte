@@ -128,7 +128,7 @@
 						/>
 						Normal Dmg:
 						<div class="ml-auto">
-							{min}-{max}
+							{formatNumber(min, 0)}-{formatNumber(max, 0)}
 						</div>
 					</div>
 					<div class="flex items-center gap-2">
@@ -139,12 +139,12 @@
 						/>
 						Crit Dmg:
 						<div class="ml-auto">
-							{formatNumber(min * critMultiplier)}-{formatNumber(max * critMultiplier)}
+							{formatNumber(min * critMultiplier, 0)}-{formatNumber(max * critMultiplier, 0)}
 						</div>
 					</div>
 
 					<div class="flex">
-						Crit chance: <div class="ml-auto">{formatNumber(critChance * 100)}%</div>
+						Crit chance: <div class="ml-auto">{formatNumber(critChance * 100, 1)}%</div>
 					</div>
 
 					<div
