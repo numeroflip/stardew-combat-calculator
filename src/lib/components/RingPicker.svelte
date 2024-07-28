@@ -10,7 +10,7 @@
 	<DropdownMenu.Trigger asChild let:builder>
 		<Button
 			builders={[builder]}
-			class="h-16 px-4 pixel-border rounded-sm bg-amber-50  grid place-content-center"
+			class="h-16 px-4 pixel-border text-3xl rounded-sm bg-amber-50  grid place-content-center"
 			variant="outline"
 		>
 			{#if value}
@@ -21,7 +21,7 @@
 		</Button>
 	</DropdownMenu.Trigger>
 
-	<DropdownMenu.Content class="w-fit bg-white/50 backdrop-blur-md pixel-border min-w-0">
+	<DropdownMenu.Content class="w-fit text-3xl bg-white/50 backdrop-blur-md pixel-border min-w-0">
 		<DropdownMenu.RadioGroup bind:value>
 			<DropdownMenu.RadioItem indicator={false} value="" class="mr-0 cursor-pointer p-2 pl-2">
 				<div class="size-10 grid place-content-center text-xl">🚫</div>
@@ -30,7 +30,7 @@
 				<DropdownMenu.RadioItem
 					indicator={false}
 					value={ringKey}
-					class="mr-0 cursor-pointer h-16 p-2 pl-2"
+					class="mr-0 cursor-pointer text-3xl h-16 p-2 pl-2"
 				>
 					{ring.name}
 					<!-- <img src={gemIcon[gemName]} alt={ring.name} class=" size-10" /> -->

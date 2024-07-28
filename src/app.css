@@ -3,6 +3,29 @@
 @tailwind utilities;
  
 @layer base {
+
+    body {
+      font-smooth: never;
+      -webkit-font-smoothing : none;
+        
+    }
+  
+  
+    @font-face {
+      font-family: 'Bobsled';
+      font-weight: 400;
+      font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+      src: url(/fonts/Stardew_Valley.otf) format("otf"), 
+      url(/fonts/Stardew_Valley.ttf) ;
+
+    }
+    
+
+    
+  
+
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;

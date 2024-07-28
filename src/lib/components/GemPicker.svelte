@@ -17,24 +17,25 @@
 			{#if value}
 				<img src={gemIcon[value]} alt={value} class="size-10 object-cover" />
 			{:else}
-      <img src={gemIcon.diamond} alt={value} class="size-10 opacity-50 grayscale object-cover" />
-				<!-- Open -->
+				<img src={gemIcon.diamond} alt={value} class="size-10 opacity-20 grayscale object-cover" />
 			{/if}
 		</Button>
 	</DropdownMenu.Trigger>
 
-	<DropdownMenu.Content sideOffset={10} class="w-fit bg-white/50 backdrop-blur-md pixel-border   min-w-0">
+	<DropdownMenu.Content
+		sideOffset={10}
+		class="w-fit bg-white/50 backdrop-blur-md pixel-border   min-w-0"
+	>
 		<DropdownMenu.RadioGroup bind:value>
 			<DropdownMenu.RadioItem indicator={false} value="" class="mr-0 cursor-pointer p-2 pl-2">
-        <div class="size-10 grid place-content-center text-xl">
-          🚫
-
-        </div>
-        
-
-</DropdownMenu.RadioItem>
+				<div class="size-10 grid place-content-center text-xl">🚫</div>
+			</DropdownMenu.RadioItem>
 			{#each gemNames as gemName}
-				<DropdownMenu.RadioItem indicator={false} value={gemName} class="mr-0 cursor-pointer p-2 pl-2">
+				<DropdownMenu.RadioItem
+					indicator={false}
+					value={gemName}
+					class="mr-0 cursor-pointer p-2 pl-2"
+				>
 					<img src={gemIcon[gemName]} alt={gemName} class=" size-10" />
 				</DropdownMenu.RadioItem>
 			{/each}

@@ -122,18 +122,18 @@
 </script>
 
 <div
-	class=" h-full py-10 mx-auto flex my-10 justify-center items-center container max-w-7xl pixel-corners-border--lg bg-[#F4D497]"
+	class=" h-full py-10 mx-auto flex my-10 justify-center items-center container max-w-6xl pixel-corners-border--lg bg-[#F4D497]"
 >
 	<div class="space-y-5">
-		<h1 class="h1 text-5xl text-center capitalize font-bold">Stardew Combat calculator</h1>
+		<h1 class="h1 text-6xl text-center capitalize ">Stardew Combat calculator</h1>
 
-		<form class="flex flex-col gap-10">
+		<form class="flex flex-col gap-10 ">
 			<!-- WEAPON -->
 			<div class="mt-5 p-4">
 				<div class="flex gap-10">
 					<div class="flex flex-col gap-5">
 						<section
-							class="p-4 min-w-80 rounded pixel-border flex flex-col gap-2 text-sm bg-white w-fit"
+							class="p-4 min-w-80 rounded pixel-border flex flex-col gap-2 text-3xl bg-white w-fit"
 						>
 							<section class="mb-5">
 								<label for="weapon">Weapon</label>
@@ -158,7 +158,7 @@
 						</section>
 
 						<section
-							class="p-4 min-w-80 rounded pixel-border flex flex-col gap-2 border-amber-800 text-sm bg-white w-fit"
+							class="p-4 min-w-80 rounded pixel-border flex flex-col gap-2 border-amber-800 text-3xl bg-white w-fit"
 						>
 							<div>
 								Damage: {min} - {max}
@@ -179,7 +179,7 @@
 						</section>
 					</div>
 					<div>
-	
+						<h3 class="text-4xl text-center mb-5">Gems</h3>
 							<div class="flex gap-4">
 								<GemPicker bind:value={selectedGems[0]} />
 								<GemPicker bind:value={selectedGems[1]} />
@@ -191,7 +191,7 @@
 			</div>
 
 			<!-- PROFESSION -->
-			<section class="flex gap-4 p-4">
+			<section class="flex gap-4 text-3xl p-4">
 				<div>
 					<label for="profession">Lvl 5 Skill</label>
 					<select id="profession" bind:value={lvl5Profession} name="profession">
@@ -217,7 +217,7 @@
 				</div>
 			</section>
 
-			<section class=" flex gap-4 p-4">
+			<section class=" flex gap-4 p-4 ">
 				<fieldset>
 					<!-- RINGS -->
 					{#each selectedRings.left as ring, index}
@@ -239,7 +239,7 @@
 
 			{#if canBeEnchanted}
 				<!-- ENCHANTMENT -->
-				<section class="flex gap-4 p-4">
+				<section class="flex gap-4 p-4 text-3xl">
 					<div>
 						<label for="enchantment">Enchantment</label>
 						<select id="enchantment" bind:value={enchantmentName} name="enchantment">
