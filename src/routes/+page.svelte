@@ -195,7 +195,7 @@
 					</section>
 					{#if canBeEnchanted}
 							<section>
-								<h3 class="text-3xl mb-2">Innate Enchantment</h3>
+								<h3 class="text-3xl mb-4">Innate Enchantment</h3>
 								<EnchantmentPicker
 									bind:enchantmentKey
 									bind:enchantmentOptionName={enchantmentValue}

@@ -6,10 +6,15 @@
 	export let weaponName: string;
 	$: weapon = weapons.find((weapon) => weapon.name === weaponName);
 
-    const orderedSwords = swords.toSorted((a,b) => b.level - a.level);
-    const orderedDaggers = daggers.toSorted((a,b) => b.level - a.level);
-    const orderedClubs = clubs.toSorted((a,b) => b.level - a.level);
+	const orderedSwords = swords.toSorted((a, b) => b.level - a.level);
+	const orderedDaggers = daggers.toSorted((a, b) => b.level - a.level);
+	const orderedClubs = clubs.toSorted((a, b) => b.level - a.level);
+
+	let tab: 'swords' | 'daggers' | 'clubs' = 'swords';
+
+	import * as Tabs from '$lib/components/ui/tabs';
 </script>
+
 <DropdownMenu.Root>
 	<DropdownMenu.Trigger asChild let:builder>
 		<Button
@@ -24,23 +29,17 @@
 						<div class="text-left text-2xl flex gap-5 text-amber-950/40">
 							<img src={weapon.icon} alt={weapon.name} class=" size-20 object-cover" />
 							<div class="grid grid-cols-[1fr_auto] gap-x-5">
-								<div >
-									Dmg:
+								<div>Dmg:</div>
+								<div class="text-end">
+									{weapon.damage[0]}-{weapon.damage[1]}
 								</div>
-                                <div class="text-end">
-                                    {weapon.damage[0]}-{weapon.damage[1]}
-                               </div>
-                               <div>
-                                Level:
-                               </div>
-                               <div class="text-end">
+								<div>Level:</div>
+								<div class="text-end">
 									{weapon.level}
 								</div>
-                                <div>
-                                    Base crit chance:
-                                </div>
-                                <div class="text-end">
-									 {weapon.critStrikeChance * 100}%
+								<div>Base crit chance:</div>
+								<div class="text-end">
+									{weapon.critStrikeChance * 100}%
 								</div>
 							</div>
 						</div>
@@ -52,65 +51,71 @@
 
 	<DropdownMenu.Content
 		sideOffset={10}
-		class="w-fit bg-white/50 backdrop-blur-md pixel-border max-h-[30vh]  overflow-x-hidden   min-w-0"
+		class="w-fit relative min-w-80 bg-white/50 backdrop-blur-md pixel-border      "
 	>
-		<DropdownMenu.RadioGroup bind:value={weaponName} class="flex gap-4">
-			<section class="flex-grow overflow-y-auto max-h-full h-full" >
-				<DropdownMenu.Label class="text-2xl font-normal text-amber-950/50 text-center"
-					>Swords</DropdownMenu.Label
+		<Tabs.Root bind:value={tab}>
+			<Tabs.List class=" flex bg-transparent rounded-none h-fit border-b-2 border-amber-950">
+				<Tabs.Trigger class="text-xl bg-transparent" value="daggers">
+					Dagger
+					<img src={orderedDaggers[11].icon} alt={'Swords'} class=" size-10" /></Tabs.Trigger
 				>
-				<DropdownMenu.Separator />
-				{#each orderedSwords as sword}
-					<DropdownMenu.RadioItem
-						indicator={false}
-						value={sword.name}
-						class="mr-0 flex gap-2 cursor-pointer p-2 pl-2"
-					>
-						<img src={sword.icon} alt={sword.name} class=" size-10" />
-						<div class="text-2xl">
-							{sword.name}
-						</div>
-					</DropdownMenu.RadioItem>
-				{/each}
-			</section>
-			<section class="flex-grow">
-				<DropdownMenu.Label class="text-2xl font-normal text-amber-950/50 text-center"
-					>Daggers</DropdownMenu.Label
+				<Tabs.Trigger class="text-xl " value="swords">
+					Sword
+					<img src={orderedSwords[4].icon} alt={'Swords'} class=" size-10" />
+				</Tabs.Trigger>
+				<Tabs.Trigger class="text-xl " value="clubs">
+					Club
+					<img src={orderedClubs[11].icon} alt={'Swords'} class=" size-10" /></Tabs.Trigger
 				>
-				<DropdownMenu.Separator />
+			</Tabs.List>
 
-				{#each orderedDaggers as dagger}
-					<DropdownMenu.RadioItem
-						indicator={false}
-						value={dagger.name}
-						class="mr-0 flex gap-2 cursor-pointer p-2 pl-2"
-					>
-						<img src={dagger.icon} alt={dagger.name} class=" size-10" />
-						<div class="text-2xl">
-							{dagger.name}
-						</div>
-					</DropdownMenu.RadioItem>
-				{/each}
-			</section>
-			<section class="flex-grow">
-				<DropdownMenu.Label class="text-2xl font-normal text-amber-950/50 text-center"
-					>Clubs</DropdownMenu.Label
+			<DropdownMenu.RadioGroup
+				bind:value={weaponName}
+				class="flex max-h-[40vh] overflow-y-auto gap-4"
+			>
+				<Tabs.Content value="daggers">
+					{#each orderedDaggers as dagger}
+						<DropdownMenu.RadioItem
+							indicator={false}
+							value={dagger.name}
+							class="mr-0 flex gap-2 cursor-pointer p-2 pl-2"
+						>
+							<img src={dagger.icon} alt={dagger.name} class=" size-10" />
+							<div class="text-2xl">
+								{dagger.name}
+							</div>
+						</DropdownMenu.RadioItem>
+					{/each}
+				</Tabs.Content>
+				<Tabs.Content value="swords"
+					>{#each orderedSwords as sword}
+						<DropdownMenu.RadioItem
+							indicator={false}
+							value={sword.name}
+							class="mr-0 flex gap-2 cursor-pointer p-2 pl-2"
+						>
+							<img src={sword.icon} alt={sword.name} class=" size-10" />
+							<div class="text-2xl">
+								{sword.name}
+							</div>
+						</DropdownMenu.RadioItem>
+					{/each}</Tabs.Content
 				>
-				<DropdownMenu.Separator />
-
-				{#each orderedClubs as club}
-					<DropdownMenu.RadioItem
-						indicator={false}
-						value={club.name}
-						class="mr-0 flex gap-2 cursor-pointer p-2 pl-2"
-					>
-						<img src={club.icon} alt={club.name} class=" size-10" />
-						<div class="text-2xl">
-							{club.name}
-						</div>
-					</DropdownMenu.RadioItem>
-				{/each}
-			</section>
-		</DropdownMenu.RadioGroup>
+				<Tabs.Content value="clubs">
+					{#each orderedClubs as club}
+						<DropdownMenu.RadioItem
+							indicator={false}
+							value={club.name}
+							class="mr-0 flex gap-2 cursor-pointer p-2 pl-2"
+						>
+							<img src={club.icon} alt={club.name} class=" size-10" />
+							<div class="text-2xl">
+								{club.name}
+							</div>
+						</DropdownMenu.RadioItem>
+					{/each}
+				</Tabs.Content>
+			</DropdownMenu.RadioGroup>
+		</Tabs.Root>
 	</DropdownMenu.Content>
 </DropdownMenu.Root>

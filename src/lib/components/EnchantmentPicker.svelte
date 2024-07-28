@@ -33,7 +33,10 @@
 
         </div>
         {:else}
-        Pick an Enchantment
+        <div class="opacity-50 ">
+
+            Pick an Enchantment
+        </div>
 
         {/if}
 		</Button>
