@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button/index.js';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
-	import { rings } from '$model/ring.data';
+	import { ringNames, rings } from '$model/ring.data';
 
 	export let value: keyof typeof rings | undefined;
 	export let disabledRings: (keyof typeof rings)[] = []
@@ -29,22 +29,26 @@
 	</DropdownMenu.Trigger>
 
 	<DropdownMenu.Content
-		class="w-fit text-3xl rounded-none bg-white/50 backdrop-blur-md pixel-border min-w-0"
+		class="w-fit text-3xl  rounded-none bg-white/50 backdrop-blur-md pixel-border min-w-0"
 	>
 		<DropdownMenu.RadioGroup bind:value>
 			<DropdownMenu.RadioItem indicator={false} value="" class="mr-0 text-center mx-auto cursor-pointer p-2 pl-2">
-				<div class="size-10 grid  place-content-center text-xl">🚫</div>
+				<div class="size-10 mx-auto grid  place-content-center text-center w-fit text-lg">🚫</div>
 			</DropdownMenu.RadioItem>
-			{#each Object.entries(rings) as [ringKey, ring]}
+			{#each ringNames as ringKey}
+				{@const ring = rings[ringKey]}
 				{@const disabled = disabledRings?.includes(ringKey)}
 				<DropdownMenu.RadioItem
 					indicator={false}
 					value={ringKey}
 					disabled={disabled}
-					class="mr-0 cursor-pointer rounded-none text-3xl  p-2 pl-2"
+					class="mr-0 cursor-pointer flex gap-1 rounded-none text-2xl  p-2 pl-2"
 				>
-					<img src={ring.icon} alt={ring.name} class="size-10" />
-					{ring.name}
+					<img src={ring.icon} alt={ring.name} class="size-7" />
+					<div class="text-amber-900">
+
+						{ring.name}
+					</div>
 				</DropdownMenu.RadioItem>
 			{/each}
 		</DropdownMenu.RadioGroup>

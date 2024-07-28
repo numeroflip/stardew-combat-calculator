@@ -12,7 +12,7 @@
 
 </script>
 
-<div class="flex  flex-col pixel-corners">
+<div class="flex  pixel-corners">
     <RingPicker bind:value={value[0]} disabledRings={ring2 ? [ring2] : undefined} />
     <RingPicker bind:value={value[1]} disabledRings={ring1 ? [ring1] : undefined} />
 </div>

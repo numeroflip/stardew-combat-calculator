@@ -8,7 +8,7 @@ export type Stats = {
 	weight?: number;
 };
 
-export type WeaponType = 'sword' | 'dagger' | 'mace';
+export type WeaponType = 'sword' | 'dagger' | 'club';
 
 export type WeaponBase = {
 	name: string;
@@ -16,6 +16,7 @@ export type WeaponBase = {
 	damage: [number, number];
 	critStrikeChance: number;
 	stats?: Stats;
+	icon: string;
 };
 
 export type Weapon = WeaponBase & { type: WeaponType };

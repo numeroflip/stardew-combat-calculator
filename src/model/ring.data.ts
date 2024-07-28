@@ -1,14 +1,17 @@
 import type { Ring } from './ring';
 
-type RingName =
-	| 'iridiumBand'
-	| 'amethyst'
-	| 'topaz'
-	| 'aquamarine'
-	| 'jade'
-	| 'emerald'
-	| 'ruby'
-	| 'crabshell';
+export const ringNames = [
+	'iridiumBand',
+	'ruby',
+	'aquamarine',
+	'jade',
+	'emerald',
+	'amethyst',
+	'topaz',
+	'crabshell'
+] as const;
+
+type RingName = (typeof ringNames)[number];
 
 export const rings: Record<RingName, Ring> = {
 	iridiumBand: {

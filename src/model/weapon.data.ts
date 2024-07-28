@@ -2,12 +2,13 @@
 
 import type { Weapon, WeaponBase, WeaponType } from './weapon';
 
-const swords: WeaponBase[] = [
+const swordsBase: WeaponBase[] = [
 	{
 		name: 'Rusty Sword',
 		level: 1,
 		damage: [2, 5],
-		critStrikeChance: 0.02
+		critStrikeChance: 0.02,
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/d/d7/Rusty_Sword.png'
 	},
 	{
 		name: 'Steel Smallsword',
@@ -16,13 +17,15 @@ const swords: WeaponBase[] = [
 		critStrikeChance: 0.02,
 		stats: {
 			speed: 2
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/d/da/Steel_Smallsword.png'
 	},
 	{
 		name: 'Wooden Blade',
 		level: 1,
 		damage: [3, 7],
-		critStrikeChance: 0.02
+		critStrikeChance: 0.02,
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/0/06/Wooden_Blade.png'
 	},
 	{
 		name: "Pirate's Sword",
@@ -31,7 +34,8 @@ const swords: WeaponBase[] = [
 		critStrikeChance: 0.02,
 		stats: {
 			speed: 2
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/1/19/Pirate%27s_Sword.png'
 	},
 	{
 		name: 'Silver Saber',
@@ -40,7 +44,8 @@ const swords: WeaponBase[] = [
 		critStrikeChance: 0.02,
 		stats: {
 			defense: 1
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/b/b0/Silver_Saber.png'
 	},
 	{
 		name: 'Cutlass',
@@ -49,7 +54,8 @@ const swords: WeaponBase[] = [
 		critStrikeChance: 0.02,
 		stats: {
 			speed: 2
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/1/1e/Cutlass.png'
 	},
 	{
 		name: 'Forest Sword',
@@ -59,7 +65,8 @@ const swords: WeaponBase[] = [
 		stats: {
 			speed: 2,
 			defense: 1
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/1/17/Forest_Sword.png'
 	},
 	{
 		name: 'Iron Edge',
@@ -70,7 +77,8 @@ const swords: WeaponBase[] = [
 			speed: -2,
 			defense: 1,
 			weight: 3
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/3/3c/Iron_Edge.png'
 	},
 	{
 		name: 'Insect Head',
@@ -80,7 +88,8 @@ const swords: WeaponBase[] = [
 		stats: {
 			speed: 2,
 			critChance: 2
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/3/35/Insect_Head.png'
 	},
 	{
 		name: 'Bone Sword',
@@ -90,7 +99,8 @@ const swords: WeaponBase[] = [
 		stats: {
 			speed: 4,
 			weight: 2
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/2/29/Bone_Sword.png'
 	},
 	{
 		name: 'Claymore',
@@ -101,7 +111,8 @@ const swords: WeaponBase[] = [
 			speed: -4,
 			defense: 2,
 			weight: 3
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/0/0c/Claymore.png'
 	},
 	{
 		name: "Neptune's Glaive",
@@ -112,7 +123,8 @@ const swords: WeaponBase[] = [
 			speed: -1,
 			defense: 2,
 			weight: 4
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/2/26/Neptune%27s_Glaive.png'
 	},
 	{
 		name: "Templar's Blade",
@@ -121,7 +133,8 @@ const swords: WeaponBase[] = [
 		critStrikeChance: 0,
 		stats: {
 			defense: 1
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/e/e4/Templar%27s_Blade.png'
 	},
 	{
 		name: 'Obsidian Edge',
@@ -131,7 +144,8 @@ const swords: WeaponBase[] = [
 		stats: {
 			speed: -1,
 			critPower: 10
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/7/73/Obsidian_Edge.png'
 	},
 	{
 		name: 'Ossified Blade',
@@ -142,7 +156,8 @@ const swords: WeaponBase[] = [
 			speed: -2,
 			defense: 1,
 			weight: 2
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/3/30/Ossified_Blade.png'
 	},
 	{
 		name: 'Holy Blade',
@@ -152,7 +167,8 @@ const swords: WeaponBase[] = [
 		stats: {
 			speed: 4,
 			defense: 2
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/a/ab/Holy_Blade.png'
 	},
 	{
 		name: 'Tempered Broadsword',
@@ -163,7 +179,8 @@ const swords: WeaponBase[] = [
 			speed: -3,
 			defense: 3,
 			weight: 3
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/5/51/Tempered_Broadsword.png'
 	},
 	{
 		name: 'Yeti Tooth',
@@ -173,7 +190,8 @@ const swords: WeaponBase[] = [
 		stats: {
 			critPower: 10,
 			defense: 4
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/4/4d/Yeti_Tooth.png'
 	},
 	{
 		name: 'Steel Falchion',
@@ -183,7 +201,8 @@ const swords: WeaponBase[] = [
 		stats: {
 			speed: 4,
 			critPower: 20
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/e/ee/Steel_Falchion.png'
 	},
 	{
 		name: 'Dark Sword',
@@ -194,7 +213,8 @@ const swords: WeaponBase[] = [
 			speed: -5,
 			critChance: 2,
 			weight: 5
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/2/2e/Dark_Sword.png'
 	},
 	{
 		name: 'Lava Katana',
@@ -205,7 +225,8 @@ const swords: WeaponBase[] = [
 			defense: 3,
 			weight: 3,
 			critPower: 25
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/a/a0/Lava_Katana.png'
 	},
 	{
 		name: 'Dragontooth Cutlass',
@@ -214,7 +235,8 @@ const swords: WeaponBase[] = [
 		critStrikeChance: 0.02,
 		stats: {
 			critPower: 50
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/e/e8/Dragontooth_Cutlass.png'
 	},
 	{
 		name: 'Dwarf Sword',
@@ -224,7 +246,8 @@ const swords: WeaponBase[] = [
 		stats: {
 			speed: 2,
 			defense: 4
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/3/38/Dwarf_Sword.png'
 	},
 	{
 		name: 'Galaxy Sword',
@@ -233,7 +256,8 @@ const swords: WeaponBase[] = [
 		critStrikeChance: 0.02,
 		stats: {
 			speed: 4
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/4/44/Galaxy_Sword.png'
 	},
 	{
 		name: 'Infinity Blade',
@@ -243,7 +267,8 @@ const swords: WeaponBase[] = [
 		stats: {
 			speed: 4,
 			defense: 2
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/4/40/Infinity_Blade.png'
 	},
 	{
 		name: "Haley's Iron",
@@ -253,7 +278,8 @@ const swords: WeaponBase[] = [
 		stats: {
 			speed: -1,
 			critPower: 10
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/6/66/Haley%27s_Iron.png'
 	},
 	{
 		name: "Leah's Whittler",
@@ -263,7 +289,8 @@ const swords: WeaponBase[] = [
 		stats: {
 			speed: -1,
 			critPower: 10
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/6/69/Leah%27s_Whittler.png'
 	},
 	{
 		name: 'Meowmere',
@@ -273,16 +300,18 @@ const swords: WeaponBase[] = [
 		stats: {
 			speed: 4,
 			weight: 2
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/6/63/Meowmere.png'
 	}
 ];
 
-export const daggers: WeaponBase[] = [
+export const daggersBase: WeaponBase[] = [
 	{
 		name: 'Carving Knife',
 		level: 1,
 		damage: [1, 3],
-		critStrikeChance: 0.04
+		critStrikeChance: 0.04,
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/6/6d/Carving_Knife.png'
 	},
 	{
 		name: 'Iron Dirk',
@@ -291,7 +320,8 @@ export const daggers: WeaponBase[] = [
 		critStrikeChance: 0.03,
 		stats: {
 			critChance: 2
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/b/bb/Iron_Dirk.png'
 	},
 	{
 		name: 'Wind Spire',
@@ -303,7 +333,8 @@ export const daggers: WeaponBase[] = [
 			critChance: 1,
 
 			weight: 5
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/0/00/Wind_Spire.png'
 	},
 	{
 		name: 'Elf Blade',
@@ -312,7 +343,8 @@ export const daggers: WeaponBase[] = [
 		critStrikeChance: 0.04,
 		stats: {
 			critChance: 2
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/f/f2/Elf_Blade.png'
 	},
 	{
 		name: "Burglar's Shank",
@@ -322,7 +354,8 @@ export const daggers: WeaponBase[] = [
 		stats: {
 			critPower: 25,
 			critChance: 2
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/7/7c/Burglar%27s_Shank.png'
 	},
 	{
 		name: 'Crystal Dagger',
@@ -334,7 +367,8 @@ export const daggers: WeaponBase[] = [
 			critChance: 2,
 
 			weight: 5
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/8/8a/Crystal_Dagger.png'
 	},
 	{
 		name: 'Shadow Dagger',
@@ -343,7 +377,8 @@ export const daggers: WeaponBase[] = [
 		critStrikeChance: 0.04,
 		stats: {
 			critChance: 2
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/4/47/Shadow_Dagger.png'
 	},
 	{
 		name: 'Broken Trident',
@@ -352,7 +387,8 @@ export const daggers: WeaponBase[] = [
 		critStrikeChance: 0.02,
 		stats: {
 			critChance: 1
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/3/3f/Broken_Trident.png'
 	},
 	{
 		name: 'Wicked Kris',
@@ -361,7 +397,8 @@ export const daggers: WeaponBase[] = [
 		critStrikeChance: 0.06,
 		stats: {
 			critChance: 4
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/9/94/Wicked_Kris.png'
 	},
 	{
 		name: 'Galaxy Dagger',
@@ -372,7 +409,8 @@ export const daggers: WeaponBase[] = [
 			speed: 1,
 			critChance: 1,
 			weight: 5
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/6/68/Galaxy_Dagger.png'
 	},
 	{
 		name: 'Dwarf Dagger',
@@ -385,7 +423,8 @@ export const daggers: WeaponBase[] = [
 			critChance: 2,
 			defense: 6,
 			weight: 5
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/9/99/Dwarf_Dagger.png'
 	},
 	{
 		name: 'Dragontooth Shiv',
@@ -397,7 +436,8 @@ export const daggers: WeaponBase[] = [
 			critChance: 3,
 
 			weight: 5
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/9/95/Dragontooth_Shiv.png'
 	},
 	{
 		name: 'Iridium Needle',
@@ -407,7 +447,8 @@ export const daggers: WeaponBase[] = [
 		stats: {
 			critPower: 200,
 			critChance: 6
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/6/62/Iridium_Needle.png'
 	},
 	{
 		name: 'Infinity Dagger',
@@ -419,7 +460,8 @@ export const daggers: WeaponBase[] = [
 			critChance: 4,
 			defense: 3,
 			weight: 5
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/d/d6/Infinity_Dagger.png'
 	},
 	{
 		name: "Elliott's Pencil",
@@ -428,7 +470,8 @@ export const daggers: WeaponBase[] = [
 		critStrikeChance: 0.06,
 		stats: {
 			critChance: 4
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/7/70/Elliott%27s_Pencil.png'
 	},
 	{
 		name: "Abby's Planchette",
@@ -437,16 +480,18 @@ export const daggers: WeaponBase[] = [
 		critStrikeChance: 0.06,
 		stats: {
 			critChance: 4
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/7/72/Abby%27s_Planchette.png'
 	}
 ];
 
-export const maces: WeaponBase[] = [
+export const clubsBase: WeaponBase[] = [
 	{
 		name: 'Femur',
 		level: 2,
 		damage: [6, 11],
-		critStrikeChance: 0.02
+		critStrikeChance: 0.02,
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/e/e4/Femur.png'
 	},
 	{
 		name: 'Wood Club',
@@ -455,7 +500,8 @@ export const maces: WeaponBase[] = [
 		critStrikeChance: 0.02,
 		stats: {
 			speed: 2
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/5/51/Wood_Club.png'
 	},
 	{
 		name: 'Wood Mallet',
@@ -466,7 +512,8 @@ export const maces: WeaponBase[] = [
 			speed: 2,
 
 			weight: 2
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/a/ac/Wood_Mallet.png'
 	},
 	{
 		name: 'Lead Rod',
@@ -475,7 +522,8 @@ export const maces: WeaponBase[] = [
 		critStrikeChance: 0.02,
 		stats: {
 			speed: 4
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/3/36/Lead_Rod.png'
 	},
 	{
 		name: 'Kudgel',
@@ -487,7 +535,8 @@ export const maces: WeaponBase[] = [
 			critPower: 50,
 
 			weight: 2
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/e/e0/Kudgel.png'
 	},
 	{
 		name: 'The Slammer',
@@ -496,7 +545,8 @@ export const maces: WeaponBase[] = [
 		critStrikeChance: 0.02,
 		stats: {
 			speed: 2
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/c/c7/The_Slammer.png'
 	},
 	{
 		name: 'Galaxy Hammer',
@@ -507,7 +557,8 @@ export const maces: WeaponBase[] = [
 			speed: 2,
 
 			weight: 5
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/8/8a/Galaxy_Hammer.png'
 	},
 	{
 		name: 'Dwarf Hammer',
@@ -517,7 +568,8 @@ export const maces: WeaponBase[] = [
 		stats: {
 			defense: 2,
 			weight: 5
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/d/d5/Dwarf_Hammer.png'
 	},
 	{
 		name: 'Dragontooth Club',
@@ -528,7 +580,8 @@ export const maces: WeaponBase[] = [
 			critPower: 50,
 
 			weight: 3
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/1/18/Dragontooth_Club.png'
 	},
 	{
 		name: 'Infinity Gavel',
@@ -540,7 +593,8 @@ export const maces: WeaponBase[] = [
 
 			defense: 1,
 			weight: 5
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/8/87/Infinity_Gavel.png'
 	},
 	{
 		name: "Alex's Bat",
@@ -549,7 +603,8 @@ export const maces: WeaponBase[] = [
 		critStrikeChance: 0.02,
 		stats: {
 			speed: 2
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/1/17/Alex%27s_Bat.png'
 	},
 	{
 		name: "Harvey's Mallet",
@@ -558,7 +613,8 @@ export const maces: WeaponBase[] = [
 		critStrikeChance: 0.02,
 		stats: {
 			speed: -2
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/0/09/Harvey%27s_Mallet.png'
 	},
 	{
 		name: "Maru's Wrench",
@@ -567,7 +623,8 @@ export const maces: WeaponBase[] = [
 		critStrikeChance: 0.02,
 		stats: {
 			speed: -2
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/6/6f/Maru%27s_Wrench.png'
 	},
 	{
 		name: "Penny's Fryer",
@@ -576,7 +633,8 @@ export const maces: WeaponBase[] = [
 		critStrikeChance: 0.02,
 		stats: {
 			speed: -2
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/9/9c/Penny%27s_Fryer.png'
 	},
 	{
 		name: "Sam's Old Guitar",
@@ -585,7 +643,8 @@ export const maces: WeaponBase[] = [
 		critStrikeChance: 0.02,
 		stats: {
 			speed: -2
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/d/dc/Sam%27s_Old_Guitar.png'
 	},
 	{
 		name: "Seb's Lost Mace",
@@ -594,16 +653,17 @@ export const maces: WeaponBase[] = [
 		critStrikeChance: 0.02,
 		stats: {
 			speed: -2
-		}
+		},
+		icon: 'https://stardewvalleywiki.com/mediawiki/images/3/37/Seb%27s_Lost_Mace.png'
 	}
 ];
+
+export const swords = withWeaponType(swordsBase, 'sword');
+export const daggers = withWeaponType(daggersBase, 'dagger');
+export const clubs = withWeaponType(clubsBase, 'club');
 
 function withWeaponType(arr: WeaponBase[], type: WeaponType) {
 	return arr.map((w) => ({ ...w, type }));
 }
 
-export const weapons: Weapon[] = [
-	...withWeaponType(swords, 'sword'),
-	...withWeaponType(daggers, 'dagger'),
-	...withWeaponType(maces, 'mace')
-];
+export const weapons: Weapon[] = [...swords, ...daggers, ...clubs];
