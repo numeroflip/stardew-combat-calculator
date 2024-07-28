@@ -19,14 +19,14 @@
 	<DropdownMenu.Trigger asChild let:builder>
 		<Button
 			builders={[builder]}
-			class=" pixel-corners px-10 gap-3 rounded-sm bg-amber-50 h-fit w-fit  p-6 flex items-center justify-center "
+			class=" pixel-corners w-full h-full px-10 gap-3 rounded-sm bg-amber-50    p-6 flex items-center justify-center "
 			variant="outline"
 		>
 			{#if weapon}
-				<div class="flex flex-col">
+				<div class="flex w-full flex-col">
 					<div class="text-4xl flex flex-col gap-5 text-center">
 						{weaponName}
-						<div class="text-left text-2xl flex gap-5 text-amber-950/40">
+						<div class="text-left justify-between text-2xl flex gap-5 text-amber-950/40">
 							<img src={weapon.icon} alt={weapon.name} class=" size-20 object-cover" />
 							<div class="grid grid-cols-[1fr_auto] gap-x-5">
 								<div>Dmg:</div>
