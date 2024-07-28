@@ -4,36 +4,47 @@
 	import { rings } from '$model/ring.data';
 
 	export let value: keyof typeof rings | undefined;
+	export let disabledRings: (keyof typeof rings)[] = []
 </script>
 
 <DropdownMenu.Root>
 	<DropdownMenu.Trigger asChild let:builder>
 		<Button
 			builders={[builder]}
-			class="h-16 px-4 pixel-border text-3xl rounded-sm bg-amber-50  grid place-content-center"
+			class="h-16 px-4  text-3xl rounded-none bg-amber-50 border-orange-900/20  grid place-content-center"
 			variant="outline"
 		>
 			{#if value}
-				{rings[value].name}
+				<div class="flex gap-1 items-center">
+					<img src={rings[value].icon} alt={rings[value].name} class="size-10" />
+				</div>
 			{:else}
-				Open
+				<img
+					src={rings.topaz.icon}
+					alt={rings.topaz.name}
+					class="size-10 opacity-20 grayscale object-cover"
+				/>
 			{/if}
 		</Button>
 	</DropdownMenu.Trigger>
 
-	<DropdownMenu.Content class="w-fit text-3xl bg-white/50 backdrop-blur-md pixel-border min-w-0">
+	<DropdownMenu.Content
+		class="w-fit text-3xl rounded-none bg-white/50 backdrop-blur-md pixel-border min-w-0"
+	>
 		<DropdownMenu.RadioGroup bind:value>
-			<DropdownMenu.RadioItem indicator={false} value="" class="mr-0 cursor-pointer p-2 pl-2">
-				<div class="size-10 grid place-content-center text-xl">🚫</div>
+			<DropdownMenu.RadioItem indicator={false} value="" class="mr-0 text-center mx-auto cursor-pointer p-2 pl-2">
+				<div class="size-10 grid  place-content-center text-xl">🚫</div>
 			</DropdownMenu.RadioItem>
 			{#each Object.entries(rings) as [ringKey, ring]}
+				{@const disabled = disabledRings?.includes(ringKey)}
 				<DropdownMenu.RadioItem
 					indicator={false}
 					value={ringKey}
-					class="mr-0 cursor-pointer text-3xl h-16 p-2 pl-2"
+					disabled={disabled}
+					class="mr-0 cursor-pointer rounded-none text-3xl  p-2 pl-2"
 				>
+					<img src={ring.icon} alt={ring.name} class="size-10" />
 					{ring.name}
-					<!-- <img src={gemIcon[gemName]} alt={ring.name} class=" size-10" /> -->
 				</DropdownMenu.RadioItem>
 			{/each}
 		</DropdownMenu.RadioGroup>

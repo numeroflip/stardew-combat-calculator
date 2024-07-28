@@ -17,6 +17,7 @@
 	import { getDamageValues } from '$lib/getDamageValues';
 	import GemPicker from '$lib/components/GemPicker.svelte';
 	import RingPicker from '$lib/components/RingPicker.svelte';
+	import RingPairPicker from '$lib/components/RingPairPicker.svelte';
 
 	const ringArray = Object.values(rings);
 
@@ -143,7 +144,7 @@
 									{/each}
 								</select>
 							</section>
-							<div class="text-neutral-500">
+							<div class="text-neutral-500 text-2xl">
 								<div>
 									Level: {weapon.level}
 								</div>
@@ -174,19 +175,34 @@
 								Crit: {formatNumber(min * critMultiplier)} - {formatNumber(max * critMultiplier)}
 							</div>
 							<div>
-								Avg with crits: {avgWithCrits}
+								Avg with crits: {formatNumber(avgWithCrits, 0)}
 							</div>
 						</section>
 					</div>
 					<div>
-						<h3 class="text-4xl text-center mb-5">Gems</h3>
+						<section class="mb-10">
+
+							<h3 class="text-4xl  text-center mb-5">Gems</h3>
 							<div class="flex gap-4">
 								<GemPicker bind:value={selectedGems[0]} />
 								<GemPicker bind:value={selectedGems[1]} />
 								<GemPicker bind:value={selectedGems[2]} />
 							</div>
+						</section>
 						
+							<section class=" flex w-fit flex-col gap-4 p-4 ">
+								<h3 class="text-4xl text-center mb-5">Rings</h3>
+				
+								<fieldset class=" flex gap-10">
+									<RingPairPicker bind:value={selectedRings.left} />
+									
+									
+										<RingPairPicker bind:value={selectedRings.right} />
+									</fieldset>
+								
+							</section>
 					</div>
+					
 				</div>
 			</div>
 
@@ -216,27 +232,10 @@
 					</select>
 				</div>
 			</section>
+		
 
-			<section class=" flex gap-4 p-4 ">
-				<fieldset>
-					<!-- RINGS -->
-					{#each selectedRings.left as ring, index}
-						<div>
-							<RingPicker bind:value={selectedRings.left[index]} />
-						</div>
-					{/each}
-				</fieldset>
-
-				<fieldset class=" flex gap-4 p-4">
-					<!-- RINGS -->
-					{#each selectedRings.right as ring, index}
-						<div>
-							<RingPicker bind:value={selectedRings.right[index]} />
-						</div>
-					{/each}
-				</fieldset>
-			</section>
-
+			<!-- RINGS -->
+			
 			{#if canBeEnchanted}
 				<!-- ENCHANTMENT -->
 				<section class="flex gap-4 p-4 text-3xl">
