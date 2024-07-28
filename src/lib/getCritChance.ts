@@ -52,7 +52,6 @@ export function getCritChance(
 
 	// Enchantment
 	const enchantmentCritChance = getEnchantmentCritChance(enchantment);
-	console.info(enchantmentCritChance);
 	critChance = critChance * (1 + (enchantmentCritChance + ringCritChance));
 
 	// Blessing of Fangs

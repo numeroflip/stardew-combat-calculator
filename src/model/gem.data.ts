@@ -1,7 +1,7 @@
 import type { GemName } from './gem';
 import type { Stats } from './weapon';
 
-export const gems: Record<GemName, { stats: [Stats, Stats, Stats] }> = {
+export const gem: Record<GemName, { stats: [Stats, Stats, Stats] }> = {
 	emerald: {
 		stats: [
 			{
@@ -56,4 +56,14 @@ export const gems: Record<GemName, { stats: [Stats, Stats, Stats] }> = {
 			{ defense: 1 }
 		]
 	}
+};
+
+export const gemIcon: Record<GemName | 'diamond', string> = {
+	diamond: 'https://stardewvalleywiki.com/mediawiki/images/e/ea/Diamond.png',
+	jade: 'https://stardewvalleywiki.com/mediawiki/images/7/7e/Jade.png',
+	topaz: 'https://stardewvalleywiki.com/mediawiki/images/a/a5/Topaz.png',
+	amethyst: 'https://stardewvalleywiki.com/mediawiki/images/2/2e/Amethyst.png',
+	ruby: 'https://stardewvalleywiki.com/mediawiki/images/a/a9/Ruby.png',
+	aquamarine: 'https://stardewvalleywiki.com/mediawiki/images/a/a2/Aquamarine.png',
+	emerald: 'https://stardewvalleywiki.com/mediawiki/images/6/6a/Emerald.png'
 };

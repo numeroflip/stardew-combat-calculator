@@ -7,7 +7,7 @@ import {
 } from '../model/profession';
 import type { Ring } from '../model/ring';
 import type { Weapon } from '../model/weapon';
-import { round } from './utils';
+import { formatNumber } from './formatNumber';
 
 type Options = {
 	gems?: GemName[];
@@ -61,7 +61,7 @@ export function getDamageValues(
 	}
 
 	return [
-		round(baseDamage[0] * multiplier + extraDamage),
-		round(baseDamage[1] * multiplier + extraDamage)
+		formatNumber(baseDamage[0] * multiplier + extraDamage),
+		formatNumber(baseDamage[1] * multiplier + extraDamage)
 	];
 }

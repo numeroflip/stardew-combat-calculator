@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { weapons } from '../model/weapon.data';
 	import { rings } from '../model/ring.data';
-	import { gems } from '../model/gem.data';
 	import { innateEnchantment, type GuaranteedInnateEnchantment } from '../model/enchantment';
 	import type { GemName } from '../model/gem';
+	import { gem as selectableGem } from '../model/gem.data';
 	import {
 		type CombatProfession,
 		type ScoutSpecialization,
@@ -13,19 +13,35 @@
 	import { getCritMultiplier } from '$lib/getCritMultiplier';
 	import type { Ring } from '../model/ring';
 	import { getCritChance } from '$lib/getCritChance';
+	import { formatNumber } from '$lib/formatNumber';
+	import { getDamageValues } from '$lib/getDamageValues';
+	import GemPicker from '$lib/components/GemPicker.svelte';
+	import RingPicker from '$lib/components/RingPicker.svelte';
+
 	const ringArray = Object.values(rings);
 
 	let weapon = weapons[0];
-	let selectedGems: [GemName | null, GemName | null, GemName | null] = [null, null, null];
+	let selectedGems: [GemName | undefined, GemName | undefined, GemName | undefined] = [
+		undefined,
+		undefined,
+		undefined
+	];
 
+	type RingKey = keyof typeof rings;
 
-	let selectedRings: [Ring | null, Ring | null, Ring | null, Ring | null] = [null, null, null, null]
+	let selectedRings: {
+		left: [RingKey | undefined, RingKey | undefined];
+		right: [RingKey | undefined, RingKey | undefined];
+	} = {
+		left: [undefined, undefined],
+		right: [undefined, undefined]
+	};
+
 	let enchantmentName: GuaranteedInnateEnchantment;
 	let enchantmentValue: number;
 	$: enchantmentValueOptions = enchantmentName
 		? [...innateEnchantment.guaranteed[enchantmentName].options.map((i) => i.name)]
 		: null;
-
 
 	let lvl5Profession: CombatProfession['line'];
 	let lvl10Profession: FighterSpecialization | ScoutSpecialization | null;
@@ -35,7 +51,6 @@
 			: lvl5Profession === 'scout'
 				? ['acrobat', 'desperado']
 				: null;
-
 
 	$: {
 		if (!lvl5Profession) {
@@ -48,73 +63,131 @@
 		}
 	}
 
+	$: canBeEnchanted =
+		weapon.level < 15 && !weapon.name.includes('Galaxy') && !weapon.name.includes('Infinity');
+
 	$: {
-		
-			const isEnchantmentValueValid = enchantmentName && enchantmentValueOptions && enchantmentValueOptions.includes(enchantmentValue)
-			if (!isEnchantmentValueValid) {
-				enchantmentValue = 0;
-			}
-			
-		
+		const isEnchantmentValueValid =
+			enchantmentName &&
+			enchantmentValueOptions &&
+			enchantmentValueOptions.includes(enchantmentValue);
+		if (!isEnchantmentValueValid) {
+			enchantmentValue = 0;
+		}
 	}
 
-	$:profession = { line: lvl5Profession, specialization: lvl10Profession || undefined};
-	$:enchantment = {name: enchantmentName, value: enchantmentValue}
+	$: profession = { line: lvl5Profession, specialization: lvl10Profession || undefined };
+	$: enchantment = { name: enchantmentName, value: enchantmentValue };
 
-	$: critMultiplier = Math.round(getCritMultiplier(weapon, {
-		gems: selectedGems.filter(Boolean) as GemName[],
-		enchantment: enchantment,
-		/* @ts-expect-error */
-		profession: profession,
-		rings: selectedRings.filter(Boolean) as Ring[],
-	})*10000) / 10000
+	$: selectedRingsFlat = Object.values(selectedRings)
+		.flat()
+		.filter(Boolean)
+		.map((ringKey) => rings[ringKey as RingKey]);
+
+	$: critMultiplier = formatNumber(
+		getCritMultiplier(weapon, {
+			gems: selectedGems.filter(Boolean) as GemName[],
+			enchantment: canBeEnchanted ? enchantment : undefined,
+			/* @ts-expect-error */
+			profession: profession,
+			rings: selectedRingsFlat
+		})
+	);
 
 	function capitalize(str: string) {
 		return str.charAt(0).toUpperCase() + str.slice(1);
 	}
 
-	$: critChance = Math.round(getCritChance(weapon, {
+	$: critChance = formatNumber(
+		getCritChance(weapon, {
+			gems: selectedGems.filter(Boolean) as GemName[],
+			enchantment: canBeEnchanted ? enchantment : undefined,
+			/* @ts-expect-error */
+			profession: profession,
+			rings: selectedRingsFlat
+		})
+	);
+
+	$: [min, max] = getDamageValues(weapon, {
+		enchantment: canBeEnchanted ? enchantment : undefined,
 		gems: selectedGems.filter(Boolean) as GemName[],
-		enchantment: enchantment,
 		/* @ts-expect-error */
-		profession: profession,
-		rings: selectedRings.filter(Boolean) as Ring[],
-	}) *10000) / 10000
+		profession,
+		rings: selectedRingsFlat
+	});
+	$: normalAvg = formatNumber((min + max) / 2);
+	$: [critMin, critMax] = [formatNumber(min * critMultiplier), formatNumber(max * critMultiplier)];
+	$: critAvg = formatNumber((critMin + critMax) / 2);
+	$: avgWithCrits = formatNumber(critAvg * critChance + normalAvg * (1 - critChance));
 </script>
 
-<div class=" h-full py-10 mx-auto flex justify-center items-center bg-transparent">
+<div
+	class=" h-full py-10 mx-auto flex my-10 justify-center items-center container max-w-7xl pixel-corners-border--lg bg-[#F4D497]"
+>
 	<div class="space-y-5">
-		<h1 class="h1">Stardew Combat stat calculator</h1>
+		<h1 class="h1 text-5xl text-center capitalize font-bold">Stardew Combat calculator</h1>
 
 		<form class="flex flex-col gap-10">
 			<!-- WEAPON -->
 			<div class="mt-5 p-4">
-				<label for="weapon">Weapon</label>
-				<select id="weapon" bind:value={weapon} name="weapon">
-					{#each weapons as weapon}
-						<option value={weapon}>{weapon.name}</option>
-					{/each}
-				</select>
-				<section class="p-4 border text-sm bg-white w-fit my-4">
-					<div>
-						Level: {weapon.level}
-					</div>
-					<div>
-						Damage: {weapon.damage[0]} - {weapon.damage[1]}
-					</div>
-					<div>
-						Base crit chance: {weapon.critStrikeChance * 100}%
-					</div>
-					<section class="bg-yellow-200/50">
-						<div>
-							Crit  chance: {critChance * 100}%
-						</div>
-						<div>
-							Crit  multiplier: {critMultiplier}
-						</div>
+				<div class="flex gap-10">
+					<div class="flex flex-col gap-5">
+						<section
+							class="p-4 min-w-80 rounded pixel-border flex flex-col gap-2 text-sm bg-white w-fit"
+						>
+							<section class="mb-5">
+								<label for="weapon">Weapon</label>
+								<select id="weapon" bind:value={weapon} name="weapon">
+									{#each weapons as weapon}
+										<option value={weapon}>{weapon.name}</option>
+									{/each}
+								</select>
+							</section>
+							<div class="text-neutral-500">
+								<div>
+									Level: {weapon.level}
+								</div>
+								<div>
+									Damage: {weapon.damage[0]} - {weapon.damage[1]}
+								</div>
 
-					</section>
-				</section>
+								<div>
+									Base crit chance: {weapon.critStrikeChance * 100}%
+								</div>
+							</div>
+						</section>
+
+						<section
+							class="p-4 min-w-80 rounded pixel-border flex flex-col gap-2 border-amber-800 text-sm bg-white w-fit"
+						>
+							<div>
+								Damage: {min} - {max}
+							</div>
+
+							<div>
+								Crit chance: {formatNumber(critChance * 100)}%
+							</div>
+							<div>
+								Crit multiplier: {critMultiplier}
+							</div>
+							<div>
+								Crit: {formatNumber(min * critMultiplier)} - {formatNumber(max * critMultiplier)}
+							</div>
+							<div>
+								Avg with crits: {avgWithCrits}
+							</div>
+						</section>
+					</div>
+					<div>
+	
+							<div class="flex gap-4">
+								<GemPicker bind:value={selectedGems[0]} />
+								<GemPicker bind:value={selectedGems[1]} />
+								<GemPicker bind:value={selectedGems[2]} />
+							</div>
+						
+					</div>
+				</div>
 			</div>
 
 			<!-- PROFESSION -->
@@ -145,64 +218,53 @@
 			</section>
 
 			<section class=" flex gap-4 p-4">
-				<!-- RINGS -->
-				 {#each selectedRings as ring, index }
-				 <div>
-					 <label for={`ring${index}`}>Ring 1</label>
-					 <select id={`ring${index}`} bind:value={selectedRings[index]} name={`ring${index}`}>
-						 <option value=""></option>
-						 {#each ringArray as _ring}
-							 <option value={_ring}>{_ring.name}</option>
-						 {/each}
-					 </select>
-				 </div>
+				<fieldset>
+					<!-- RINGS -->
+					{#each selectedRings.left as ring, index}
+						<div>
+							<RingPicker bind:value={selectedRings.left[index]} />
+						</div>
+					{/each}
+				</fieldset>
 
-					
-				 {/each}
-				
+				<fieldset class=" flex gap-4 p-4">
+					<!-- RINGS -->
+					{#each selectedRings.right as ring, index}
+						<div>
+							<RingPicker bind:value={selectedRings.right[index]} />
+						</div>
+					{/each}
+				</fieldset>
 			</section>
 
-			<!-- ENCHANTMENT -->
-			<section class="flex gap-4 p-4">
-				<div>
-					<label for="enchantment">Enchantment</label>
-					<select id="enchantment" bind:value={enchantmentName} name="enchantment">
-						<option value=""></option>
-						{#each Object.entries(innateEnchantment.guaranteed) as [enchantmentKey, enchantment]}
-							<option value={enchantmentKey}>{enchantment.name}</option>
-						{/each}
-					</select>
-				</div>
-				<div>
-					<label for="enchantmentValue">Enchantment Value</label>
-					<select
-						id="enchantmentValue"
-						disabled={!enchantmentName}
-						bind:value={enchantmentValue}
-						name="enchantmentValue"
-					>
-						<option value=""></option>
-						{#each enchantmentValueOptions || [] as option}
-							<option value={option}>{option}</option>
-						{/each}
-					</select>
-				</div>
-			</section>
-
-			<!-- GEMS -->
-			<section class="flex gap-4 p-4">
-				{#each selectedGems as gem, index}
+			{#if canBeEnchanted}
+				<!-- ENCHANTMENT -->
+				<section class="flex gap-4 p-4">
 					<div>
-						<label for={`gem${index}`}>Gem {index}</label>
-						<select id={`gem${index}`} bind:value={selectedGems[index]} name={`gem${index}`}>
+						<label for="enchantment">Enchantment</label>
+						<select id="enchantment" bind:value={enchantmentName} name="enchantment">
 							<option value=""></option>
-							{#each Object.keys(gems) as _gem}
-								<option value={_gem}>{capitalize(_gem)}</option>
+							{#each Object.entries(innateEnchantment.guaranteed) as [enchantmentKey, enchantment]}
+								<option value={enchantmentKey}>{enchantment.name}</option>
 							{/each}
 						</select>
 					</div>
-				{/each}
-			</section>
+					<div>
+						<label for="enchantmentValue">Enchantment Value</label>
+						<select
+							id="enchantmentValue"
+							disabled={!enchantmentName}
+							bind:value={enchantmentValue}
+							name="enchantmentValue"
+						>
+							<option value=""></option>
+							{#each enchantmentValueOptions || [] as option}
+								<option value={option}>{option}</option>
+							{/each}
+						</select>
+					</div>
+				</section>
+			{/if}
 		</form>
 	</div>
 </div>
