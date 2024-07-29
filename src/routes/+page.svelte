@@ -83,7 +83,7 @@
 </script>
 
 <div
-	class=" h-full px-0 mx-auto flex flex-col justify-center items-center container w-full max-w-5xl pixel-corners-border--lg bg-[#F4D497]"
+	class="h-full px-0 mx-auto flex flex-col justify-center items-center mt-10 container w-full max-w-5xl pixel-corners-border--lg bg-[#F4D497]"
 >
 	<div class="border-b-[6px] w-full py-4 bg-amber-200/50 border-[#7a482a]">
 		<h1 class="h1 text-5xl text-center capitalize">Stardew Combat calculator</h1>
@@ -107,22 +107,18 @@
 							<GemPicker bind:gem={selectedGems[2]} bind:focusedGem={focusedGems[2]} />
 						</div>
 					</section>
-					<div />
 					<section class="flex items-center justify-between w-full gap-10">
 						<h3 class="text-3xl">Skills</h3>
 
 						<SkillPicker bind:lvl5SkillKey bind:lvl10SkillKey />
 					</section>
-					<div />
+
 					{#if canBeEnchanted}
 						<section class="flex items-center justify-between w-full gap-5">
 							<h3 class="text-3xl inline">Innate Enchantment</h3>
 							<EnchantmentPicker bind:enchantment bind:focusedEnchantment />
 						</section>
-					{:else}
-						<div />
 					{/if}
-					<div />
 					<section class=" flex justify-between w-full items-center gap-10">
 						<h3 class="text-3xl">Rings</h3>
 						<fieldset class=" flex gap-3">

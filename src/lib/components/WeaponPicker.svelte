@@ -43,35 +43,29 @@
 	<DropdownMenu.Trigger asChild let:builder>
 		<Button
 			builders={[builder]}
-			class=" pixel-corners w-full h-fit px-10 gap-3 rounded-sm bg-amber-50    p-6 flex items-center justify-center "
+			class=" pixel-corners w-full text-2xl h-fit px-10 gap-5 rounded-sm bg-amber-50    p-6 flex items-center "
 			variant="outline"
 		>
 			{#if weapon}
-				<div class="flex w-full flex-col">
-					<div class="text-4xl flex flex-col gap-5 text-center">
-						<div class="text-left gap-5 text-2xl flex">
-							<div class="shrink-0 relative size-20 flex justify-center items-center">
-								<img
-									src={shownWeapon.icon}
-									alt={shownWeapon.name}
-									class=" size-15 object-cover content-center"
-								/>
-								<span class="absolute top-0 left-0 opacity-70">{shownWeapon.level}</span>
-							</div>
-							<div>
-								{shownWeapon.name}
-								<div class="grid w-full text-amber-950/40 grid-cols-[1fr_auto] gap-x-5">
-									<div>Dmg:</div>
-									<div class="text-end">
-										{shownWeapon.damage[0]}-{shownWeapon.damage[1]}
-									</div>
+				<div class="shrink-0 relative size-20 flex justify-center items-center">
+					<img
+						src={shownWeapon.icon}
+						alt={shownWeapon.name}
+						class=" size-16 object-cover content-center"
+					/>
+					<span class="absolute top-0 left-0 opacity-70">{shownWeapon.level}</span>
+				</div>
+				<div class="w-full text-left">
+					{shownWeapon.name}
+					<div class="grid w-full text-amber-950/40 grid-cols-[1fr_auto] gap-x-5">
+						<div>Dmg:</div>
+						<div class="text-end">
+							{shownWeapon.damage[0]}-{shownWeapon.damage[1]}
+						</div>
 
-									<div>Base crit chance:</div>
-									<div class="text-end">
-										{shownWeapon.critStrikeChance * 100}%
-									</div>
-								</div>
-							</div>
+						<div>Base crit chance:</div>
+						<div class="text-end">
+							{shownWeapon.critStrikeChance * 100}%
 						</div>
 					</div>
 				</div>
@@ -103,7 +97,7 @@
 							>
 								<div class="relative">
 									<img src={_weapon.icon} alt={_weapon.name} class=" size-10" />
-									<span class="absolute -top-1 -left-1 leading-3 text-sm opacity-30"
+									<span class="absolute -bottom-1 -right-1 leading-3 text-sm opacity-30"
 										>{_weapon.level}</span
 									>
 								</div>
