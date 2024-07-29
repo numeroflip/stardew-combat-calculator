@@ -11,7 +11,7 @@ import type { Weapon } from '../model/weapon';
 type Options = {
 	gems?: GemName[];
 	rings?: Ring[];
-	blessingOfFangs?: boolean;
+	hasBlessingOfFangs?: boolean;
 	profession?: CombatProfession;
 	enchantment?: SelectedEnchantment;
 	luck?: number;
@@ -25,7 +25,7 @@ export function getCritChance(
 		luck = 0,
 		profession = undefined,
 		enchantment = undefined,
-		blessingOfFangs = false
+		hasBlessingOfFangs: blessingOfFangs = false
 	}: Options = {}
 ) {
 	let critChance = weapon.critStrikeChance;
@@ -74,9 +74,9 @@ function getEnchantmentCritChance(enchantment?: SelectedEnchantment) {
 		return 0;
 	}
 
-	if (enchantment.name === 'critChance') {
-		const foundEnchantment = innateEnchantment.guaranteed[enchantment.name].options.find(
-			(option) => option.name === enchantment.value
+	if (enchantment.key === 'critChance') {
+		const foundEnchantment = innateEnchantment.guaranteed[enchantment.key].options.find(
+			(option) => option.name === enchantment.optionName
 		);
 		return foundEnchantment?.value ?? 0;
 	}

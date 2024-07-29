@@ -1,4 +1,4 @@
-import type { Stats } from './weapon';
+import type { Stats } from './stat';
 
 export type Gem = {
 	name: GemName;

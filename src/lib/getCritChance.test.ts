@@ -53,7 +53,7 @@ test('galaxySword + 1 ring + 3 aquamarine + best enchantment', () => {
 		getCritChance(galaxySword, {
 			rings: [rings.aquamarine, rings.aquamarine],
 			gems: ['aquamarine', 'aquamarine', 'aquamarine'],
-			enchantment: { name: 'critChance', value: 3 }
+			enchantment: { key: 'critChance', optionName: 3 }
 		})
 	).toBe(0.19908);
 });
@@ -71,7 +71,7 @@ test('galaxySword + 2 ring + 3 aquamarine + blessing of Fangs', () => {
 	const chance = getCritChance(galaxySword, {
 		rings: [rings.aquamarine, rings.aquamarine],
 		gems: ['aquamarine', 'aquamarine', 'aquamarine'],
-		blessingOfFangs: true
+		hasBlessingOfFangs: true
 	});
 	expect(round(chance)).toBe(0.2896);
 });
@@ -80,7 +80,7 @@ test('galaxySword + 2 ring + 3 aquamarine + blessing of Fangs + Scout', () => {
 	const chance = getCritChance(galaxySword, {
 		rings: [rings.aquamarine, rings.aquamarine],
 		gems: ['aquamarine', 'aquamarine', 'aquamarine'],
-		blessingOfFangs: true,
+		hasBlessingOfFangs: true,
 		profession: { line: 'scout' }
 	});
 	expect(round(chance)).toBe(0.4344);
@@ -90,7 +90,7 @@ test('galaxySword + 2 ring + 3 aquamarine + blessing of Fangs + Scout + Luck', (
 	const chance = getCritChance(galaxySword, {
 		rings: [rings.aquamarine, rings.aquamarine],
 		gems: ['aquamarine', 'aquamarine', 'aquamarine'],
-		blessingOfFangs: true,
+		hasBlessingOfFangs: true,
 		profession: { line: 'scout' },
 		luck: 2
 	});

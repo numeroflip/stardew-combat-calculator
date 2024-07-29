@@ -1,5 +1,6 @@
+import { keysOf } from '$lib/objectUtils';
 import type { GemName } from './gem';
-import type { Stats } from './weapon';
+import { getStatDescription, type Stats } from './stat';
 
 export const gem: Record<GemName, { stats: [Stats, Stats, Stats] }> = {
 	emerald: {
@@ -57,6 +58,23 @@ export const gem: Record<GemName, { stats: [Stats, Stats, Stats] }> = {
 		]
 	}
 };
+
+export function getGemDescription(gemName: GemName, level: 1 | 2 | 3): string[] {
+	const stats = gem[gemName].stats;
+	const stat = stats[level - 1];
+
+	const statStrings = keysOf(stat)
+		.map((statKey) => {
+			const effectValue = stat[statKey];
+
+			if (effectValue) {
+				return getStatDescription(statKey, effectValue);
+			}
+		})
+		.filter(Boolean);
+
+	return statStrings;
+}
 
 export const gemIcon: Record<GemName | 'diamond', string> = {
 	diamond: 'https://stardewvalleywiki.com/mediawiki/images/e/ea/Diamond.png',

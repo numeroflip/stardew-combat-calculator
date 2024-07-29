@@ -1,4 +1,6 @@
+import { keysOf } from '$lib/objectUtils';
 import type { Ring } from './ring';
+import { getStatDescription } from './stat';
 
 export const ringNames = [
 	'iridiumBand',
@@ -11,7 +13,7 @@ export const ringNames = [
 	'crabshell'
 ] as const;
 
-type RingName = (typeof ringNames)[number];
+export type RingName = (typeof ringNames)[number];
 
 export const rings: Record<RingName, Ring> = {
 	iridiumBand: {
@@ -55,3 +57,18 @@ export const rings: Record<RingName, Ring> = {
 		icon: 'https://stardewvalleywiki.com/mediawiki/images/e/eb/Crabshell_Ring.png'
 	}
 };
+
+export function getRingDescription(ringName: RingName): string[] {
+	const effects = rings[ringName].effect;
+
+	const effectStrings = keysOf(effects)
+		.map((effectKey) => {
+			const effect = effects[effectKey];
+			if (effect) {
+				return getStatDescription(effectKey, effect);
+			}
+		})
+		.filter(Boolean);
+
+	return effectStrings;
+}

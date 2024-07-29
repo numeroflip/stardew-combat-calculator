@@ -2,21 +2,14 @@
 	import { Button } from '$lib/components/ui/button/index.js';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
 	import { innateEnchantment } from '$model/enchantment';
+	import { keysOf } from '$lib/objectUtils';
 
-	
-    let strValue: string
-    type EnchantmentKey = keyof typeof innateEnchantment.guaranteed
+	let strValue: string;
+	type EnchantmentKey = keyof typeof innateEnchantment.guaranteed;
 
-    export let enchantmentKey: string | undefined
-    export let enchantmentOptionName: number | undefined
-
-
-    $: [enchantmentKey, enchantmentOptionName] = strValue ? [strValue.split('__')[0], Number(strValue.split('__')[1]) ] : []
-
-   
-
-    $:enchantmentType =enchantmentKey ? innateEnchantment.guaranteed[enchantmentKey as EnchantmentKey] : undefined
-
+	export let enchantment: { key: EnchantmentKey; optionName: number } | undefined;
+	export let focusedEnchantment: { key: EnchantmentKey; optionName: number } | undefined =
+		undefined;
 </script>
 
 <DropdownMenu.Root>
@@ -26,19 +19,14 @@
 			class=" pixel-corners p-4 py-7 rounded-sm bg-amber-50  text-2xl  grid place-content-center"
 			variant="outline"
 		>
-        {#if enchantmentType && enchantmentOptionName}
-        <div>
-
-            {enchantmentType.name} <span class="font-mono">+</span>{enchantmentOptionName} 
-
-        </div>
-        {:else}
-        <div class="opacity-50 ">
-
-            Pick an Enchantment
-        </div>
-
-        {/if}
+			{#if enchantment}
+				<div>
+					{innateEnchantment.guaranteed[enchantment.key].name}
+					<span class="font-mono">+</span>{enchantment.optionName}
+				</div>
+			{:else}
+				<div class="opacity-50">Pick an Enchantment</div>
+			{/if}
 		</Button>
 	</DropdownMenu.Trigger>
 
@@ -46,27 +34,35 @@
 		sideOffset={10}
 		class="w-fit bg-white/50 backdrop-blur-md pixel-border   min-w-0"
 	>
-		<DropdownMenu.RadioGroup bind:value={strValue}>
-			<DropdownMenu.RadioItem indicator={false} value="" class="mr-0 cursor-pointer p-2 pl-2">
+		<DropdownMenu.Group>
+			<DropdownMenu.Item class="mr-0 cursor-pointer p-2 pl-2">
 				<div class="size-10 grid text-center w-full place-content-center text-xl">🚫</div>
-			</DropdownMenu.RadioItem>
-			{#each Object.entries(innateEnchantment.guaranteed) as [enchantmentKey, enchantment]}
-            <DropdownMenu.Separator />
-				<DropdownMenu.Label class="text-xl text-amber-900">{enchantment.name}</DropdownMenu.Label>
-                <div class="flex gap-2">
-
-                    {#each enchantment.options as option}
-                    
-					<DropdownMenu.RadioItem
-						indicator={false}
-						value={String(`${enchantmentKey}__${option.name}`)}
-						class="mr-0 min-w-10 text-xl cursor-pointer p-2 pl-2"
-                        >
-                        <span class="font-mono">+</span>{option.name}
-					</DropdownMenu.RadioItem>
-                    {/each}
-                </div>
+			</DropdownMenu.Item>
+			{#each keysOf(innateEnchantment.guaranteed) as enchantmentKey}
+				{@const _enchantment = innateEnchantment.guaranteed[enchantmentKey]}
+				<DropdownMenu.Separator />
+				<DropdownMenu.Label class="text-xl text-amber-900">{_enchantment.name}</DropdownMenu.Label>
+				<div class="flex gap-2">
+					{#each _enchantment.options as option}
+						<DropdownMenu.Item
+							on:focusin={() =>
+								(focusedEnchantment = {
+									key: enchantmentKey,
+									optionName: option.name
+								})}
+							on:focusout={() => (focusedEnchantment = undefined)}
+							on:click={() =>
+								(enchantment = {
+									key: enchantmentKey,
+									optionName: option.name
+								})}
+							class="mr-0 min-w-10 text-xl cursor-pointer p-2 pl-2"
+						>
+							<span class="font-mono">+</span>{option.name}
+						</DropdownMenu.Item>
+					{/each}
+				</div>
 			{/each}
-		</DropdownMenu.RadioGroup>
+		</DropdownMenu.Group>
 	</DropdownMenu.Content>
 </DropdownMenu.Root>

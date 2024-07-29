@@ -17,8 +17,9 @@
       font-style: normal;
     font-weight: 400;
     font-display: swap;
-      src: url(/fonts/Stardew_Valley.otf) format("otf"), 
-      url(/fonts/Stardew_Valley.ttf) ;
+      src: url(/fonts/Stardew_Valley.otf) , 
+    ;
+
 
     }
     
@@ -400,17 +401,11 @@
   position: relative;
 }
 .pixel-border {
-  outline-offset: -8px!important;
-  border-radius: 10px;
-  outline-width: 3px!important;
+
   border: 3px solid transparent;
 }
 
-.pixel-border:focus-visible {
-  
-  outline: 3px solid currentColor!important;
 
-}
 
 .pixel-border--wrapper {
   width: fit-content;

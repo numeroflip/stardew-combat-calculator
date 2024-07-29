@@ -8,7 +8,7 @@ type Options = {
 	gems?: GemName[];
 	rings?: Ring[];
 	profession?: CombatProfession;
-	enchantment?: { name: GuaranteedInnateEnchantment; value: number };
+	enchantment?: { key: GuaranteedInnateEnchantment; optionName: number };
 };
 
 export function getCritMultiplier(
@@ -33,9 +33,9 @@ export function getCritMultiplier(
 	});
 
 	// Enchantment
-	if (enchantment?.name === 'critPower') {
-		const foundEnchantment = innateEnchantment.guaranteed[enchantment.name].options.find(
-			(option) => option.name === enchantment.value
+	if (enchantment?.key === 'critPower') {
+		const foundEnchantment = innateEnchantment.guaranteed[enchantment.key].options.find(
+			(option) => option.name === enchantment.optionName
 		);
 
 		if (foundEnchantment) {

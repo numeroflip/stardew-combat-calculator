@@ -41,7 +41,7 @@ export const innateEnchantment = {
 	}
 } as const;
 
-export type SelectedEnchantment = { name: GuaranteedInnateEnchantment; value: number };
+export type SelectedEnchantment = { key: GuaranteedInnateEnchantment; optionName: number };
 
 function nameAndValue(name: number, value: number) {
 	return { name, value };

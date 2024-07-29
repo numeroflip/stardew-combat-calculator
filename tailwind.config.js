@@ -15,8 +15,7 @@ const config = {
 		},
 		extend: {
 			fontFamily: {
-				sans: ['Bobsled', ...defaultTheme.fontFamily.sans],
-				serif: ['Bobsled', ...defaultTheme.fontFamily.serif]
+				stardew: ['Bobsled', ...defaultTheme.fontFamily.sans]
 			},
 
 			colors: {
