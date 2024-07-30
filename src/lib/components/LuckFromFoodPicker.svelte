@@ -21,7 +21,7 @@
 	<DropdownMenu.Trigger asChild let:builder>
 		<Button
 			builders={[builder]}
-			class="size-14 pixel-corners text-3xl rounded-sm bg-amber-50  p-0 grid place-content-center"
+			class="size-[72px] pixel-corners p-4 pixel-corners   cursor-pointer text-3xl rounded-sm bg-amber-50 grid place-content-center"
 			variant="outline"
 		>
 			{shownLuck}

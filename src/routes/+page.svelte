@@ -13,6 +13,7 @@
 	import CalculationResults from '$lib/components/CalculationResults.svelte';
 	import type { GuaranteedInnateEnchantment } from '$model/enchantment';
 	import LuckFromFoodPicker from '$lib/components/LuckFromFoodPicker.svelte';
+	import Switch from '$lib/components/ui/switch/switch.svelte';
 
 	let weapon = weapons[0];
 	let focusedWeapon: Weapon | undefined;
@@ -80,7 +81,7 @@
 </script>
 
 <div
-	class="h-full px-0 mx-auto flex flex-col justify-center items-center mt-10 container w-full max-w-5xl pixel-corners-border--lg bg-[#F4D497]"
+	class="h-full px-0 mx-auto flex flex-col justify-center items-center my-10 container w-full max-w-5xl pixel-corners-border--lg bg-[#F4D497]"
 >
 	<div class="border-b-[6px] w-full py-4 bg-amber-200/50 border-[#7a482a]">
 		<h1 class="h1 text-5xl text-center capitalize">Stardew Combat calculator</h1>
@@ -129,17 +130,36 @@
 
 						<SkillPicker bind:skills />
 					</section>
+					<section class="flex flex-col gap-5 mt-10">
+						<!-- <h3 class="text-3xl">Extra</h3> -->
+						<div class="grid grid-cols-2">
+							<section class="flex flex-col gap-5 items-center">
+								<h3 class="text-2xl">Luck (from food)</h3>
 
-					<section class="flex items-center flex-wrap justify-between w-full gap-10">
-						<h3 class="text-3xl">Luck (from food)</h3>
-
-						<LuckFromFoodPicker bind:luck={luckFromFood} />
-					</section>
-
-					<section class="flex items-center flex-wrap justify-between w-full gap-10">
-						<h3 class="text-3xl">Blessing of Fangs</h3>
-
-						<input type="checkbox" bind:checked={hasBlessingOfFangs} />
+								<LuckFromFoodPicker bind:luck={luckFromFood} />
+							</section>
+							<section class="flex flex-col gap-5 items-center">
+								<label for="blessing-of-fangs"><h3 class="text-2xl">Blessing of Fangs</h3></label>
+								<label
+									for="blessing-of-fangs"
+									class={`bg-amber-50 p-4 pixel-corners  block cursor-pointer `}
+								>
+									<div class={hasBlessingOfFangs ? '' : 'opacity-30 grayscale'}>
+										<img
+											src="https://stardewvalleywiki.com/mediawiki/images/a/af/Blessing_Of_Fangs.png"
+											alt="blessing of fangs"
+											class="size-10 object-cover"
+										/>
+									</div>
+								</label>
+								<input
+									type="checkbox"
+									bind:checked={hasBlessingOfFangs}
+									class="sr-only"
+									id="blessing-of-fangs"
+								/>
+							</section>
+						</div>
 					</section>
 				</div>
 				<section class="flex flex-col w-full gap-3">
