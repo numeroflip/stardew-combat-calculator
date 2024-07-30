@@ -28,14 +28,15 @@
 	</DropdownMenu.Trigger>
 
 	<DropdownMenu.Content
-		class="w-fit text-3xl   rounded-none bg-white/50 backdrop-blur-md pixel-border min-w-0"
+		fitViewport
+		class="w-fit text-3xl    rounded-none bg-white/50 backdrop-blur-md pixel-border min-w-0"
 	>
-		<div class="max-h-[60vh] overflow-y-auto overflow-x-hidden">
+		<div class=" max-h-[inherit] cursor-pointer overflow-y-auto overflow-x-hidden">
 			<DropdownMenu.RadioGroup bind:value>
 				<DropdownMenu.RadioItem
 					indicator={false}
 					value=""
-					class="mr-0 cursor-pointer  flex gap-1 rounded-none text-xl  p-2 pl-2"
+					class="mr-0   flex gap-1 rounded-none text-xl  p-2 pl-2"
 				>
 					<img
 						src={rings.topaz.icon}

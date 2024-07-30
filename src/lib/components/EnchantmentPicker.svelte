@@ -25,7 +25,7 @@
 					<span class="font-mono">+</span>{enchantment.optionName}
 				</div>
 			{:else}
-				<div class="opacity-50">Pick an Enchantment</div>
+				<div class="opacity-50">No Enchantment</div>
 			{/if}
 		</Button>
 	</DropdownMenu.Trigger>

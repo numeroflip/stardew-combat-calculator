@@ -2,15 +2,8 @@
 	import { weapons } from '../model/weapon.data';
 	import { rings } from '../model/ring.data';
 	import type { GemName } from '../model/gem';
-	import {
-		type CombatProfession,
-		type ScoutSpecialization,
-		type FighterSpecialization
-	} from '../model/profession';
-	import { getCritMultiplier } from '$lib/getCritMultiplier';
-	import { getCritChance } from '$lib/getCritChance';
-	import { formatNumber } from '$lib/formatNumber';
-	import { getDamageValues } from '$lib/getDamageValues';
+	import { type SelectedProfession } from '../model/profession';
+
 	import GemPicker from '$lib/components/GemPicker.svelte';
 	import type { Weapon } from '$model/weapon';
 	import RingPairPicker from '$lib/components/RingPairPicker.svelte';
@@ -19,6 +12,7 @@
 	import SkillPicker from '$lib/components/SkillPicker.svelte';
 	import CalculationResults from '$lib/components/CalculationResults.svelte';
 	import type { GuaranteedInnateEnchantment } from '$model/enchantment';
+	import LuckFromFoodPicker from '$lib/components/LuckFromFoodPicker.svelte';
 
 	let weapon = weapons[0];
 	let focusedWeapon: Weapon | undefined;
@@ -63,8 +57,7 @@
 	let focusedEnchantment: { key: GuaranteedInnateEnchantment; optionName: number } | undefined;
 	$: shownEnchantment = focusedEnchantment || enchantment;
 
-	let lvl5SkillKey: CombatProfession['line'];
-	let lvl10SkillKey: FighterSpecialization | ScoutSpecialization | undefined;
+	let skills: SelectedProfession = {};
 
 	$: canBeEnchanted =
 		weapon.level < 15 && !weapon.name.includes('Galaxy') && !weapon.name.includes('Infinity');
@@ -74,12 +67,16 @@
 		right: focusedRings.right.map((ringKey, index) => ringKey || selectedRings.right[index])
 	};
 
+	let luckFromFood: 0 | 1 | 2 | 3 | 4 | 5 | 6 = 0;
+
 	$: shownRingsFlat = Object.values(shownRings)
 		.flat()
 		.filter(Boolean)
 		.map((ringKey) => rings[ringKey as RingKey]);
 
 	$: shownWeapon = focusedWeapon || weapon;
+
+	let hasBlessingOfFangs = false;
 </script>
 
 <div
@@ -91,15 +88,15 @@
 	<div class="space-y-5 w-full pt-5">
 		<form class="flex w-full flex-col gap-10">
 			<!-- WEAPON -->
-			<div class="grid grid-cols-2 gap-10 py-10 px-10">
+			<div class="grid md:grid-cols-2 gap-10 py-10 px-10">
 				<div class="flex flex-col gap-7">
-					<section class="flex flex-col w-full gap-3">
+					<section class="flex flex-wrap flex-col w-full gap-3">
 						<h3 class="text-3xl">Weapon</h3>
 						<div class="flex gap-4 w-full">
 							<WeaponPicker bind:weapon bind:focusedWeapon />
 						</div>
 					</section>
-					<section class="flex items-center justify-between w-full gap-10">
+					<section class="flex flex-wrap items-center justify-between w-full gap-10">
 						<h3 class="text-3xl">Gems</h3>
 						<div class="flex gap-4">
 							<GemPicker bind:gem={selectedGems[0]} bind:focusedGem={focusedGems[0]} />
@@ -107,19 +104,14 @@
 							<GemPicker bind:gem={selectedGems[2]} bind:focusedGem={focusedGems[2]} />
 						</div>
 					</section>
-					<section class="flex items-center justify-between w-full gap-10">
-						<h3 class="text-3xl">Skills</h3>
-
-						<SkillPicker bind:lvl5SkillKey bind:lvl10SkillKey />
-					</section>
 
 					{#if canBeEnchanted}
-						<section class="flex items-center justify-between w-full gap-5">
+						<section class="flex items-center flex-wrap justify-between w-full gap-5">
 							<h3 class="text-3xl inline">Innate Enchantment</h3>
 							<EnchantmentPicker bind:enchantment bind:focusedEnchantment />
 						</section>
 					{/if}
-					<section class=" flex justify-between w-full items-center gap-10">
+					<section class=" flex justify-between flex-wrap w-full items-center gap-10">
 						<h3 class="text-3xl">Rings</h3>
 						<fieldset class=" flex gap-3">
 							<RingPairPicker
@@ -132,6 +124,23 @@
 							/>
 						</fieldset>
 					</section>
+					<section class="flex items-center flex-wrap justify-between w-full gap-10">
+						<h3 class="text-3xl">Skills</h3>
+
+						<SkillPicker bind:skills />
+					</section>
+
+					<section class="flex items-center flex-wrap justify-between w-full gap-10">
+						<h3 class="text-3xl">Luck (from food)</h3>
+
+						<LuckFromFoodPicker bind:luck={luckFromFood} />
+					</section>
+
+					<section class="flex items-center flex-wrap justify-between w-full gap-10">
+						<h3 class="text-3xl">Blessing of Fangs</h3>
+
+						<input type="checkbox" bind:checked={hasBlessingOfFangs} />
+					</section>
 				</div>
 				<section class="flex flex-col w-full gap-3">
 					<h3 class="text-3xl">Results</h3>
@@ -140,11 +149,9 @@
 						enchantment={canBeEnchanted ? shownEnchantment : undefined}
 						gems={shownGems.filter(Boolean)}
 						rings={shownRingsFlat}
-						skills={lvl5SkillKey && lvl10SkillKey
-							? { lvl5: lvl5SkillKey, lvl10: lvl10SkillKey }
-							: undefined}
-						hasBlessingOfFangs={false}
-						luck={0}
+						skills={skills || undefined}
+						{hasBlessingOfFangs}
+						luck={luckFromFood}
 					/>
 				</section>
 

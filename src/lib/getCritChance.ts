@@ -4,7 +4,7 @@
 
 import { innateEnchantment, type SelectedEnchantment } from '../model/enchantment';
 import type { GemName } from '../model/gem';
-import type { CombatProfession } from '../model/profession';
+import type { SelectedProfession } from '../model/profession';
 import type { Ring } from '../model/ring';
 import type { Weapon } from '../model/weapon';
 
@@ -12,7 +12,7 @@ type Options = {
 	gems?: GemName[];
 	rings?: Ring[];
 	hasBlessingOfFangs?: boolean;
-	profession?: CombatProfession;
+	profession?: SelectedProfession;
 	enchantment?: SelectedEnchantment;
 	luck?: number;
 };
@@ -60,7 +60,7 @@ export function getCritChance(
 	}
 
 	// Professions
-	if (profession?.line === 'scout') {
+	if (profession?.lvl5 === 'scout') {
 		critChance = critChance * 1.5;
 	}
 

@@ -3,7 +3,7 @@ import type { GemName } from '../model/gem';
 import {
 	BRUTE_DMG_MULTIPLIER,
 	FIGHTER_DMG_MULTIPLIER,
-	type CombatProfession
+	type SelectedProfession
 } from '../model/profession';
 import type { Ring } from '../model/ring';
 import type { Weapon } from '../model/weapon';
@@ -13,7 +13,7 @@ type Options = {
 	gems?: GemName[];
 	rings?: Ring[];
 	enchantment?: SelectedEnchantment;
-	profession?: CombatProfession;
+	profession?: SelectedProfession;
 };
 
 export function getDamageValues(
@@ -39,11 +39,11 @@ export function getDamageValues(
 	});
 
 	// Profession
-	if (profession?.line === 'fighter') {
+	if (profession?.lvl5 === 'fighter') {
 		multiplier += FIGHTER_DMG_MULTIPLIER;
 	}
 
-	if (profession?.specialization === 'brute') {
+	if (profession?.lvl10 === 'brute') {
 		multiplier += BRUTE_DMG_MULTIPLIER;
 	}
 

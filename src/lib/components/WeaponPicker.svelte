@@ -75,6 +75,7 @@
 
 	<DropdownMenu.Content
 		sideOffset={10}
+		fitViewport
 		class="w-fit relative min-w-80 bg-white/50 backdrop-blur-md pixel-border      "
 	>
 		<Tabs.Root bind:value={activeTab}>

@@ -1,13 +1,13 @@
 import { innateEnchantment, type GuaranteedInnateEnchantment } from '../model/enchantment';
 import type { GemName } from '../model/gem';
-import type { CombatProfession } from '../model/profession';
+import type { SelectedProfession } from '../model/profession';
 import type { Ring } from '../model/ring';
 import type { Weapon } from '../model/weapon';
 
 type Options = {
 	gems?: GemName[];
 	rings?: Ring[];
-	profession?: CombatProfession;
+	profession?: SelectedProfession;
 	enchantment?: { key: GuaranteedInnateEnchantment; optionName: number };
 };
 
@@ -46,7 +46,7 @@ export function getCritMultiplier(
 	}
 
 	// Profession
-	if (profession?.specialization === 'desperado') {
+	if (profession?.lvl10 === 'desperado') {
 		multiplier *= 2;
 	}
 
