@@ -35,7 +35,12 @@
 		class="w-fit bg-white/50 backdrop-blur-md pixel-border   min-w-0"
 	>
 		<DropdownMenu.Group>
-			<DropdownMenu.Item class="mr-0 cursor-pointer p-2 pl-2">
+			<DropdownMenu.Item
+				on:focusin={() => (focusedEnchantment = undefined)}
+				on:focusout={() => (focusedEnchantment = undefined)}
+				on:click={() => (enchantment = undefined)}
+				class="mr-0 cursor-pointer p-2 pl-2"
+			>
 				<div class="size-10 grid text-center w-full place-content-center text-xl">🚫</div>
 			</DropdownMenu.Item>
 			{#each keysOf(innateEnchantment.guaranteed) as enchantmentKey}
