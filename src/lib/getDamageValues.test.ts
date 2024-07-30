@@ -15,9 +15,9 @@ test('base damage is correct', () => {
 });
 
 test('profession perks are applied correctly', () => {
-	expect(
-		getDamageValues(galaxySword, { profession: { line: 'fighter', specialization: 'brute' } })[0]
-	).toBe(60 * (1 + (FIGHTER_DMG_MULTIPLIER + BRUTE_DMG_MULTIPLIER)));
+	expect(getDamageValues(galaxySword, { profession: { lvl5: 'fighter', lvl10: 'brute' } })[0]).toBe(
+		60 * (1 + (FIGHTER_DMG_MULTIPLIER + BRUTE_DMG_MULTIPLIER))
+	);
 });
 
 test('ring perks are applied correctly', () => {
@@ -37,7 +37,7 @@ test('ring perks are applied correctly', () => {
 	const attackEnchValue = 3;
 	expect(
 		getDamageValues(galaxySword, {
-			enchantment: { name: 'attack', value: attackEnchValue }
+			enchantment: { key: 'attack', optionName: attackEnchValue }
 		})[0]
 	).toBe(60 + attackEnchValue * 3);
 });

@@ -43,7 +43,7 @@ test("Lava Katana's  + 3 gem + 2 ring + enchantment + desperado", () => {
 		getCritMultiplier(lavaKatana, {
 			gems: ['jade', 'jade', 'jade'],
 			rings: [rings.jade, rings.jade],
-			profession: { line: 'scout', specialization: 'desperado' },
+			profession: { lvl5: 'scout', lvl10: 'desperado' },
 			enchantment: { key: 'critPower', optionName: 75 }
 		})
 	).toBe(20.52);

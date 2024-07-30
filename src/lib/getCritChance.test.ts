@@ -81,7 +81,7 @@ test('galaxySword + 2 ring + 3 aquamarine + blessing of Fangs + Scout', () => {
 		rings: [rings.aquamarine, rings.aquamarine],
 		gems: ['aquamarine', 'aquamarine', 'aquamarine'],
 		hasBlessingOfFangs: true,
-		profession: { line: 'scout' }
+		profession: { lvl5: 'scout' }
 	});
 	expect(round(chance)).toBe(0.4344);
 });
@@ -91,7 +91,7 @@ test('galaxySword + 2 ring + 3 aquamarine + blessing of Fangs + Scout + Luck', (
 		rings: [rings.aquamarine, rings.aquamarine],
 		gems: ['aquamarine', 'aquamarine', 'aquamarine'],
 		hasBlessingOfFangs: true,
-		profession: { line: 'scout' },
+		profession: { lvl5: 'scout' },
 		luck: 2
 	});
 	expect(round(chance)).toBe(0.4344 + 0.0217);
