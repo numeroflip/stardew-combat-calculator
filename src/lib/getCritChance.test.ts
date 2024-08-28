@@ -53,7 +53,7 @@ test('galaxySword + 1 ring + 3 aquamarine + best enchantment', () => {
 		getCritChance(galaxySword, {
 			rings: [rings.aquamarine, rings.aquamarine],
 			gems: ['aquamarine', 'aquamarine', 'aquamarine'],
-			enchantment: { key: 'critChance', optionName: 3 }
+			enchantment: { key: 'critChance', optionName: '3' }
 		})
 	).toBe(0.19908);
 });

@@ -3,112 +3,231 @@
 	import { getCritChance } from '$lib/getCritChance';
 	import { getCritMultiplier } from '$lib/getCritMultiplier';
 	import { getDamageValues } from '$lib/getDamageValues';
-	import type { SelectedEnchantment } from '$model/enchantment';
-	import type { GemName } from '$model/gem';
-	import type { SelectedProfession } from '$model/profession';
-	import type { Ring } from '$model/ring';
-	import type { Weapon } from '$model/weapon';
+	import { rings as ringData } from '$model/ring.data';
+	import clsx from 'clsx';
+	import Progress from './ui/progress/progress.svelte';
+	import {
+		weaponNameStore,
+		enchantmentStore,
+		gemsStore,
+		skillsStore,
+		ringStore,
+		luckStore,
+		hasBlessingOfFangsStore
+	} from '$lib/store/calculatorOptions';
+	import { weapons } from '$model/weapon.data';
+	import { skillSchema, type CalculatorOptions } from '$model/calculatorOptions';
 
-	type $$Props = {
-		weapon: Weapon;
-		enchantment?: SelectedEnchantment;
-		skills?: SelectedProfession;
-		gems?: GemName[];
-		rings?: Ring[];
-		luck?: number;
-		hasBlessingOfFangs?: boolean;
+	$: activeWeaponName = $weaponNameStore.dirty || $weaponNameStore.selected;
+	$: weapon = weapons.find((w) => w.name === activeWeaponName) || weapons[0];
+	$: enchantment = $enchantmentStore.dirty || $enchantmentStore.selected;
+	$: gems = [
+		$gemsStore.dirty[0] || $gemsStore.selected[0],
+		$gemsStore.dirty[1] || $gemsStore.selected[1],
+		$gemsStore.dirty[2] || $gemsStore.selected[2]
+	];
+	$: skills = skillSchema.safeParse({
+		lvl5: $skillsStore.dirty.lvl5 || $skillsStore.selected.lvl5,
+		lvl10: $skillsStore.dirty.lvl10 || $skillsStore.selected.lvl10
+	})?.data;
+	$: rings = {
+		left: [
+			$ringStore.dirty.left[0] || $ringStore.selected.left[0],
+			$ringStore.dirty.left[1] || $ringStore.selected.left[1]
+		],
+		right: [
+			$ringStore.dirty.right[0] || $ringStore.selected.right[0],
+			$ringStore.dirty.right[1] || $ringStore.selected.right[1]
+		]
+	};
+	$: luck = $luckStore.dirty ?? $luckStore.selected;
+	$: hasBlessingOfFangs = $hasBlessingOfFangsStore.dirty || $hasBlessingOfFangsStore.selected;
+
+	type Results = {
+		critDmg: { min: number; max: number };
+		critMultiplier: number;
+		critChance: number;
+		normalAvg: number;
+		avgWithCrits: number;
+		dmg: { min: number; max: number };
 	};
 
-	export let weapon: $$Props['weapon'];
-	export let enchantment: $$Props['enchantment'] = undefined;
-	export let skills: $$Props['skills'] = undefined;
-	export let gems: $$Props['gems'] = undefined;
-	export let rings: $$Props['rings'] = undefined;
-	export let luck: $$Props['luck'] = 0;
-	export let hasBlessingOfFangs: $$Props['hasBlessingOfFangs'] = false;
+	function getResults(args: CalculatorOptions): Results {
+		const rings = [...(args.rings?.left || []), ...(args.rings?.right || [])]
+			?.filter(Boolean)
+			.map((ring) => ringData[ring]);
+		const skills = args.skills;
+		const gems = args.gems?.filter(Boolean) || [];
+		const enchantment = args.enchantment;
 
-	$: critMultiplier = formatNumber(
-		getCritMultiplier(weapon, {
-			gems: gems,
-			enchantment: enchantment,
-			profession: skills,
-			rings: rings
-		})
-	);
-
-	$: critChance = formatNumber(
-		getCritChance(weapon, {
-			gems,
+		const [min, max] = getDamageValues(weapon, {
 			enchantment,
+			gems,
 			profession: skills,
-			rings: rings,
-			luck: luck,
+			rings
+		});
+		const critMultiplier = formatNumber(
+			getCritMultiplier(weapon, {
+				gems,
+				enchantment,
+				profession: args.skills,
+				rings
+			})
+		);
+		const [critMin, critMax] = [
+			formatNumber(min * critMultiplier),
+			formatNumber(max * critMultiplier)
+		];
+		const critAvg = formatNumber((critMin + critMax) / 2);
+		const critChance = formatNumber(
+			getCritChance(weapon, {
+				gems,
+				enchantment,
+				profession: skills,
+				rings: rings,
+				luck: luck,
+				hasBlessingOfFangs
+			})
+		);
+		const normalAvg = formatNumber((min + max) / 2);
+		const avgWithCrits = formatNumber(critAvg * critChance + normalAvg * (1 - critChance));
+
+		return {
+			dmg: { min, max },
+			critDmg: { min: critMin, max: critMax },
+			critMultiplier,
+			critChance,
+			normalAvg,
+			avgWithCrits
+		};
+	}
+
+	let previousResults: Results;
+	let results: Results;
+
+	$: {
+		if (results) {
+			previousResults = results;
+		}
+		results = getResults({
+			weapon: weapon.name,
+			enchantment,
+			skills,
+			gems,
+			rings,
+			luck,
 			hasBlessingOfFangs
-		})
-	);
+		});
+	}
 
-	$: [min, max] = getDamageValues(weapon, {
-		enchantment: enchantment,
-		gems: gems,
-		profession: skills,
-		rings: rings
-	});
-
-	$: normalAvg = formatNumber((min + max) / 2);
-	$: [critMin, critMax] = [formatNumber(min * critMultiplier), formatNumber(max * critMultiplier)];
-	$: critAvg = formatNumber((critMin + critMax) / 2);
-	$: avgWithCrits = formatNumber(critAvg * critChance + normalAvg * (1 - critChance));
+	$: diff = previousResults
+		? {
+				dmg: results.dmg.min - previousResults.dmg.min,
+				critDmg: results.critDmg.min - previousResults.critDmg.min,
+				critChance: results.critChance - previousResults.critChance,
+				normalAvg: results.normalAvg - previousResults.normalAvg,
+				avgWithCrits: results.avgWithCrits - previousResults.avgWithCrits,
+				critMultiplier: results.critMultiplier - previousResults.critMultiplier
+			}
+		: undefined;
+	const MAX_DMG = 300;
 </script>
 
-<section
-	class="p-4 h-fit w-full rounded pixel-border flex flex-col gap-2 text-amber-900/60 text-3xl bg-amber-50"
+<div
+	class="flex flex-col gap-1 divide-red-600 border-t-3 border-surface-900 text-2xl md:max-w-80 md:gap-2"
 >
-	<div class="flex items-center gap-2">
-		<img
-			src="https://stardewvalleywiki.com/mediawiki/images/thumb/0/00/Attack.png/24px-Attack.png"
-			alt="attack"
-			class="size-5 object-cover"
-		/>
-		Normal Dmg:
-		<div class="ml-auto">
-			{formatNumber(min, 0)}-{formatNumber(max, 0)}
+	<section
+		class={clsx(
+			'relative  h-fit px-3 py-1 ',
+			'flex  w-full flex-col gap-2 bg-surface-100   text-surface-950 md:shadow-theme'
+		)}
+	>
+		<div class="z-10 flex items-center gap-2">
+			<div class="align-center flex flex-shrink-0 items-center">
+				<img
+					src="https://stardewvalleywiki.com/mediawiki/images/thumb/0/00/Attack.png/24px-Attack.png"
+					alt="attack"
+					class="size-5 object-cover"
+				/>
+				Dmg:
+			</div>
+			<div class="absolute bottom-0 left-0 right-0 top-0">
+				<Progress
+					max={MAX_DMG}
+					value={results.dmg.max}
+					class="-z-10 h-full rounded-none border-surface-900/10 bg-surface-800/20  "
+					barClass="bg-red-600/30"
+				/>
+			</div>
+			<div class="ml-auto">
+				{formatNumber(results.dmg.min, 0)}-{formatNumber(results.dmg.max, 0)}
+			</div>
 		</div>
-	</div>
-</section>
+	</section>
 
-<section
-	class="p-4 h-fit w-full rounded pixel-border flex flex-col gap-2 text-amber-900/60 text-3xl bg-amber-50"
->
-	<div class="flex border-b-2 pb-2 border-amber-900 text-amber-900 items-center gap-2">
-		<img
-			src="https://stardewvalleywiki.com/mediawiki/images/thumb/0/06/Crit._Power.png/24px-Crit._Power.png"
-			alt="crit"
-			class="size-5 object-cover"
-		/>
-		Crit:
+	<section
+		class="relative z-10 flex items-center gap-2 bg-surface-100 px-3 py-1 text-amber-900 md:shadow-theme"
+	>
+		<div class="align-center flex flex-shrink-0 items-center">
+			<img
+				src="https://stardewvalleywiki.com/mediawiki/images/thumb/0/06/Crit._Power.png/24px-Crit._Power.png"
+				alt="crit"
+				class="size-5 object-cover"
+			/>
+			Crit: (x{results.critMultiplier})
+		</div>
+
+		<div class="absolute bottom-0 left-0 right-0 top-0">
+			<Progress
+				max={3000}
+				value={results.critDmg.min}
+				class="-z-10 h-full rounded-none border-surface-900/10 bg-surface-800/20  "
+				barClass="bg-green-600/30"
+			/>
+		</div>
 		<div class="ml-auto">
-			{formatNumber(min * critMultiplier, 0)}-{formatNumber(max * critMultiplier, 0)}
+			{formatNumber(results.critDmg.min)}-{formatNumber(results.critDmg.max, 0)}
 		</div>
-	</div>
-	<div class="flex">
-		Chance: <div class="ml-auto">{formatNumber(critChance * 100, 1)}%</div>
-	</div>
-	<div class="flex">
-		Multiplier: <div class="ml-auto">{formatNumber(critMultiplier, 2)}</div>
-	</div>
-</section>
-<section
-	class="p-4 h-fit w-full rounded pixel-border flex flex-col gap-2 text-amber-900/60 text-3xl bg-amber-50"
->
-	<div class="flex items-center gap-5 text-4xl text-amber-950">
-		<img
-			src="https://stardewvalleywiki.com/mediawiki/images/thumb/0/00/Attack.png/24px-Attack.png"
-			alt="attack"
-			class="size-8 object-cover"
-		/>
-		<div>
-			Avg dmg:<span class="opacity-35 text-2xl self-center mx-2">(with crits)</span>
+	</section>
+	<section
+		class="relative z-10 mb-2 flex items-center gap-2 bg-surface-100 px-3 py-0 text-xl text-amber-900/80 md:shadow-theme"
+	>
+		Crit chance:
+		<div class="absolute bottom-0 left-0 right-0 top-0">
+			<Progress
+				max={100}
+				value={results.critChance * 100}
+				class="-z-10 h-full rounded-none  border-surface-900/10 bg-surface-800/20  "
+				barClass="bg-blue-400/30"
+			/>
 		</div>
-		<div class="ml-auto">{formatNumber(avgWithCrits, 0)}</div>
-	</div>
-</section>
+		<div class="ml-auto">
+			{formatNumber(results.critChance * 100, 1)}%
+		</div>
+	</section>
+	<!-- <section
+		class="md:pixel-border relative z-10 flex h-fit w-full flex-col gap-2 bg-surface-100 px-3 py-1 text-amber-900/60 md:shadow-theme"
+	>
+		<div class="flex items-center gap-5 text-amber-950">
+			<img
+				src="https://stardewvalleywiki.com/mediawiki/images/thumb/0/00/Attack.png/24px-Attack.png"
+				alt="attack"
+				class="size-8 object-cover"
+			/>
+			<div>Avg</div>
+			<div class="absolute bottom-0 left-0 right-0 top-0">
+				<Progress
+					max={MAX_DMG}
+					value={results.avgWithCrits}
+					class="-z-10 h-full rounded-none  border-surface-900/10 bg-surface-800/20  "
+					barClass="bg-black/30"
+				/>
+			</div>
+			<div class="ml-auto">
+				{#if isOnClient}
+					{formatNumber(results.avgWithCrits, 0)}
+				{/if}
+			</div>
+		</div>
+	</section> -->
+</div>

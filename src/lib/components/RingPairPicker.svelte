@@ -1,23 +1,15 @@
 <script lang="ts">
-	import { rings, type RingName } from '$model/ring.data';
+	import { cn } from '$lib/utils';
 	import RingPicker from './RingPicker.svelte';
 
-	export let value: [RingName | undefined, RingName | undefined] = [undefined, undefined];
-	export let focusedRings: [RingName | undefined, RingName | undefined] = [undefined, undefined];
+	let className = '';
 
-	$: ring1 = value[0];
-	$: ring2 = value[1];
+	export let type: 'left' | 'right';
+
+	export { className as class };
 </script>
 
-<div class="flex pixel-corners">
-	<RingPicker
-		bind:value={value[0]}
-		bind:focusedRing={focusedRings[0]}
-		disabledRings={ring2 ? [ring2] : undefined}
-	/>
-	<RingPicker
-		bind:value={value[1]}
-		bind:focusedRing={focusedRings[1]}
-		disabledRings={ring1 ? [ring1] : undefined}
-	/>
+<div class={cn('pixel-corners  flex gap-[2px]', className)}>
+	<RingPicker class="pl-1" index={0} {type} />
+	<RingPicker class="pr-1" index={1} {type} />
 </div>

@@ -1,47 +1,38 @@
 <script lang="ts">
-	import { gemNames, type GemName } from '$model/gem';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
-	import { gemIcon, getGemDescription, gem as allGems } from '$model/gem.data';
+	import { luckStore } from '$lib/store/calculatorOptions';
 
-	type LuckAmount = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+	type LuckAmount = number;
 
-	let luck: LuckAmount = 0;
-	let focusedLuck: LuckAmount = 0;
-	let shownLuck: LuckAmount = 0;
+	$: selectedLuck = $luckStore.selected;
+	$: focusedLuck = $luckStore.dirty;
+	$: shownLuck = focusedLuck ?? selectedLuck;
 
 	const options: LuckAmount[] = [0, 1, 2, 3, 4, 5, 6];
-
-	$: shownLuck = focusedLuck ?? luck;
-
-	export { shownLuck as luck };
 </script>
 
 <DropdownMenu.Root>
 	<DropdownMenu.Trigger asChild let:builder>
 		<Button
 			builders={[builder]}
-			class="size-[72px] pixel-corners p-4 pixel-corners   cursor-pointer text-3xl rounded-sm bg-amber-50 grid place-content-center"
-			variant="outline"
+			class="grid size-16  cursor-pointer place-content-center p-4 text-3xl"
 		>
 			{shownLuck}
 		</Button>
 	</DropdownMenu.Trigger>
 
-	<DropdownMenu.Content
-		sideOffset={10}
-		class="w-fit bg-white/50 backdrop-blur-md pixel-border   min-w-0"
-	>
-		<DropdownMenu.Group>
+	<DropdownMenu.Content sideOffset={10} class=" w-fit min-w-0 p-2 py-4">
+		<DropdownMenu.Group class="flex flex-col gap-2">
 			{#each options as option}
 				<DropdownMenu.Item
-					on:click={() => (luck = option)}
-					on:focusin={() => (focusedLuck = option)}
-					on:focusout={() => (focusedLuck = luck)}
-					class="mr-0 grid place-content-center cursor-pointer p-5 size-12 "
+					on:click={() => luckStore.setSelected(option)}
+					on:focusin={() => luckStore.setDirty(option)}
+					on:focusout={() => luckStore.clearDirty()}
+					class="mr-0 grid size-12 cursor-pointer place-content-center p-5 "
 				>
 					<div class="flex flex-col">
-						<div class="capitalize 2 text-amber-900 text-3xl">
+						<div class="2 text-3xl capitalize text-amber-900">
 							{option}
 						</div>
 					</div>

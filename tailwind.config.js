@@ -2,7 +2,7 @@ import defaultTheme from 'tailwindcss/defaultTheme';
 
 /** @type {import('tailwindcss').Config} */
 const config = {
-	darkMode: ['class'],
+	darkMode: 'media',
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 	safelist: ['dark'],
 	theme: {
@@ -14,11 +14,36 @@ const config = {
 			}
 		},
 		extend: {
+			borderWidth: {
+				3: '3px'
+			},
 			fontFamily: {
-				stardew: ['Bobsled', ...defaultTheme.fontFamily.sans]
+				stardewTitle: ['Stardew Cursive', ...defaultTheme.fontFamily.sans],
+				stardew: ['Stardew', ...defaultTheme.fontFamily.sans]
+			},
+			boxShadow: {
+				'inner-lg': 'inset 0 8px 8px 0 rgb(67 27 7 / 10%)',
+				theme: 'inset 0px 0px 0px 4px rgb(67 27 7 /10%)',
+				'theme-item':
+					'inset -3px 3px 0px rgb(67 27 7 /20%),inset 3px -3px 0px rgb(255 255 255 /47%)'
 			},
 
 			colors: {
+				surface: {
+					DEFAULT: '#FCCB78',
+					50: '#fff9ed',
+					100: '#fff2d5',
+					150: '#FAE7C2',
+					200: '#F6D89D',
+					300: '#fccb78',
+					400: '#faa83d',
+					500: '#f78d18',
+					600: '#e8730e',
+					700: '#c1570d',
+					800: '#994513',
+					900: '#7b3913',
+					950: '#431b07'
+				},
 				border: 'hsl(var(--border) / <alpha-value>)',
 				input: 'hsl(var(--input) / <alpha-value>)',
 				ring: 'hsl(var(--ring) / <alpha-value>)',

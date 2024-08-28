@@ -1,4 +1,4 @@
-import { innateEnchantment, type GuaranteedInnateEnchantment } from '../model/enchantment';
+import { innateEnchantments, type SelectedEnchantment } from '../model/enchantment';
 import type { GemName } from '../model/gem';
 import type { SelectedProfession } from '../model/profession';
 import type { Ring } from '../model/ring';
@@ -8,7 +8,7 @@ type Options = {
 	gems?: GemName[];
 	rings?: Ring[];
 	profession?: SelectedProfession;
-	enchantment?: { key: GuaranteedInnateEnchantment; optionName: number };
+	enchantment?: SelectedEnchantment;
 };
 
 export function getCritMultiplier(
@@ -34,7 +34,7 @@ export function getCritMultiplier(
 
 	// Enchantment
 	if (enchantment?.key === 'critPower') {
-		const foundEnchantment = innateEnchantment.guaranteed[enchantment.key].options.find(
+		const foundEnchantment = innateEnchantments.guaranteed[enchantment.key].options.find(
 			(option) => option.name === enchantment.optionName
 		);
 

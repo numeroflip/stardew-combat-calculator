@@ -1,12 +1,16 @@
-export type Stats = {
-	speed?: number;
-	damage?: number;
-	critPower?: number;
-	critMultiplier?: number;
-	critChance?: number;
-	defense?: number;
-	weight?: number;
-};
+import { z } from 'zod';
+
+export const statSchema = z.object({
+	speed: z.number().optional(),
+	damage: z.number().optional(),
+	critPower: z.number().optional(),
+	critMultiplier: z.number().optional(),
+	critChance: z.number().optional(),
+	defense: z.number().optional(),
+	weight: z.number().optional()
+});
+
+export type Stats = z.infer<typeof statSchema>;
 
 const statToDescriptionMap: Record<keyof Stats, string> = {
 	damage: 'Dmg',

@@ -2,7 +2,7 @@
  * base damage × (3 + Crit. Power / 50)
  */
 
-import { innateEnchantment, type SelectedEnchantment } from '../model/enchantment';
+import { innateEnchantments, type SelectedEnchantment } from '../model/enchantment';
 import type { GemName } from '../model/gem';
 import type { SelectedProfession } from '../model/profession';
 import type { Ring } from '../model/ring';
@@ -75,7 +75,7 @@ function getEnchantmentCritChance(enchantment?: SelectedEnchantment) {
 	}
 
 	if (enchantment.key === 'critChance') {
-		const foundEnchantment = innateEnchantment.guaranteed[enchantment.key].options.find(
+		const foundEnchantment = innateEnchantments.guaranteed[enchantment.key].options.find(
 			(option) => option.name === enchantment.optionName
 		);
 		return foundEnchantment?.value ?? 0;

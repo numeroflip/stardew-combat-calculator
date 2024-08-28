@@ -33,7 +33,7 @@ test("Lava Katana's  + 3 gem + 2 ring + enchantment", () => {
 		getCritMultiplier(lavaKatana, {
 			gems: ['jade', 'jade', 'jade'],
 			rings: [rings.jade, rings.jade],
-			enchantment: { key: 'critPower', optionName: 75 }
+			enchantment: { key: 'critPower', optionName: '75' }
 		})
 	).toBe(10.26);
 });
@@ -44,7 +44,7 @@ test("Lava Katana's  + 3 gem + 2 ring + enchantment + desperado", () => {
 			gems: ['jade', 'jade', 'jade'],
 			rings: [rings.jade, rings.jade],
 			profession: { lvl5: 'scout', lvl10: 'desperado' },
-			enchantment: { key: 'critPower', optionName: 75 }
+			enchantment: { key: 'critPower', optionName: '75' }
 		})
 	).toBe(20.52);
 });

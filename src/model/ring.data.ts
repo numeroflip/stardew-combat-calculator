@@ -1,19 +1,6 @@
 import { keysOf } from '$lib/objectUtils';
-import type { Ring } from './ring';
+import type { Ring, RingName } from './ring';
 import { getStatDescription } from './stat';
-
-export const ringNames = [
-	'iridiumBand',
-	'ruby',
-	'aquamarine',
-	'jade',
-	'emerald',
-	'amethyst',
-	'topaz',
-	'crabshell'
-] as const;
-
-export type RingName = (typeof ringNames)[number];
 
 export const rings: Record<RingName, Ring> = {
 	iridiumBand: {

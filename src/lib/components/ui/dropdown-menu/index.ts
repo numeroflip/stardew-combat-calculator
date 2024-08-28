@@ -9,6 +9,37 @@ import RadioGroup from './dropdown-menu-radio-group.svelte';
 import SubContent from './dropdown-menu-sub-content.svelte';
 import SubTrigger from './dropdown-menu-sub-trigger.svelte';
 import CheckboxItem from './dropdown-menu-checkbox-item.svelte';
+import { tv } from 'tailwind-variants';
+
+export type DropdownVariant = 'default' | 'light' | 'pixelated';
+
+export const dropdownItemVariants = tv({
+	base: ' mb-1 flex cursor-default select-none items-center rounded-none  border-none px-2 py-1.5 text-sm outline-none data-[disabled]:pointer-events-none  data-[disabled]:opacity-50',
+	variants: {
+		variant: {
+			default:
+				'shadow-theme-item bg-surface data-[highlighted]:bg-white/20 data-[highlighted]:text-accent-foreground',
+			light:
+				'shadow-theme-item bg-surface-50 data-[highlighted]:bg-surface-400/50 data-[highlighted]:text-accent-foreground',
+			pixelated:
+				'pixel-corners bg-transparent data-[highlighted]:bg-surface-200 data-[highlighted]:text-accent-foreground'
+		}
+	},
+	defaultVariants: {
+		variant: 'default'
+	}
+});
+
+export const dropdownContentVariants = tv({
+	base: 'z-50 min-w-[8rem] p-1 text-popover-foreground focus:outline-none',
+	variants: {
+		variant: {
+			default: 'bg-surface border-4 border-surface-900 shadow-theme',
+			light: 'bg-surface-100 border-4 border-surface-900 shadow-theme',
+			pixelated: 'pixel-border bg-surface-50/60 backdrop-blur-md'
+		}
+	}
+});
 
 const Sub = DropdownMenuPrimitive.Sub;
 const Root = DropdownMenuPrimitive.Root;

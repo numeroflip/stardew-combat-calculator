@@ -1,4 +1,4 @@
-import { innateEnchantment, type SelectedEnchantment } from '../model/enchantment';
+import { innateEnchantments, type SelectedEnchantment } from '../model/enchantment';
 import type { GemName } from '../model/gem';
 import {
 	BRUTE_DMG_MULTIPLIER,
@@ -49,7 +49,7 @@ export function getDamageValues(
 
 	// Enchantment
 	if (enchantment && enchantment.key === 'attack') {
-		const foundEnchantment = innateEnchantment.guaranteed[enchantment.key].options.find(
+		const foundEnchantment = innateEnchantments.guaranteed[enchantment.key].options.find(
 			(option) => option.name === enchantment.optionName
 		);
 

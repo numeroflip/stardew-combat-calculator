@@ -2,60 +2,86 @@
 	import { gemNames, type GemName } from '$model/gem';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
-	import { gemIcon, getGemDescription, gem as allGems } from '$model/gem.data';
+	import { gemIcon, getGemDescription } from '$model/gem.data';
+	import { gemsStore } from '$lib/store/calculatorOptions';
 
-	export let gem: GemName | undefined;
-	export let focusedGem: GemName | undefined = undefined;
-	export let gemLevel: 1 | 2 | 3 = 1;
+	export let index: 0 | 1 | 2;
 
-	$: shownGem = focusedGem ?? gem;
+	function removeGem(mode: 'dirty' | 'selected') {
+		const setFn = mode === 'dirty' ? gemsStore.setDirty : gemsStore.setSelected;
+		const items = $gemsStore[mode].toSpliced(index, 1, undefined);
+
+		setFn(items);
+	}
+
+	function selectGem(gem: GemName, mode: 'dirty' | 'selected') {
+		const setFn = mode === 'dirty' ? gemsStore.setDirty : gemsStore.setSelected;
+
+		const items = $gemsStore[mode].toSpliced(index, 1, gem);
+		setFn(items);
+	}
+
+	$: shownGem = $gemsStore.dirty[index] || $gemsStore.selected[index];
+
+	$: shownGems = [
+		$gemsStore.dirty[0] || $gemsStore.selected[0],
+		$gemsStore.dirty[1] || $gemsStore.selected[1],
+		$gemsStore.dirty[2] || $gemsStore.selected[2]
+	];
+	$: gemLevel = shownGems.filter((gem) => gem === shownGem).length as 1 | 2 | 3;
 </script>
 
 <DropdownMenu.Root>
 	<DropdownMenu.Trigger asChild let:builder>
 		<Button
 			builders={[builder]}
-			class="size-16 pixel-corners rounded-sm bg-amber-50  p-0 grid place-content-center"
-			variant="outline"
+			variant="pixelated"
+			class="no grid size-12 place-content-center rounded-none border-none  p-0  pl-0 pr-0 md:size-16"
 		>
 			{#if shownGem}
-				<img src={gemIcon[shownGem]} alt={shownGem} class="size-10 object-cover" />
+				<img src={gemIcon[shownGem]} alt={shownGem} class="size-8 object-cover md:size-10" />
 			{:else}
-				<img src={gemIcon.diamond} alt="" class="size-10 opacity-20 grayscale object-cover" />
+				<img
+					src={gemIcon.diamond}
+					alt=""
+					class="size-8 object-cover opacity-20 grayscale md:size-10"
+				/>
 			{/if}
 		</Button>
 	</DropdownMenu.Trigger>
 
-	<DropdownMenu.Content
-		sideOffset={10}
-		class="w-fit bg-white/50 backdrop-blur-md pixel-border   min-w-0"
-	>
-		<DropdownMenu.Group>
+	<DropdownMenu.Content sideOffset={10} class=" w-fit min-w-0 ">
+		<DropdownMenu.Group class="max-h-[40vh] overflow-y-auto ">
 			<DropdownMenu.Item
-				on:click={() => (gem = undefined)}
-				on:focusin={() => (focusedGem = undefined)}
-				on:focusout={() => (focusedGem = undefined)}
-				class="mr-0 flex gap-2 cursor-pointer p-2 pl-2"
+				on:click={() => removeGem('selected')}
+				on:focusin={() => removeGem('dirty')}
+				on:focusout={() => removeGem('dirty')}
+				class="mr-0 flex cursor-pointer gap-2 p-2 pl-2 text-lg lg:text-xl"
 			>
-				<div class="size-10 grid place-content-center text-xl">
-					<img src={gemIcon.diamond} alt="" class="size-10 opacity-20 grayscale object-cover" />
+				<div class="grid place-content-center">
+					<img
+						src={gemIcon.diamond}
+						alt=""
+						class="size-8 object-cover opacity-20 grayscale lg:size-10"
+					/>
 				</div>
-				<div class="text-amber-900 text-xl">No Gem</div>
+				<div class="text-amber-900">No Gem</div>
 			</DropdownMenu.Item>
+
 			{#each gemNames as gemName}
 				<DropdownMenu.Item
-					on:click={() => (gem = gemName)}
-					on:focusin={() => (focusedGem = gemName)}
-					on:focusout={() => (focusedGem = undefined)}
-					class="mr-0 flex gap-2 cursor-pointer p-2 pl-2"
+					on:click={() => selectGem(gemName, 'selected')}
+					on:focusin={() => selectGem(gemName, 'dirty')}
+					on:focusout={() => removeGem('dirty')}
+					class=" mr-0 flex cursor-pointer gap-2 p-2 pl-2 text-lg lg:text-xl"
 				>
-					<img src={gemIcon[gemName]} alt={gemName} class=" size-10" />
+					<img src={gemIcon[gemName]} alt={gemName} class="size-8 lg:size-10" />
 					<div class="flex flex-col">
-						<div class="capitalize text-amber-900 text-xl">
+						<div class="capitalize text-surface-900">
 							{gemName}
 						</div>
 
-						<div class="text-amber-900/30 leading-3 text-lg">
+						<div class="text-sm leading-3 text-surface-900/50">
 							{getGemDescription(gemName, gemLevel)}
 						</div>
 					</div>

@@ -1,182 +1,269 @@
 <script lang="ts">
-	import { weapons } from '../model/weapon.data';
-	import { rings } from '../model/ring.data';
-	import type { GemName } from '../model/gem';
-	import { type SelectedProfession } from '../model/profession';
-
 	import GemPicker from '$lib/components/GemPicker.svelte';
-	import type { Weapon } from '$model/weapon';
 	import RingPairPicker from '$lib/components/RingPairPicker.svelte';
 	import WeaponPicker from '$lib/components/WeaponPicker.svelte';
 	import EnchantmentPicker from '$lib/components/EnchantmentPicker.svelte';
 	import SkillPicker from '$lib/components/SkillPicker.svelte';
 	import CalculationResults from '$lib/components/CalculationResults.svelte';
-	import type { GuaranteedInnateEnchantment } from '$model/enchantment';
 	import LuckFromFoodPicker from '$lib/components/LuckFromFoodPicker.svelte';
-	import Switch from '$lib/components/ui/switch/switch.svelte';
 
-	let weapon = weapons[0];
-	let focusedWeapon: Weapon | undefined;
+	import queryString from 'query-string';
+	import { calculatorOptionsSchema, type CalculatorOptions } from '$model/calculatorOptions';
+	import { buttonVariants } from '$lib/components/ui/button';
+	import Header from '$lib/components/Header.svelte';
+	import { onMount, tick } from 'svelte';
+	import {
+		setCalculatorOptions,
+		hasBlessingOfFangsStore,
+		selectedCalculatorOptionsStore
+	} from '$lib/store/calculatorOptions';
+	import { get } from 'svelte/store';
 
-	let selectedGems: [GemName | undefined, GemName | undefined, GemName | undefined] = [
-		undefined,
-		undefined,
-		undefined
-	];
+	export const ssr = false;
+	const DEFAULT_OPTIONS_KEY = 'options';
 
-	let focusedGems: [GemName | undefined, GemName | undefined, GemName | undefined] = [
-		undefined,
-		undefined,
-		undefined
-	];
+	let initialized = false;
 
-	$: shownGems = [
-		focusedGems[0] || selectedGems[0],
-		focusedGems[1] || selectedGems[1],
-		focusedGems[2] || selectedGems[2]
-	];
+	let options = get(selectedCalculatorOptionsStore);
+	$: options = $selectedCalculatorOptionsStore;
 
-	type RingKey = keyof typeof rings;
+	onMount(() => {
+		const initialOptionsFromStorage = getOptionsFromStorage();
+		const initialOptionsFromQuery = getOptionsFromQueryParams();
+		const initialOptions = initialOptionsFromQuery || initialOptionsFromStorage;
 
-	let selectedRings: {
-		left: [RingKey | undefined, RingKey | undefined];
-		right: [RingKey | undefined, RingKey | undefined];
-	} = {
-		left: [undefined, undefined],
-		right: [undefined, undefined]
-	};
+		if (initialOptions) {
+			setCalculatorOptions(initialOptions);
+		}
 
-	let focusedRings: {
-		left: [RingKey | undefined, RingKey | undefined];
-		right: [RingKey | undefined, RingKey | undefined];
-	} = {
-		left: [undefined, undefined],
-		right: [undefined, undefined]
-	};
+		initialized = true;
+	});
 
-	let enchantment: { key: GuaranteedInnateEnchantment; optionName: number } | undefined;
-	let focusedEnchantment: { key: GuaranteedInnateEnchantment; optionName: number } | undefined;
-	$: shownEnchantment = focusedEnchantment || enchantment;
+	function getOptionsFromStorage(key: string = DEFAULT_OPTIONS_KEY): CalculatorOptions | undefined {
+		const valueStr = localStorage.getItem(key);
 
-	let skills: SelectedProfession = {};
+		if (!valueStr) {
+			return;
+		}
 
-	$: canBeEnchanted =
-		weapon.level < 15 && !weapon.name.includes('Galaxy') && !weapon.name.includes('Infinity');
+		const valueParsed = parseJSON(valueStr);
+		const valueValidated = calculatorOptionsSchema.safeParse(valueParsed);
 
-	$: shownRings = {
-		left: focusedRings.left.map((ringKey, index) => ringKey || selectedRings.left[index]),
-		right: focusedRings.right.map((ringKey, index) => ringKey || selectedRings.right[index])
-	};
+		if (valueValidated.error) {
+			console.warn(valueValidated.error.message);
+		}
 
-	let luckFromFood: 0 | 1 | 2 | 3 | 4 | 5 | 6 = 0;
+		return valueValidated.data;
+	}
 
-	$: shownRingsFlat = Object.values(shownRings)
-		.flat()
-		.filter(Boolean)
-		.map((ringKey) => rings[ringKey as RingKey]);
+	function getOptionsFromQueryParams(): CalculatorOptions | undefined {
+		const queryRaw = queryString.parse(location.search)?.options;
 
-	$: shownWeapon = focusedWeapon || weapon;
+		if (typeof queryRaw !== 'string') {
+			return;
+		}
 
-	let hasBlessingOfFangs = false;
+		const queryParsed = queryRaw
+			? calculatorOptionsSchema.safeParse(parseJSON(queryRaw))
+			: undefined;
+
+		const optionsInitialFromQuery = queryParsed?.data;
+		const url = new URL(window.location.toString());
+		url.searchParams.delete('options');
+		history.replaceState({}, '', url);
+		return optionsInitialFromQuery;
+	}
+
+	$: {
+		if (typeof window !== 'undefined' && initialized) {
+			localStorage.setItem(DEFAULT_OPTIONS_KEY, JSON.stringify($selectedCalculatorOptionsStore));
+		}
+	}
+
+	function handleShare() {
+		const params = queryString.stringify({
+			options: JSON.stringify($selectedCalculatorOptionsStore)
+		});
+		const link = `${window.location.origin}?${params}`;
+
+		if (navigator?.share) {
+			navigator.share({ text: link });
+		} else {
+			navigator.clipboard.writeText(link);
+			alert('The share link is copied to the clipboard');
+		}
+	}
+
+	async function handleSave() {
+		const name = await prompt('Give it a name');
+
+		if (!name) {
+			handleSave();
+			return;
+		}
+
+		localStorage.setItem(
+			`__named__option__${name}`,
+			JSON.stringify($selectedCalculatorOptionsStore)
+		);
+	}
+	function getSavedOptionKeys() {
+		let keys: string[] = [];
+
+		for (const key in localStorage) {
+			if (key.startsWith('__named__option__')) {
+				keys.push(key);
+			}
+		}
+		return keys;
+	}
+
+	function parseJSON(data: string) {
+		return JSON.parse(data, (key, value) => (value === null ? undefined : value));
+	}
+	function loadLocalStorageOption(key: string) {
+		const loadedOptions = localStorage.getItem(key);
+		if (!loadedOptions) {
+			return;
+		}
+		const parsedOptions = calculatorOptionsSchema.safeParse(parseJSON(loadedOptions));
+
+		if (parsedOptions.data) {
+			setCalculatorOptions(parsedOptions.data);
+		}
+	}
+	async function onLoad() {
+		const savedNames = getSavedOptionKeys();
+
+		const selection = await prompt(`pick a name from: ${savedNames.toString()}`);
+		if (selection && savedNames.includes(selection)) {
+			loadLocalStorageOption(selection);
+		}
+	}
+	const isOnClient = typeof window !== 'undefined';
 </script>
 
 <div
-	class="h-full px-0 mx-auto flex flex-col justify-center items-center my-10 container w-full max-w-5xl pixel-corners-border--lg bg-[#F4D497]"
+	class="lg:pixel-corners-border--lg haupt-grid bg container mx-auto flex h-full min-h-screen w-full max-w-screen-lg flex-col border-4 border-surface-900 bg-surface-300 px-0 lg:border-none dark:bg-surface-900"
 >
-	<div class="border-b-[6px] w-full py-4 bg-amber-200/50 border-[#7a482a]">
-		<h1 class="h1 text-5xl text-center capitalize">Stardew Combat calculator</h1>
-	</div>
-	<div class="space-y-5 w-full pt-5">
-		<form class="flex w-full flex-col gap-10">
-			<!-- WEAPON -->
-			<div class="grid md:grid-cols-2 gap-10 py-10 px-10">
-				<div class="flex flex-col gap-7">
-					<section class="flex flex-wrap flex-col w-full gap-3">
-						<h3 class="text-3xl">Weapon</h3>
-						<div class="flex gap-4 w-full">
-							<WeaponPicker bind:weapon bind:focusedWeapon />
+	{#if isOnClient}
+		<Header {handleShare} onSave={handleSave} {onLoad} />
+
+		<main
+			class="grid-area-[options] h-full w-full grow overflow-y-auto bg-gradient-to-t from-surface-300 to-surface-200 px-2 py-2 shadow-theme dark:from-surface-950/50 dark:to-surface-950"
+		>
+			<section class="flex grow flex-col">
+				<h3 class="mb-4 hidden text-3xl lg:block">Weapon</h3>
+				<div class="pixel-corners bob mx-auto flex h-full w-full flex-col gap-3 md:max-w-md">
+					<div class="z-[3]">
+						<div class="pixel-corners z-[3] flex flex-col gap-5 bg-surface-50 px-5">
+							<WeaponPicker />
+						</div>
+					</div>
+
+					<section class=" z-[2] flex w-full justify-between gap-5 pl-2">
+						<div class="flex items-center text-2xl">Gems:</div>
+						<div class="flex gap-3">
+							<GemPicker index={0} />
+							<GemPicker index={1} />
+							<GemPicker index={2} />
 						</div>
 					</section>
-					<section class="flex flex-wrap items-center justify-between w-full gap-10">
-						<h3 class="text-3xl">Gems</h3>
-						<div class="flex gap-4">
-							<GemPicker bind:gem={selectedGems[0]} bind:focusedGem={focusedGems[0]} />
-							<GemPicker bind:gem={selectedGems[1]} bind:focusedGem={focusedGems[1]} />
-							<GemPicker bind:gem={selectedGems[2]} bind:focusedGem={focusedGems[2]} />
-						</div>
+					<!-- Enchantment -->
+
+					<EnchantmentPicker />
+				</div>
+			</section>
+
+			<!-- Rings -->
+			<section
+				class="flex w-full flex-wrap items-center justify-between gap-10 self-stretch py-1 pl-4 pr-1"
+			>
+				<h3 class="text-2xl text-surface-950">Rings:</h3>
+				<fieldset class="flex justify-between gap-4">
+					<RingPairPicker type="left" />
+					<RingPairPicker type="right" />
+				</fieldset>
+			</section>
+
+			<!-- LUCK AND BLESSING -->
+			<section class="mt-10 flex flex-col gap-5">
+				<div class="grid grid-cols-2">
+					<!-- Luck -->
+					<section class="flex flex-col items-center gap-5">
+						<h3 class="text-2xl">Luck (from food)</h3>
+
+						<LuckFromFoodPicker />
 					</section>
 
-					{#if canBeEnchanted}
-						<section class="flex items-center flex-wrap justify-between w-full gap-5">
-							<h3 class="text-3xl inline">Innate Enchantment</h3>
-							<EnchantmentPicker bind:enchantment bind:focusedEnchantment />
-						</section>
-					{/if}
-					<section class=" flex justify-between flex-wrap w-full items-center gap-10">
-						<h3 class="text-3xl">Rings</h3>
-						<fieldset class=" flex gap-3">
-							<RingPairPicker
-								bind:value={selectedRings.left}
-								bind:focusedRings={focusedRings.left}
+					<!-- Blessing -->
+					<section class="flex flex-col items-center gap-5">
+						<label for="blessing-of-fangs"><h3 class="text-2xl">Blessing of Fangs</h3></label>
+
+						<label
+							class={`${buttonVariants({
+								variant: 'pixelated',
+								size: 'unset'
+							})} ${$hasBlessingOfFangsStore.selected ? '' : 'opacity-30 grayscale'} grid size-16 cursor-pointer place-content-center`}
+							for="blessing-of-fangs"
+						>
+							<img
+								src="https://stardewvalleywiki.com/mediawiki/images/a/af/Blessing_Of_Fangs.png"
+								alt="blessing of fangs"
+								class="size-10 object-cover"
 							/>
-							<RingPairPicker
-								bind:value={selectedRings.right}
-								bind:focusedRings={focusedRings.right}
-							/>
-						</fieldset>
-					</section>
-					<section class="flex items-center flex-wrap justify-between w-full gap-10">
-						<h3 class="text-3xl">Skills</h3>
-
-						<SkillPicker bind:skills />
-					</section>
-					<section class="flex flex-col gap-5 mt-10">
-						<!-- <h3 class="text-3xl">Extra</h3> -->
-						<div class="grid grid-cols-2">
-							<section class="flex flex-col gap-5 items-center">
-								<h3 class="text-2xl">Luck (from food)</h3>
-
-								<LuckFromFoodPicker bind:luck={luckFromFood} />
-							</section>
-							<section class="flex flex-col gap-5 items-center">
-								<label for="blessing-of-fangs"><h3 class="text-2xl">Blessing of Fangs</h3></label>
-								<label
-									for="blessing-of-fangs"
-									class={`bg-amber-50 p-4 pixel-corners  block cursor-pointer `}
-								>
-									<div class={hasBlessingOfFangs ? '' : 'opacity-30 grayscale'}>
-										<img
-											src="https://stardewvalleywiki.com/mediawiki/images/a/af/Blessing_Of_Fangs.png"
-											alt="blessing of fangs"
-											class="size-10 object-cover"
-										/>
-									</div>
-								</label>
-								<input
-									type="checkbox"
-									bind:checked={hasBlessingOfFangs}
-									class="sr-only"
-									id="blessing-of-fangs"
-								/>
-							</section>
-						</div>
+						</label>
+						<input
+							type="checkbox"
+							bind:checked={$hasBlessingOfFangsStore.selected}
+							class="sr-only"
+							id="blessing-of-fangs"
+						/>
 					</section>
 				</div>
-				<section class="flex flex-col w-full gap-3">
-					<h3 class="text-3xl">Results</h3>
-					<CalculationResults
-						weapon={shownWeapon}
-						enchantment={canBeEnchanted ? shownEnchantment : undefined}
-						gems={shownGems.filter(Boolean)}
-						rings={shownRingsFlat}
-						skills={skills || undefined}
-						{hasBlessingOfFangs}
-						luck={luckFromFood}
-					/>
-				</section>
+			</section>
 
-				<div />
-			</div>
-		</form>
-	</div>
+			<section class="mt-auto flex w-full flex-wrap items-center gap-10">
+				<h3 class="text-3xl">Skills</h3>
+				<SkillPicker />
+			</section>
+
+			<!-- RESULTS -->
+		</main>
+		<footer class="grid-area-[results]">
+			<section
+				class="flex h-full w-full flex-1 grow flex-col gap-3 p-0 [grid-area:results] lg:px-10 lg:pb-10 lg:pt-10"
+			>
+				<!-- <h3 class="text-3xl">Results</h3> -->
+				<CalculationResults />
+			</section>
+		</footer>
+	{/if}
 </div>
+
+<style>
+	.bob {
+		background-color: transparent;
+
+		--color: theme('colors.surface.100');
+
+		background-image: radial-gradient(
+			ellipse farthest-corner at 2px 2px,
+			var(--color),
+			var(--color) 50%,
+			transparent 50%
+		);
+		background-size: 2px 2px;
+	}
+
+	.haupt-grid {
+		display: grid;
+		grid-template-rows: auto 1fr auto;
+
+		height: 100dvh;
+		grid-template-areas:
+			'header'
+			'options'
+			'results';
+	}
+</style>

@@ -1,21 +1,24 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button/index.js';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
-	import { weapons, swords, clubs, daggers } from '$model/weapon.data';
-
-	export let weapon: Weapon;
-	export let focusedWeapon: Weapon | undefined = undefined;
+	import { swords, clubs, daggers, weapons } from '$model/weapon.data';
+	import * as Tabs from '$lib/components/ui/tabs';
+	import { weaponNameStore } from '$lib/store/calculatorOptions';
 
 	const orderedSwords = swords.toSorted((a, b) => b.level - a.level);
 	const orderedDaggers = daggers.toSorted((a, b) => b.level - a.level);
 	const orderedClubs = clubs.toSorted((a, b) => b.level - a.level);
 
-	$: activeTab = weapon.type;
+	$: activeWeaponName = $weaponNameStore.dirty || $weaponNameStore.selected;
+	$: weapon = weapons.find((w) => w.name === activeWeaponName);
 
-	$: shownWeapon = focusedWeapon || weapon;
+	$: weaponType = weapon?.type;
 
-	import * as Tabs from '$lib/components/ui/tabs';
-	import type { Weapon, WeaponType } from '$model/weapon';
+	let activeTab = weapon?.type;
+
+	$: {
+		activeTab = weaponType;
+	}
 
 	const tabs = [
 		{
@@ -43,29 +46,53 @@
 	<DropdownMenu.Trigger asChild let:builder>
 		<Button
 			builders={[builder]}
-			class=" pixel-corners w-full text-2xl h-fit px-10 gap-5 rounded-sm bg-amber-50    p-6 flex items-center "
-			variant="outline"
+			variant="lightBase"
+			class=" pixel-corners relative flex h-fit w-full shrink-0 items-center justify-center self-center rounded-none border-none bg-surface-50 p-3 py-1"
 		>
 			{#if weapon}
-				<div class="shrink-0 relative size-20 flex justify-center items-center">
-					<img
-						src={shownWeapon.icon}
-						alt={shownWeapon.name}
-						class=" size-16 object-cover content-center"
-					/>
-					<span class="absolute top-0 left-0 opacity-70">{shownWeapon.level}</span>
-				</div>
-				<div class="w-full text-left">
-					{shownWeapon.name}
-					<div class="grid w-full text-amber-950/40 grid-cols-[1fr_auto] gap-x-5">
-						<div>Dmg:</div>
-						<div class="text-end">
-							{shownWeapon.damage[0]}-{shownWeapon.damage[1]}
-						</div>
+				<div class="flex w-full shrink-0">
+					<div class="relative h-fit w-fit shrink-0 self-center">
+						<img
+							src={weapon.icon}
+							alt={weapon.name}
+							class=" md:size-15 size-12 content-center object-cover"
+						/>
+						<span class="absolute -bottom-4 -right-2 text-lg opacity-70">{weapon.level}</span>
+					</div>
 
-						<div>Base crit chance:</div>
-						<div class="text-end">
-							{shownWeapon.critStrikeChance * 100}%
+					<div class=" ml-5 flex w-full flex-col gap-2 p-3">
+						<div
+							class="grid w-full min-w-36 grid-cols-[1fr_auto] items-center gap-1 gap-x-5 text-xl text-amber-950/40"
+						>
+							<div class="col-span-2 self-start text-start text-2xl text-surface-900">
+								{weapon.name}
+							</div>
+							<div class="flex items-center gap-2">
+								<img
+									src="https://stardewvalleywiki.com/mediawiki/images/thumb/0/00/Attack.png/24px-Attack.png"
+									alt="attack"
+									class="size-5 object-cover"
+								/>
+								Dmg.:
+							</div>
+
+							<div class="text-end">
+								{weapon.damage[0]}-{weapon.damage[1]}
+							</div>
+
+							<div>
+								<div class="flex items-center gap-2">
+									<img
+										src="https://stardewvalleywiki.com/mediawiki/images/thumb/0/06/Crit._Power.png/24px-Crit._Power.png"
+										alt="Base crit chance"
+										class="size-5 object-cover"
+									/>
+									Crit:
+								</div>
+							</div>
+							<div class="text-end">
+								{weapon.critStrikeChance * 100}%
+							</div>
 						</div>
 					</div>
 				</div>
@@ -74,35 +101,39 @@
 	</DropdownMenu.Trigger>
 
 	<DropdownMenu.Content
-		sideOffset={10}
-		fitViewport
-		class="w-fit relative min-w-80 bg-white/50 backdrop-blur-md pixel-border      "
+		sideOffset={20}
+		class="relative w-fit min-w-80 bg-surface-100 p-0 backdrop-blur-md      "
 	>
 		<Tabs.Root bind:value={activeTab}>
-			<Tabs.List class=" flex bg-transparent rounded-none h-fit border-b-2 border-amber-950">
+			<Tabs.List
+				class=" flex h-fit gap-1 rounded-none border-b-4 border-surface-900  bg-surface-200"
+			>
 				{#each tabs as tab}
-					<Tabs.Trigger class="text-xl bg-transparent" value={tab.value}
-						>{tab.name} <img src={tab.icon} alt={tab.name} class=" size-10" /></Tabs.Trigger
+					<Tabs.Trigger class="bg-transparent font-stardewTitle text-xl" value={tab.value}
+						>{tab.name} <img src={tab.icon} alt={tab.name} class=" size-9" /></Tabs.Trigger
 					>
 				{/each}
 			</Tabs.List>
 
-			<DropdownMenu.Group class="flex w-full max-h-[40vh] overflow-y-auto gap-4">
+			<DropdownMenu.Group class="flex max-h-[40vh] w-full gap-4 overflow-y-auto p-0">
 				{#each tabs as tab}
 					<Tabs.Content class="w-full" value={tab.value}>
 						{#each tab.list as _weapon}
 							<DropdownMenu.Item
-								on:click={() => (weapon = _weapon)}
-								on:focusin={() => (focusedWeapon = _weapon)}
-								class="mr-0 w-full flex gap-2 cursor-pointer p-2 pl-2"
+								on:click={() => weaponNameStore.setSelected(_weapon.name)}
+								on:focusin={() => weaponNameStore.setDirty(_weapon.name)}
+								class="mr-0 flex w-full cursor-pointer gap-4 p-2 pl-2"
 							>
-								<div class="relative">
-									<img src={_weapon.icon} alt={_weapon.name} class=" size-10" />
-									<span class="absolute -bottom-1 -right-1 leading-3 text-sm opacity-30"
+								<div class=" relative shrink-0 p-0">
+									<img src={_weapon.icon} alt={_weapon.name} class=" size-9 object-cover" />
+									<span
+										class="absolute -bottom-1 -right-2 block p-1 text-sm leading-3 text-surface-900/30"
 										>{_weapon.level}</span
 									>
 								</div>
-								<div class="text-2xl flex w-full justify-between items-center">
+								<div
+									class="flex w-full items-center justify-between font-stardewTitle text-xl text-surface-900"
+								>
 									{_weapon.name}
 									<span class=" ml-2 opacity-30">{_weapon.damage[0]}-{_weapon.damage[1]}</span>
 								</div>

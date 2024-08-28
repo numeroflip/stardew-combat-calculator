@@ -1,22 +1,54 @@
+import { z } from 'zod';
+
 export const FIGHTER_DMG_MULTIPLIER = 0.1;
 export const BRUTE_DMG_MULTIPLIER = 0.15;
-
-export type FighterLine = {
-	line: 'fighter';
-	specialization?: FighterSpecialization;
-};
 
 export type SelectedProfession = {
 	lvl5?: LVL5Skill;
 	lvl10?: Lvl10Skills;
 };
 
-export type FighterSpecialization = 'brute' | 'defender';
-export type ScoutSpecialization = 'acrobat' | 'desperado';
-export type ScoutLine = {
-	line: 'scout';
-	specialization?: ScoutSpecialization;
-};
+export const FighterSpecializationSchema = z.enum(['brute', 'defender']);
+export type FighterSpecialization = z.infer<typeof FighterSpecializationSchema>;
+
+export const ScoutSpecializationSchema = z.enum(['acrobat', 'desperado']);
+export type ScoutSpecialization = z.infer<typeof ScoutSpecializationSchema>;
+
+export const ScoutLineSchema = z.object({
+	line: z.literal('scout'),
+	specialization: ScoutSpecializationSchema.optional()
+});
+
+export const lvl5FighterSchema = z.enum(['fighter']);
+export const lvl10FighterSchema = z.enum(['brute', 'defender']);
+export const lvl5ScoutSchema = z.enum(['scout']);
+export const lvl10ScoutSchema = z.enum(['desperado', 'acrobat']);
+
+export const skillTupleSchema = z
+	.tuple([lvl5FighterSchema, lvl10FighterSchema])
+	.or(z.tuple([lvl5ScoutSchema, lvl10ScoutSchema]));
+
+export const skillSetSchema = z
+	.object({
+		lvl5: lvl5FighterSchema,
+		lvl10: lvl10FighterSchema.optional()
+	})
+	.or(
+		z.object({
+			lvl5: lvl5ScoutSchema,
+			lvl10: lvl10ScoutSchema.optional()
+		})
+	);
+
+export type SkillSet = z.infer<typeof skillSetSchema>;
+
+export const FighterLineSchema = z.object({
+	line: z.literal('fighter'),
+	specialization: z.optional(FighterSpecializationSchema)
+});
+export type FighterLine = z.infer<typeof FighterLineSchema>;
+
+export type ScoutLine = z.infer<typeof ScoutLineSchema>;
 
 export const combatProfessionLines = ['fighter', 'scout'] as const;
 

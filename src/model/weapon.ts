@@ -1,14 +1,21 @@
-import type { Stats } from './stat';
+import { z } from 'zod';
+import { statSchema } from './stat';
 
 export type WeaponType = 'sword' | 'dagger' | 'club';
 
-export type WeaponBase = {
-	name: string;
-	level: number;
-	damage: [number, number];
-	critStrikeChance: number;
-	stats?: Stats;
-	icon: string;
-};
+export const weaponBaseSchema = z.object({
+	name: z.string(),
+	level: z.number(),
+	damage: z.tuple([z.number(), z.number()]),
+	critStrikeChance: z.number(),
+	stats: z.optional(statSchema),
+	icon: z.string()
+});
 
-export type Weapon = WeaponBase & { type: WeaponType };
+export type WeaponBase = z.infer<typeof weaponBaseSchema>;
+
+export const weaponSchema = weaponBaseSchema.extend({
+	type: z.enum(['sword', 'dagger', 'club'])
+});
+
+export type Weapon = z.infer<typeof weaponSchema>;

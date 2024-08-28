@@ -34,10 +34,10 @@ test('gem perks are applied correctly', () => {
 });
 
 test('ring perks are applied correctly', () => {
-	const attackEnchValue = 3;
+	const attackEnchValue = '3';
 	expect(
 		getDamageValues(galaxySword, {
 			enchantment: { key: 'attack', optionName: attackEnchValue }
 		})[0]
-	).toBe(60 + attackEnchValue * 3);
+	).toBe(60 + Number(attackEnchValue) * 3);
 });

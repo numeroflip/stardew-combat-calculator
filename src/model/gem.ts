@@ -1,9 +1,14 @@
-import type { Stats } from './stat';
+import { keysOf } from '$lib/objectUtils';
+import { statSchema } from './stat';
 
-export type Gem = {
-	name: GemName;
-	stats: [Stats, Stats, Stats]; // 3 level
-};
+import { z } from 'zod';
 
-export const gemNames = ['ruby', 'aquamarine', 'jade', 'amethyst', 'emerald', 'topaz'] as const;
-export type GemName = (typeof gemNames)[number];
+export const gemNameSchema = z.enum(['ruby', 'aquamarine', 'jade', 'amethyst', 'emerald', 'topaz']);
+export const gemNames = keysOf(gemNameSchema.enum);
+export const gemSchema = z.object({
+	name: gemNameSchema,
+	stats: z.array(statSchema).length(3)
+});
+
+export type Gem = z.infer<typeof gemSchema>;
+export type GemName = z.infer<typeof gemNameSchema>;
