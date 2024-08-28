@@ -14,7 +14,9 @@
 	$: lvl5Skill = activeSkills.lvl5 ? skills[activeSkills.lvl5] : undefined;
 	$: lvl10Skill = activeSkills.lvl10 ? lvl10Skills[activeSkills.lvl10] : undefined;
 
-	$: step = $skillsStore.selected.lvl5 ? 'lvl10' : 'lvl5';
+	$: selectedLvl5 = $skillsStore.selected.lvl5;
+
+	$: step = selectedLvl5 ? 'lvl10' : 'lvl5';
 
 	let open = false;
 
@@ -43,7 +45,10 @@
 
 	function clearLvl10(mode: 'dirty' | 'selected' = 'selected') {
 		const setFn = mode === 'dirty' ? skillsStore.setDirty : skillsStore.setSelected;
-		setFn({ lvl10: undefined });
+		setFn({ lvl5: $skillsStore[mode].lvl5, lvl10: undefined });
+		if (mode === 'selected') {
+			step = 'lvl5';
+		}
 	}
 </script>
 
