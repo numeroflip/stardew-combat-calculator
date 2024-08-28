@@ -144,7 +144,7 @@
 </script>
 
 <div
-	class="lg:pixel-corners-border--lg haupt-grid bg container mx-auto flex h-full min-h-screen w-full max-w-screen-lg flex-col border-4 border-surface-900 bg-surface-300 px-0 lg:border-none dark:bg-surface-900"
+	class="lg:pixel-corners-border--lg haupt-grid bg container mx-auto flex h-full min-h-dvh w-full max-w-screen-lg flex-col border-4 border-surface-900 bg-surface-300 px-0 lg:border-none dark:bg-surface-900"
 >
 	{#if isOnClient}
 		<Header {handleShare} onSave={handleSave} {onLoad} />
