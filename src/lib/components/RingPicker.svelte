@@ -58,11 +58,8 @@
 		</Button>
 	</DropdownMenu.Trigger>
 
-	<DropdownMenu.Content
-		fitViewport
-		class="w-fit  min-w-0 rounded-none bg-white/50 text-3xl backdrop-blur-md"
-	>
-		<div class=" max-h-[inherit] cursor-pointer overflow-y-auto overflow-x-hidden">
+	<DropdownMenu.Content sideOffset={10} class="w-fit min-w-0 font-stardewTitle ">
+		<div class=" max-h-[50vh] cursor-pointer overflow-y-auto overflow-x-hidden">
 			<DropdownMenu.RadioGroup {value}>
 				<DropdownMenu.RadioItem
 					indicator={false}
@@ -70,7 +67,7 @@
 					on:click={() => removeRing()}
 					on:focusin={() => removeRing('dirty')}
 					on:focusout={() => removeRing('dirty')}
-					class="mr-0   flex gap-1 rounded-none p-2  pl-2 text-xl"
+					class="mr-0 flex cursor-pointer gap-1 rounded-none p-2  pl-2 text-xl"
 				>
 					<img
 						src={ringsData.topaz.icon}

@@ -2,7 +2,7 @@
 	import {
 		enchantmentStore,
 		gemsStore,
-		hasBlessingOfFangsStore,
+		blessingStore,
 		luckStore,
 		ringStore,
 		selectedCalculatorOptionsStore,
@@ -13,6 +13,9 @@
 	import { toast } from 'svelte-sonner';
 	import { calculatorOptionsSchema } from '$model/calculatorOptions';
 	import queryString from 'query-string';
+	import { Dialog, DialogTrigger } from '../ui/dialog';
+	import SaveConfigurationDialog from './SaveConfigurationDialog.svelte';
+	import LoadConfigDialog from './LoadConfigDialog.svelte';
 
 	function onReset() {
 		gemsStore.reset();
@@ -20,7 +23,7 @@
 		ringStore.reset();
 		gemsStore.reset();
 		luckStore.reset();
-		hasBlessingOfFangsStore.reset();
+		blessingStore.reset();
 		skillsStore.reset();
 		enchantmentStore.reset();
 	}
@@ -54,44 +57,16 @@
 	function parseJSON(data: string) {
 		return JSON.parse(data, (key, value) => (value === null ? undefined : value));
 	}
-
-	async function onLoad() {
-		const savedNames = getSavedOptionKeys();
-
-		const selection = await prompt(`pick a name from: ${savedNames.toString()}`);
-		if (selection && savedNames.includes(selection)) {
-			loadLocalStorageOption(selection);
-		}
-	}
-
-	async function handleSave() {
-		const name = await prompt('Give it a name');
-
-		if (!name) {
-			handleSave();
-			return;
-		}
-
-		localStorage.setItem(
-			`__named__option__${name}`,
-			JSON.stringify($selectedCalculatorOptionsStore)
-		);
-	}
-	function getSavedOptionKeys() {
-		let keys: string[] = [];
-
-		for (const key in localStorage) {
-			if (key.startsWith('__named__option__')) {
-				keys.push(key);
-			}
-		}
-		return keys;
-	}
 </script>
 
 <div class="flex justify-center gap-2 bg-surface-100/30 p-1 text-xl">
 	<button class=" bg-surface-300 px-3 py-1 shadow-theme-item" on:click={handleShare}>Share</button>
-	<button class=" bg-surface-300 px-3 py-1 shadow-theme-item" on:click={handleSave}>Save</button>
-	<button class=" bg-surface-300 px-3 py-1 shadow-theme-item" on:click={onLoad}>Load</button>
+
+	<SaveConfigurationDialog>
+		<button class=" bg-surface-300 px-3 py-1 shadow-theme-item">Save</button>
+	</SaveConfigurationDialog>
+	<LoadConfigDialog>
+		<button class=" bg-surface-300 px-3 py-1 shadow-theme-item">Load</button>
+	</LoadConfigDialog>
 	<button class=" bg-surface-300 px-3 py-1 shadow-theme-item" on:click={onReset}>Reset</button>
 </div>

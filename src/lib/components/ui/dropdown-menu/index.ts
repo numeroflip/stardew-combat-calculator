@@ -22,7 +22,7 @@ export const dropdownItemVariants = tv({
 			light:
 				'shadow-theme-item bg-surface-50 data-[highlighted]:bg-surface-400/50 data-[highlighted]:text-accent-foreground',
 			pixelated:
-				'pixel-corners bg-transparent data-[highlighted]:bg-surface-200 data-[highlighted]:text-accent-foreground'
+				'pixel-corners--sm md:pixel-corners bg-transparent data-[highlighted]:bg-surface-200 data-[highlighted]:text-accent-foreground'
 		}
 	},
 	defaultVariants: {
@@ -36,7 +36,7 @@ export const dropdownContentVariants = tv({
 		variant: {
 			default: 'bg-surface border-4 border-surface-900 shadow-theme',
 			light: 'bg-surface-100 border-4 border-surface-900 shadow-theme',
-			pixelated: 'pixel-border bg-surface-50/60 backdrop-blur-md'
+			pixelated: 'pixel-border text-surface-900 bg-surface-50/60 backdrop-blur-md'
 		}
 	}
 });

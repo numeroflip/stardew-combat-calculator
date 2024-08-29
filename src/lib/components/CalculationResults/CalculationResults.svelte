@@ -13,7 +13,7 @@
 		skillsStore,
 		ringStore,
 		luckStore,
-		hasBlessingOfFangsStore
+		blessingStore
 	} from '$lib/store/calculatorOptions';
 	import { weapons } from '$model/weapon.data';
 	import { skillSchema, type CalculatorOptions } from '$model/calculatorOptions';
@@ -48,7 +48,7 @@
 		]
 	};
 	$: luck = $luckStore.dirty ?? $luckStore.selected;
-	$: hasBlessingOfFangs = $hasBlessingOfFangsStore.dirty || $hasBlessingOfFangsStore.selected;
+	$: blessing = $blessingStore.dirty || $blessingStore.selected;
 
 	type Results = {
 		critDmg: { min: number; max: number };
@@ -94,7 +94,7 @@
 				profession: skills,
 				rings: rings,
 				luck: luck,
-				hasBlessingOfFangs
+				blessing: args.blessing
 			})
 		);
 		const normalAvg = formatNumber((min + max) / 2);
@@ -127,7 +127,7 @@
 			gems,
 			rings,
 			luck,
-			hasBlessingOfFangs
+			blessing
 		});
 	}
 

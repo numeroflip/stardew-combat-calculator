@@ -55,14 +55,14 @@
 	}
 </script>
 
-<div class="pixel-corners--sm md:pixel-corners flex w-full divide-x-2">
+<div class="pixel-corners--sm md:pixel-corners flex w-full justify-center divide-x-2">
 	<DropdownMenu.Root bind:open closeOnItemClick={step === 'lvl10'}>
 		<DropdownMenu.Trigger class="pixel-corners" asChild let:builder>
 			<Button
 				builders={[builder]}
 				on:click={() => clearLvl10()}
 				variant="lightBase"
-				class="relative grid h-12 min-w-36 shrink-0 grow basis-1 place-content-center rounded-none border-orange-900/20  px-4 pr-10   text-2xl md:h-16"
+				class="relative grid h-12 w-fit min-w-36  shrink-0 grow basis-1 place-content-center rounded-none border-orange-900/20  px-4 pr-10   text-2xl md:h-16"
 			>
 				{#if lvl5Skill}
 					<div class="flex items-center gap-2 text-2xl">
@@ -78,7 +78,7 @@
 			<Button
 				on:click={() => (open = true)}
 				variant="lightBase"
-				class="relative grid h-12 min-w-40 shrink-0 grow basis-1 place-content-center rounded-none border-orange-900/20 px-4   text-2xl md:h-16"
+				class="relative grid h-12 w-fit min-w-40 shrink-0 grow basis-1 place-content-center rounded-none border-orange-900/20 px-4   text-2xl md:h-16"
 				disabled={!selectedLvl5}
 			>
 				{#if lvl10Skill}
@@ -94,7 +94,7 @@
 		</DropdownMenu.Trigger>
 
 		<DropdownMenu.Content
-			class="w-fit  min-w-0 rounded-none p-2  text-3xl shadow-theme backdrop-blur-md transition-all"
+			class="w-fit  min-w-0 rounded-none p-2 font-stardewTitle text-3xl shadow-theme backdrop-blur-md transition-all"
 		>
 			{#if step === 'lvl5'}
 				<div class=" max-h-[60vh] overflow-y-auto overflow-x-hidden">
@@ -139,12 +139,14 @@
 							on:click={() => clearLvl10()}
 							aria-label="Back"
 							variant="ghost"
-							class="pixel-border left-0  w-fit bg-transparent text-amber-900"
-							><div class="rotate-180 text-3xl font-black">{'>'}</div></Button
+							class="pixel-border left-0 w-fit  bg-surface-100 bg-transparent  text-amber-900"
+							><div class="rotate-180 text-3xl font-black leading-3">
+								{'>'}
+							</div></Button
 						>
 					</div>
 
-					<div class="border-4 border-surface-900/50">
+					<div class="pixel-border flex flex-col gap-1 bg-surface-100 text-surface-900">
 						{#each keysOf(lvl5Skill.lvl10Skills) as _lvl10SkillKey}
 							{@const skill = lvl5Skill.lvl10Skills.hasOwnProperty(_lvl10SkillKey)
 								? /* @ts-expect-error */

@@ -48,20 +48,21 @@
 			</DropdownMenu.Trigger>
 		</div>
 
-		<DropdownMenu.Content fitViewport sideOffset={10} class="w-fit min-w-0 px-4 py-3">
-			<DropdownMenu.Group>
+		<DropdownMenu.Content fitViewport sideOffset={5} class="w-fit min-w-0">
+			<DropdownMenu.Group class="max-h-[40vh] overflow-y-auto overflow-x-hidden font-stardewTitle">
 				<DropdownMenu.Item
 					on:focusin={enchantmentStore.clearDirty}
 					on:focusout={enchantmentStore.clearDirty}
 					on:click={() => enchantmentStore.setSelected(undefined)}
-					class="mr-0  cursor-pointer "
+					class="mr-0 cursor-pointer  "
 				>
-					<div class="size-15 w-full place-content-center text-center text-xl">🚫</div>
+					<div class="size-12 w-full place-content-center text-center text-xl">🚫</div>
 				</DropdownMenu.Item>
 				{#each keysOf(innateEnchantments.guaranteed) as enchantmentKey}
 					{@const _enchantment = innateEnchantments.guaranteed[enchantmentKey]}
 					<DropdownMenu.Separator class="bg-surface-200" />
-					<DropdownMenu.Label class="text-xl text-amber-900">{_enchantment.name}</DropdownMenu.Label
+					<DropdownMenu.Label class="text-xl font-normal text-amber-900"
+						>{_enchantment.name}</DropdownMenu.Label
 					>
 					<div class="flex gap-2">
 						{#each _enchantment.options as option}
@@ -77,7 +78,7 @@
 										key: enchantmentKey,
 										optionName: option.name
 									})}
-								class=" mr-0  size-14 cursor-pointer p-2 text-center  text-xl"
+								class=" mr-0  size-12 cursor-pointer p-2 text-center  text-xl"
 							>
 								<div class="w-full font-stardewTitle">
 									<span>+</span>{option.name}

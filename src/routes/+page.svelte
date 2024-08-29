@@ -14,13 +14,12 @@
 	import { onMount, tick } from 'svelte';
 	import {
 		setCalculatorOptions,
-		hasBlessingOfFangsStore,
+		blessingStore,
 		selectedCalculatorOptionsStore
 	} from '$lib/store/calculatorOptions';
 	import { get } from 'svelte/store';
-
-	export const ssr = false;
-	const DEFAULT_OPTIONS_KEY = 'options';
+	import { calculatorStorage } from '$lib/calculatorOptionsStorage';
+	import BlessingSelector from '$lib/components/BlessingSelector/BlessingSelector.svelte';
 
 	let initialized = false;
 
@@ -28,7 +27,7 @@
 	$: options = $selectedCalculatorOptionsStore;
 
 	onMount(() => {
-		const initialOptionsFromStorage = getOptionsFromStorage();
+		const initialOptionsFromStorage = calculatorStorage.loadOptions();
 		const initialOptionsFromQuery = getOptionsFromQueryParams();
 		const initialOptions = initialOptionsFromQuery || initialOptionsFromStorage;
 
@@ -38,23 +37,6 @@
 
 		initialized = true;
 	});
-
-	function getOptionsFromStorage(key: string = DEFAULT_OPTIONS_KEY): CalculatorOptions | undefined {
-		const valueStr = localStorage.getItem(key);
-
-		if (!valueStr) {
-			return;
-		}
-
-		const valueParsed = parseJSON(valueStr);
-		const valueValidated = calculatorOptionsSchema.safeParse(valueParsed);
-
-		if (valueValidated.error) {
-			console.warn(valueValidated.error.message);
-		}
-
-		return valueValidated.data;
-	}
 
 	function getOptionsFromQueryParams(): CalculatorOptions | undefined {
 		const queryRaw = queryString.parse(location.search)?.options;
@@ -76,7 +58,7 @@
 
 	$: {
 		if (typeof window !== 'undefined' && initialized) {
-			localStorage.setItem(DEFAULT_OPTIONS_KEY, JSON.stringify($selectedCalculatorOptionsStore));
+			calculatorStorage.saveOptions($selectedCalculatorOptionsStore);
 		}
 	}
 
@@ -151,27 +133,8 @@
 
 					<!-- Blessing -->
 					<section class="flex items-center justify-between gap-5">
-						<label for="blessing-of-fangs"><h3 class="text-2xl">Blessing of Fangs</h3></label>
-
-						<label
-							class={`${buttonVariants({
-								variant: 'pixelatedDynamic',
-								size: 'unset'
-							})} ${$hasBlessingOfFangsStore.selected ? '' : 'opacity-30 grayscale'} grid size-12 cursor-pointer place-content-center md:size-16`}
-							for="blessing-of-fangs"
-						>
-							<img
-								src="https://stardewvalleywiki.com/mediawiki/images/a/af/Blessing_Of_Fangs.png"
-								alt="blessing of fangs"
-								class="size-8 object-cover md:size-10"
-							/>
-						</label>
-						<input
-							type="checkbox"
-							bind:checked={$hasBlessingOfFangsStore.selected}
-							class="sr-only"
-							id="blessing-of-fangs"
-						/>
+						<h3 class="text-2xl">Statue Of Blessings</h3>
+						<BlessingSelector />
 					</section>
 				</div>
 			</section>

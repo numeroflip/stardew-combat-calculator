@@ -26,13 +26,17 @@ const ringsSchema = z.object({
 	right: z.array(ringNameSchema.optional()).length(2).optional()
 });
 
+const blessingSchema = z.enum(['fangs', 'luck', 'speed']);
+
+export type Blessing = z.infer<typeof blessingSchema>;
+
 export const calculatorOptionsSchema = z.object({
 	weapon: z.string(),
 	enchantment: selectedEnchantmentSchema.optional(),
 	skills: skillSchema.optional(),
 	gems: z.array(gemNameSchema.optional()).length(3).optional(),
 	rings: ringsSchema.optional(),
-	hasBlessingOfFangs: z.boolean().optional(),
+	blessing: blessingSchema.optional(),
 	luck: z.number().optional()
 });
 

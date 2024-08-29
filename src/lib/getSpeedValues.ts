@@ -24,7 +24,8 @@ export function getSpeedValues(options: CalculatorOptions): number {
 
 	const baseSpeed = BASE_SPEED_BY_WEAPON_TYPE[weapon.type];
 
-	const extraWeaponSpeed = speedLvlToMilliseconds(weapon.stats?.speed ?? 0);
+	const speedFromWeaponStats = speedLvlToMilliseconds(weapon.stats?.speed ?? 0);
+
 	const uniqueGems = Array.from(new Set(options.gems || [])).filter(Boolean);
 
 	const gemEnchantmentSpeedEffectsArr = uniqueGems
@@ -49,7 +50,7 @@ export function getSpeedValues(options: CalculatorOptions): number {
 		})
 		.filter(Boolean);
 
-	const speedLvlAdditionsGem = gemEnchantmentSpeedEffectsArr.reduce((a, b) => a + b, 0);
+	const speedFromGems = gemEnchantmentSpeedEffectsArr.reduce((a, b) => a + b, 0);
 
 	const secondaryEnchantmentSpeed =
 		options.enchantment?.key === 'speed'
@@ -69,8 +70,11 @@ export function getSpeedValues(options: CalculatorOptions): number {
 		.filter(Boolean)
 		.reduce((a, b) => a + b, 0);
 
+	const speedFromBlessing = options.blessing === 'speed' ? speedLvlToMilliseconds(0.5) : 0;
+
 	const multiplier = 1 - (speedRingEffects + secondaryEnchantmentSpeed);
-	const result = (baseSpeed - extraWeaponSpeed - speedLvlAdditionsGem) * multiplier;
+	const result =
+		(baseSpeed - speedFromWeaponStats - speedFromBlessing - speedFromGems) * multiplier;
 	return result < 200 ? 200 : result;
 }
 

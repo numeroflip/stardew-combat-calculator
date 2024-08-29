@@ -2,6 +2,7 @@
  * base damage × (3 + Crit. Power / 50)
  */
 
+import type { Blessing } from '$model/calculatorOptions';
 import { innateEnchantments, type SelectedEnchantment } from '../model/enchantment';
 import type { GemName } from '../model/gem';
 import type { SelectedProfession } from '../model/profession';
@@ -11,7 +12,7 @@ import type { Weapon } from '../model/weapon';
 type Options = {
 	gems?: GemName[];
 	rings?: Ring[];
-	hasBlessingOfFangs?: boolean;
+	blessing?: Blessing;
 	profession?: SelectedProfession;
 	enchantment?: SelectedEnchantment;
 	luck?: number;
@@ -25,7 +26,7 @@ export function getCritChance(
 		luck = 0,
 		profession = undefined,
 		enchantment = undefined,
-		hasBlessingOfFangs: blessingOfFangs = false
+		blessing = undefined
 	}: Options = {}
 ) {
 	let critChance = weapon.critStrikeChance;
@@ -55,7 +56,7 @@ export function getCritChance(
 	critChance = critChance * (1 + (enchantmentCritChance + ringCritChance));
 
 	// Blessing of Fangs
-	if (blessingOfFangs) {
+	if (blessing === 'fangs') {
 		critChance += 0.1;
 	}
 

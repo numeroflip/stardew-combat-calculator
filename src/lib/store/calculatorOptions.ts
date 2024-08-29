@@ -1,4 +1,4 @@
-import type { CalculatorOptions } from '$model/calculatorOptions';
+import type { Blessing, CalculatorOptions } from '$model/calculatorOptions';
 import type { SelectedEnchantment } from '$model/enchantment';
 
 import type { GemName } from '$model/gem';
@@ -19,7 +19,7 @@ function defineRings(
 
 const DEFAULT_OPTIONS: Omit<
 	Required<CalculatorOptions>,
-	'weapon' | 'gems' | 'rings' | 'enchantment'
+	'weapon' | 'gems' | 'rings' | 'enchantment' | 'blessing'
 > & {
 	weapon: Weapon;
 	gems: (GemName | undefined)[];
@@ -28,6 +28,7 @@ const DEFAULT_OPTIONS: Omit<
 		left: (RingName | undefined)[];
 		right: (RingName | undefined)[];
 	};
+	blessing: Blessing | undefined;
 } = {
 	weapon: weapons[0],
 	gems: [undefined, undefined, undefined],
@@ -38,11 +39,16 @@ const DEFAULT_OPTIONS: Omit<
 		lvl10: undefined
 	},
 	luck: 0,
-	hasBlessingOfFangs: false
+	blessing: undefined
 };
 
+export const lastLoadedOptionsKey = writable<string | undefined>();
+
 export const weaponNameStore = createOption(DEFAULT_OPTIONS.weapon.name, undefined);
-export const hasBlessingOfFangsStore = createOption(false, false);
+export const blessingStore = createOption<Blessing | undefined, Blessing | undefined>(
+	undefined,
+	undefined
+);
 export const gemsStore = createOption(DEFAULT_OPTIONS.gems, DEFAULT_OPTIONS.gems);
 export const ringStore = createOption(DEFAULT_OPTIONS.rings, DEFAULT_OPTIONS.rings);
 export const skillsStore = createOption(DEFAULT_OPTIONS.skills, DEFAULT_OPTIONS.skills);
@@ -57,15 +63,7 @@ export const weaponStore = derived(weaponNameStore, ({ selected, dirty }) => {
 });
 
 export const calculatorOptionsStore = derived(
-	[
-		weaponNameStore,
-		hasBlessingOfFangsStore,
-		gemsStore,
-		skillsStore,
-		luckStore,
-		enchantmentStore,
-		ringStore
-	],
+	[weaponNameStore, blessingStore, gemsStore, skillsStore, luckStore, enchantmentStore, ringStore],
 	([weaponName, hasBlessingOfFangs, gems, skills, luck, enchantment, rings]) => {
 		return {
 			weapon: weaponName,
@@ -81,27 +79,34 @@ export const calculatorOptionsStore = derived(
 
 export function setCalculatorOptions(options: CalculatorOptions) {
 	weaponNameStore.setSelected(options.weapon);
-	if (typeof options.hasBlessingOfFangs === 'boolean') {
-		hasBlessingOfFangsStore.setSelected(options.hasBlessingOfFangs);
+	weaponNameStore.clearDirty();
+	if (typeof options.blessing === 'string') {
+		blessingStore.setSelected(options.blessing);
+		blessingStore.clearDirty();
 	}
 	if (options.gems) {
 		gemsStore.setSelected(options.gems);
+		gemsStore.clearDirty();
 	}
 
 	if (options.skills) {
 		skillsStore.setSelected(options.skills);
+		skillsStore.clearDirty();
 	}
 
 	if (typeof options.luck === 'number') {
 		luckStore.setSelected(options.luck);
+		luckStore.clearDirty();
 	}
 
 	if (options.enchantment) {
 		enchantmentStore.setSelected(options.enchantment);
+		enchantmentStore.clearDirty();
 	}
 
 	if (options.rings) {
 		ringStore.setSelected(defineRings(options.rings?.left, options.rings?.right));
+		ringStore.clearDirty();
 	}
 }
 
