@@ -80,74 +80,18 @@
 		}
 	}
 
-	function handleShare() {
-		const params = queryString.stringify({
-			options: JSON.stringify($selectedCalculatorOptionsStore)
-		});
-		const link = `${window.location.origin}?${params}`;
-
-		if (navigator?.share) {
-			navigator.share({ text: link });
-		} else {
-			navigator.clipboard.writeText(link);
-			alert('The share link is copied to the clipboard');
-		}
-	}
-
-	async function handleSave() {
-		const name = await prompt('Give it a name');
-
-		if (!name) {
-			handleSave();
-			return;
-		}
-
-		localStorage.setItem(
-			`__named__option__${name}`,
-			JSON.stringify($selectedCalculatorOptionsStore)
-		);
-	}
-	function getSavedOptionKeys() {
-		let keys: string[] = [];
-
-		for (const key in localStorage) {
-			if (key.startsWith('__named__option__')) {
-				keys.push(key);
-			}
-		}
-		return keys;
-	}
-
 	function parseJSON(data: string) {
 		return JSON.parse(data, (key, value) => (value === null ? undefined : value));
 	}
-	function loadLocalStorageOption(key: string) {
-		const loadedOptions = localStorage.getItem(key);
-		if (!loadedOptions) {
-			return;
-		}
-		const parsedOptions = calculatorOptionsSchema.safeParse(parseJSON(loadedOptions));
 
-		if (parsedOptions.data) {
-			setCalculatorOptions(parsedOptions.data);
-		}
-	}
-	async function onLoad() {
-		const savedNames = getSavedOptionKeys();
-
-		const selection = await prompt(`pick a name from: ${savedNames.toString()}`);
-		if (selection && savedNames.includes(selection)) {
-			loadLocalStorageOption(selection);
-		}
-	}
 	const isOnClient = typeof window !== 'undefined';
 </script>
 
 <div
-	class="lg:pixel-corners-border--lg haupt-grid bg container mx-auto flex h-full min-h-dvh w-full max-w-screen-lg flex-col border-surface-900 bg-surface-300 px-0 md:min-h-0 md:border-4 lg:border-none dark:bg-surface-900"
+	class="lg:pixel-corners-border--lg haupt-grid bg container mx-auto flex h-full min-h-dvh w-full max-w-screen-lg flex-col border-surface-900 bg-surface-300 px-0 dark:bg-surface-900 md:min-h-0 md:border-4 lg:border-none"
 >
 	{#if isOnClient}
-		<Header {handleShare} onSave={handleSave} {onLoad} />
+		<Header />
 
 		<main
 			class="flex h-full w-full grow flex-col gap-5 overflow-y-auto bg-gradient-to-b from-[#144683] to-[#258BF0] px-1 py-5 shadow-theme [grid-area:options] dark:from-surface-950/50 dark:to-surface-950"

@@ -1,35 +1,5 @@
-<script lang="ts">
-	import {
-		enchantmentStore,
-		gemsStore,
-		hasBlessingOfFangsStore,
-		luckStore,
-		ringStore,
-		skillsStore,
-		weaponNameStore,
-		weaponStore
-	} from '$lib/store/calculatorOptions';
-
-	type $$Props = {
-		handleShare: () => void;
-		onSave: () => void;
-		onLoad: () => void;
-	};
-
-	export let onLoad;
-	export let onSave;
-	export let handleShare: $$Props['handleShare'];
-
-	function onReset() {
-		gemsStore.reset();
-		weaponNameStore.reset();
-		ringStore.reset();
-		gemsStore.reset();
-		luckStore.reset();
-		hasBlessingOfFangsStore.reset();
-		skillsStore.reset();
-		enchantmentStore.reset();
-	}
+<script>
+	import Menu from './Menu.svelte';
 </script>
 
 <header
@@ -40,11 +10,5 @@
 	>
 		Stardew Combat calculator
 	</h1>
-	<div class="flex justify-center gap-2 bg-surface-100/30 p-1 text-xl">
-		<button class=" bg-surface-300 px-3 py-1 shadow-theme-item" on:click={handleShare}>Share</button
-		>
-		<button class=" bg-surface-300 px-3 py-1 shadow-theme-item" on:click={onSave}>Save</button>
-		<button class=" bg-surface-300 px-3 py-1 shadow-theme-item" on:click={onLoad}>Load</button>
-		<button class=" bg-surface-300 px-3 py-1 shadow-theme-item" on:click={onReset}>Reset</button>
-	</div>
+	<Menu />
 </header>
