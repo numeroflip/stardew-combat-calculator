@@ -51,7 +51,7 @@
 	</DropdownMenu.Trigger>
 
 	<DropdownMenu.Content sideOffset={10} class=" w-fit min-w-0 ">
-		<DropdownMenu.Group class="max-h-[40vh] overflow-y-auto ">
+		<DropdownMenu.Group class="max-h-[40vh] overflow-y-auto font-stardewTitle ">
 			<DropdownMenu.Item
 				on:click={() => removeGem('selected')}
 				on:focusin={() => removeGem('dirty')}

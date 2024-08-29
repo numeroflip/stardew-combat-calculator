@@ -4,7 +4,7 @@
 	import WeaponPicker from '$lib/components/WeaponPicker.svelte';
 	import EnchantmentPicker from '$lib/components/EnchantmentPicker.svelte';
 	import SkillPicker from '$lib/components/SkillPicker.svelte';
-	import CalculationResults from '$lib/components/CalculationResults.svelte';
+	import CalculationResults from '$lib/components/CalculationResults/CalculationResults.svelte';
 	import LuckFromFoodPicker from '$lib/components/LuckFromFoodPicker.svelte';
 
 	import queryString from 'query-string';
@@ -144,13 +144,13 @@
 </script>
 
 <div
-	class="lg:pixel-corners-border--lg haupt-grid bg container mx-auto flex h-full min-h-dvh w-full max-w-screen-lg flex-col border-4 border-surface-900 bg-surface-300 px-0 md:min-h-0 lg:border-none dark:bg-surface-900"
+	class="lg:pixel-corners-border--lg haupt-grid bg container mx-auto flex h-full min-h-dvh w-full max-w-screen-lg flex-col border-surface-900 bg-surface-300 px-0 md:min-h-0 md:border-4 lg:border-none dark:bg-surface-900"
 >
 	{#if isOnClient}
 		<Header {handleShare} onSave={handleSave} {onLoad} />
 
 		<main
-			class="flex h-full w-full grow flex-col gap-5 overflow-y-auto bg-gradient-to-b from-[#144683] to-[#258BF0] px-2 py-5 shadow-theme [grid-area:options] dark:from-surface-950/50 dark:to-surface-950"
+			class="flex h-full w-full grow flex-col gap-5 overflow-y-auto bg-gradient-to-b from-[#144683] to-[#258BF0] px-1 py-5 shadow-theme [grid-area:options] dark:from-surface-950/50 dark:to-surface-950"
 		>
 			<section class="pixel-border flex grow flex-col bg-surface-200 p-3 pt-2 md:max-w-[380px]">
 				<h3 class="mb-2 text-center text-3xl lg:block">Weapon</h3>

@@ -27,6 +27,6 @@
 	></div>
 	<div
 		style={`transform: translateX(-${100 - (100 * (baseValue ?? 0)) / (max ?? 1)}%)`}
-		class="absolute inset-0 top-0 z-10 h-full w-full bg-transparent shadow-theme transition-all"
+		class="absolute inset-0 top-0 z-10 h-full w-full bg-black/10 shadow-theme transition-all"
 	/>
 </ProgressPrimitive.Root>

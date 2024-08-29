@@ -89,22 +89,22 @@
 		</Button>
 	</DropdownMenu.Trigger>
 
-	<DropdownMenu.Content
-		sideOffset={20}
-		class="relative w-fit min-w-80 bg-surface-100 p-0 backdrop-blur-md      "
-	>
+	<DropdownMenu.Content sideOffset={1} class="relative w-fit min-w-80 bg-surface-100 p-0  ">
 		<Tabs.Root bind:value={activeTab}>
 			<Tabs.List
 				class=" flex h-fit gap-1 rounded-none border-b-4 border-surface-900  bg-surface-200"
 			>
 				{#each tabs as tab}
 					<Tabs.Trigger class="bg-transparent font-stardewTitle text-xl" value={tab.value}
-						>{tab.name} <img src={tab.icon} alt={tab.name} class=" size-9" /></Tabs.Trigger
+						>{tab.name}
+						<img src={tab.icon} alt={tab.name} class=" size-8 p-1 md:size-8" /></Tabs.Trigger
 					>
 				{/each}
 			</Tabs.List>
 
-			<DropdownMenu.Group class="flex max-h-[40vh] w-full gap-4 overflow-y-auto p-0">
+			<DropdownMenu.Group
+				class="flex max-h-[40vh] w-full gap-4 overflow-y-auto  p-0 backdrop-blur-md"
+			>
 				{#each tabs as tab}
 					<Tabs.Content class="w-full" value={tab.value}>
 						{#each tab.list as _weapon}
@@ -114,7 +114,11 @@
 								class="mr-0 flex w-full cursor-pointer gap-4 p-2 pl-2"
 							>
 								<div class=" relative shrink-0 p-0">
-									<img src={_weapon.icon} alt={_weapon.name} class=" size-9 object-cover" />
+									<img
+										src={_weapon.icon}
+										alt={_weapon.name}
+										class=" size-7 object-cover md:size-9"
+									/>
 									<span
 										class="absolute -bottom-1 -right-2 block p-1 text-sm leading-3 text-surface-900/30"
 										>{_weapon.level}</span

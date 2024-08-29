@@ -23,6 +23,9 @@
 	function selectLvl5(value: LVL5Skill, mode: 'selected' | 'dirty' = 'selected') {
 		const setFn = mode === 'dirty' ? skillsStore.setDirty : skillsStore.setSelected;
 		setFn({ lvl5: value });
+		if (mode === 'selected') {
+			step = 'lvl10';
+		}
 	}
 
 	function clearLvl5(mode: 'dirty' | 'selected' = 'selected') {
@@ -52,14 +55,14 @@
 	}
 </script>
 
-<div class="pixel-corners flex w-full divide-x-2">
+<div class="pixel-corners--sm md:pixel-corners flex w-full divide-x-2">
 	<DropdownMenu.Root bind:open closeOnItemClick={step === 'lvl10'}>
 		<DropdownMenu.Trigger class="pixel-corners" asChild let:builder>
 			<Button
 				builders={[builder]}
 				on:click={() => clearLvl10()}
 				variant="lightBase"
-				class="relative grid h-14 min-w-36 shrink-0 grow basis-1 place-content-center rounded-none border-orange-900/20  px-4 pr-10   text-3xl md:h-16"
+				class="relative grid h-12 min-w-36 shrink-0 grow basis-1 place-content-center rounded-none border-orange-900/20  px-4 pr-10   text-2xl md:h-16"
 			>
 				{#if lvl5Skill}
 					<div class="flex items-center gap-2 text-2xl">
@@ -75,7 +78,7 @@
 			<Button
 				on:click={() => (open = true)}
 				variant="lightBase"
-				class="relative grid h-14 min-w-40 shrink-0 grow basis-1 place-content-center rounded-none border-orange-900/20 px-4   text-3xl md:h-16"
+				class="relative grid h-12 min-w-40 shrink-0 grow basis-1 place-content-center rounded-none border-orange-900/20 px-4   text-2xl md:h-16"
 				disabled={!selectedLvl5}
 			>
 				{#if lvl10Skill}
