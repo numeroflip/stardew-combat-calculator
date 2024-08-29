@@ -1,7 +1,7 @@
 import { expect, test } from 'vitest';
 import { weapons } from '../model/weapon.data';
 import { getCritMultiplier } from './getCritMultiplier';
-import { rings } from '../model/ring.data';
+import { ringsData } from '../model/ring.data';
 
 // Values based on https://stardewvalleywiki.com/Crit._Power
 
@@ -32,7 +32,7 @@ test("Lava Katana's  + 3 gem + 2 ring + enchantment", () => {
 	expect(
 		getCritMultiplier(lavaKatana, {
 			gems: ['jade', 'jade', 'jade'],
-			rings: [rings.jade, rings.jade],
+			rings: [ringsData.jade, ringsData.jade],
 			enchantment: { key: 'critPower', optionName: '75' }
 		})
 	).toBe(10.26);
@@ -42,7 +42,7 @@ test("Lava Katana's  + 3 gem + 2 ring + enchantment + desperado", () => {
 	expect(
 		getCritMultiplier(lavaKatana, {
 			gems: ['jade', 'jade', 'jade'],
-			rings: [rings.jade, rings.jade],
+			rings: [ringsData.jade, ringsData.jade],
 			profession: { lvl5: 'scout', lvl10: 'desperado' },
 			enchantment: { key: 'critPower', optionName: '75' }
 		})

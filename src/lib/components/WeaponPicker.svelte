@@ -4,6 +4,7 @@
 	import { swords, clubs, daggers, weapons } from '$model/weapon.data';
 	import * as Tabs from '$lib/components/ui/tabs';
 	import { weaponNameStore } from '$lib/store/calculatorOptions';
+	import clsx from 'clsx';
 
 	const orderedSwords = swords.toSorted((a, b) => b.level - a.level);
 	const orderedDaggers = daggers.toSorted((a, b) => b.level - a.level);
@@ -40,6 +41,8 @@
 			list: orderedClubs
 		}
 	];
+
+	const imageSize = 'md:size-15 size-9';
 </script>
 
 <DropdownMenu.Root>
@@ -55,7 +58,7 @@
 						<img
 							src={weapon.icon}
 							alt={weapon.name}
-							class=" md:size-15 size-12 content-center object-cover"
+							class={clsx(imageSize, ' md:size-15 size-12 content-center object-cover')}
 						/>
 						<span class="absolute -bottom-4 -right-2 text-lg opacity-70">{weapon.level}</span>
 					</div>
@@ -78,20 +81,6 @@
 
 							<div class="text-end">
 								{weapon.damage[0]}-{weapon.damage[1]}
-							</div>
-
-							<div>
-								<div class="flex items-center gap-2">
-									<img
-										src="https://stardewvalleywiki.com/mediawiki/images/thumb/0/06/Crit._Power.png/24px-Crit._Power.png"
-										alt="Base crit chance"
-										class="size-5 object-cover"
-									/>
-									Crit:
-								</div>
-							</div>
-							<div class="text-end">
-								{weapon.critStrikeChance * 100}%
 							</div>
 						</div>
 					</div>

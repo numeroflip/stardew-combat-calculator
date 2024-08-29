@@ -31,7 +31,8 @@
 				<Button
 					disabled={!canBeEnchanted}
 					builders={[builder]}
-					class="grid  place-content-center rounded-none  border-none px-5  py-7 text-2xl"
+					variant="pixelatedDynamic"
+					class="grid  place-content-center rounded-none  border-none px-5  py-6 text-xl md:py-7 md:text-2xl"
 				>
 					{#if !canBeEnchanted}
 						<div>Not Available</div>

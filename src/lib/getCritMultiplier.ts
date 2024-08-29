@@ -50,5 +50,14 @@ export function getCritMultiplier(
 		multiplier *= 2;
 	}
 
+	return calculateMultiplier(critPower, multiplier);
+}
+
+export function getBaseCritMultiplier(weapon: Weapon) {
+	const critPower = weapon.stats?.critPower ?? 0;
+	return calculateMultiplier(critPower);
+}
+
+function calculateMultiplier(critPower: number, multiplier = 1) {
 	return (3 + critPower / 50) * multiplier;
 }

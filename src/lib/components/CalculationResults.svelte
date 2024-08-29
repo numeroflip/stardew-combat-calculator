@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { formatNumber } from '$lib/formatNumber';
-	import { getCritChance } from '$lib/getCritChance';
-	import { getCritMultiplier } from '$lib/getCritMultiplier';
+	import { getCritChance, getWeaponBaseCritChance } from '$lib/getCritChance';
+	import { getBaseCritMultiplier, getCritMultiplier } from '$lib/getCritMultiplier';
 	import { getDamageValues } from '$lib/getDamageValues';
-	import { rings as ringData } from '$model/ring.data';
+	import { ringsData as ringData } from '$model/ring.data';
 	import clsx from 'clsx';
 	import Progress from './ui/progress/progress.svelte';
 	import {
@@ -17,10 +17,15 @@
 	} from '$lib/store/calculatorOptions';
 	import { weapons } from '$model/weapon.data';
 	import { skillSchema, type CalculatorOptions } from '$model/calculatorOptions';
+	import { getSpeedValues, weaponBaseSpeed } from '$lib/getSpeedValues';
 
 	$: activeWeaponName = $weaponNameStore.dirty || $weaponNameStore.selected;
 	$: weapon = weapons.find((w) => w.name === activeWeaponName) || weapons[0];
-	$: enchantment = $enchantmentStore.dirty || $enchantmentStore.selected;
+	$: canHaveSecondaryEnchantment =
+		weapon.level < 15 && !weapon.name.includes('Galaxy') && !weapon.name.includes('Infinity');
+	$: enchantment = canHaveSecondaryEnchantment
+		? $enchantmentStore.dirty || $enchantmentStore.selected
+		: undefined;
 	$: gems = [
 		$gemsStore.dirty[0] || $gemsStore.selected[0],
 		$gemsStore.dirty[1] || $gemsStore.selected[1],
@@ -50,6 +55,7 @@
 		normalAvg: number;
 		avgWithCrits: number;
 		dmg: { min: number; max: number };
+		speed: number;
 	};
 
 	function getResults(args: CalculatorOptions): Results {
@@ -92,13 +98,16 @@
 		const normalAvg = formatNumber((min + max) / 2);
 		const avgWithCrits = formatNumber(critAvg * critChance + normalAvg * (1 - critChance));
 
+		const speed = getSpeedValues(args);
+
 		return {
 			dmg: { min, max },
 			critDmg: { min: critMin, max: critMax },
 			critMultiplier,
 			critChance,
 			normalAvg,
-			avgWithCrits
+			avgWithCrits,
+			speed
 		};
 	}
 
@@ -134,16 +143,16 @@
 </script>
 
 <div
-	class="flex flex-col gap-1 divide-red-600 border-t-3 border-surface-900 text-2xl md:max-w-80 md:gap-2"
+	class="flex flex-col gap-1 border-t-3 border-surface-900 bg-surface-200 py-1 text-xl md:max-w-80 md:gap-2 md:border-t-0"
 >
 	<section
 		class={clsx(
-			'relative  h-fit px-3 py-1 ',
-			'flex  w-full flex-col gap-2 bg-surface-100   text-surface-950 md:shadow-theme'
+			'relative  h-fit px-3 py-0 ',
+			'flex  w-full flex-col gap-2    text-surface-950 md:shadow-theme'
 		)}
 	>
 		<div class="z-10 flex items-center gap-2">
-			<div class="align-center flex flex-shrink-0 items-center">
+			<div class="align-center flex flex-shrink-0 items-center gap-2">
 				<img
 					src="https://stardewvalleywiki.com/mediawiki/images/thumb/0/00/Attack.png/24px-Attack.png"
 					alt="attack"
@@ -155,7 +164,8 @@
 				<Progress
 					max={MAX_DMG}
 					value={results.dmg.max}
-					class="-z-10 h-full rounded-none border-surface-900/10 bg-surface-800/20  "
+					baseValue={weapon.damage[1]}
+					class="-z-10 h-full rounded-none border-surface-900/10 bg-transparent  "
 					barClass="bg-red-600/30"
 				/>
 			</div>
@@ -165,10 +175,8 @@
 		</div>
 	</section>
 
-	<section
-		class="relative z-10 flex items-center gap-2 bg-surface-100 px-3 py-1 text-amber-900 md:shadow-theme"
-	>
-		<div class="align-center flex flex-shrink-0 items-center">
+	<section class="relative z-10 flex items-center px-3 py-0 text-amber-900 md:shadow-theme">
+		<div class="align-center flex flex-shrink-0 items-center gap-2">
 			<img
 				src="https://stardewvalleywiki.com/mediawiki/images/thumb/0/06/Crit._Power.png/24px-Crit._Power.png"
 				alt="crit"
@@ -177,11 +185,12 @@
 			Crit: (x{results.critMultiplier})
 		</div>
 
-		<div class="absolute bottom-0 left-0 right-0 top-0">
+		<div class="absolute bottom-0 left-0 right-0 top-0 gap-2">
 			<Progress
 				max={3000}
 				value={results.critDmg.min}
-				class="-z-10 h-full rounded-none border-surface-900/10 bg-surface-800/20  "
+				baseValue={weapon.damage[0] * getBaseCritMultiplier(weapon)}
+				class="-z-10 h-full rounded-none border-surface-900/10 bg-transparent   "
 				barClass="bg-green-600/30"
 			/>
 		</div>
@@ -190,14 +199,22 @@
 		</div>
 	</section>
 	<section
-		class="relative z-10 mb-2 flex items-center gap-2 bg-surface-100 px-3 py-0 text-xl text-amber-900/80 md:shadow-theme"
+		class="relative z-10 flex items-center gap-2 px-3 py-0 text-amber-900/80 md:shadow-theme"
 	>
-		Crit chance:
+		<div class="align-center flex flex-shrink-0 items-center gap-2">
+			<img
+				src="https://stardewvalleywiki.com/mediawiki/images/thumb/a/a9/Crit._Chance.png/24px-Crit._Chance.png"
+				alt="crit chance"
+				class="mr-1 size-4 object-cover"
+			/>
+			Crit chance:
+		</div>
 		<div class="absolute bottom-0 left-0 right-0 top-0">
 			<Progress
 				max={100}
+				baseValue={getWeaponBaseCritChance(weapon) * 100}
 				value={results.critChance * 100}
-				class="-z-10 h-full rounded-none  border-surface-900/10 bg-surface-800/20  "
+				class="-z-10 h-full rounded-none border-surface-900/10 bg-transparent   "
 				barClass="bg-blue-400/30"
 			/>
 		</div>
@@ -205,6 +222,34 @@
 			{formatNumber(results.critChance * 100, 1)}%
 		</div>
 	</section>
+
+	<section
+		class="relative z-10 flex items-center gap-2 px-3 py-0 text-amber-900/80 md:shadow-theme"
+	>
+		<div class="align-center flex flex-shrink-0 items-center gap-2">
+			<img
+				src="https://stardewvalleywiki.com/mediawiki/images/thumb/2/26/Speed_w.png/24px-Speed_w.png"
+				alt="speed"
+				class="size-5 object-cover"
+			/>
+
+			Speed
+		</div>
+
+		<div class="absolute bottom-0 left-0 right-0 top-0">
+			<Progress
+				max={5.5}
+				value={1000 / results.speed}
+				baseValue={1000 / weaponBaseSpeed(weapon)}
+				class="-z-10 h-full rounded-none  border-surface-900/10 bg-transparent  "
+				barClass="bg-surface-700/20"
+			/>
+		</div>
+		<div class="ml-auto">
+			{formatNumber(1000 / results.speed, 1)} hits/s
+		</div>
+	</section>
+
 	<!-- <section
 		class="md:pixel-border relative z-10 flex h-fit w-full flex-col gap-2 bg-surface-100 px-3 py-1 text-amber-900/60 md:shadow-theme"
 	>

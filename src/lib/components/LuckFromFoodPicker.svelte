@@ -15,24 +15,25 @@
 <DropdownMenu.Root>
 	<DropdownMenu.Trigger asChild let:builder>
 		<Button
+			variant="lightBase"
 			builders={[builder]}
-			class="grid size-16  cursor-pointer place-content-center p-4 text-3xl"
+			class="pixel-corners--sm grid size-12 cursor-pointer  place-content-center p-4 text-3xl md:size-16"
 		>
 			{shownLuck}
 		</Button>
 	</DropdownMenu.Trigger>
 
-	<DropdownMenu.Content sideOffset={10} class=" w-fit min-w-0 p-2 py-4">
+	<DropdownMenu.Content sideOffset={10} class=" w-fit min-w-0 p-2 py-4 font-stardewTitle">
 		<DropdownMenu.Group class="flex flex-col gap-2">
 			{#each options as option}
 				<DropdownMenu.Item
 					on:click={() => luckStore.setSelected(option)}
 					on:focusin={() => luckStore.setDirty(option)}
 					on:focusout={() => luckStore.clearDirty()}
-					class="mr-0 grid size-12 cursor-pointer place-content-center p-5 "
+					class="mr-0 grid size-8 cursor-pointer place-content-center p-5 md:size-12 "
 				>
 					<div class="flex flex-col">
-						<div class="2 text-3xl capitalize text-amber-900">
+						<div class="text-2xl capitalize text-amber-900 md:text-3xl">
 							{option}
 						</div>
 					</div>

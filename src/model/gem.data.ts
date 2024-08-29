@@ -2,7 +2,7 @@ import { keysOf } from '$lib/objectUtils';
 import type { GemName } from './gem';
 import { getStatDescription, type Stats } from './stat';
 
-export const gem: Record<GemName, { stats: [Stats, Stats, Stats] }> = {
+export const gemData: Record<GemName, { stats: [Stats, Stats, Stats] }> = {
 	emerald: {
 		stats: [
 			{
@@ -60,7 +60,7 @@ export const gem: Record<GemName, { stats: [Stats, Stats, Stats] }> = {
 };
 
 export function getGemDescription(gemName: GemName, level: 1 | 2 | 3): string[] {
-	const stats = gem[gemName].stats;
+	const stats = gemData[gemName].stats;
 	const stat = stats[level - 1];
 
 	const statStrings = keysOf(stat)

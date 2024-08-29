@@ -6,7 +6,7 @@
 </script>
 
 <div
-	class="max-w-screen max-h-screen min-h-screen overflow-hidden overflow-x-clip bg-gradient-to-b from-[#144683] to-[#258BF0] font-stardewTitle text-surface-900 dark:from-blue-950 dark:to-blue-900 dark:text-surface-500 lg:max-h-none lg:py-10"
+	class="max-w-screen max-h-screen overflow-hidden overflow-x-clip bg-gradient-to-b from-[#144683] to-[#258BF0] font-stardewTitle text-surface-900 lg:max-h-none lg:py-10 dark:from-blue-950 dark:to-blue-900 dark:text-surface-500"
 >
 	{#if isClient}
 		<slot />

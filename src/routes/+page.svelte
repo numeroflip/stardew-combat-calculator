@@ -144,17 +144,17 @@
 </script>
 
 <div
-	class="lg:pixel-corners-border--lg haupt-grid bg container mx-auto flex h-full min-h-dvh w-full max-w-screen-lg flex-col border-4 border-surface-900 bg-surface-300 px-0 lg:border-none dark:bg-surface-900"
+	class="lg:pixel-corners-border--lg haupt-grid bg container mx-auto flex h-full min-h-dvh w-full max-w-screen-lg flex-col border-4 border-surface-900 bg-surface-300 px-0 md:min-h-0 lg:border-none dark:bg-surface-900"
 >
 	{#if isOnClient}
 		<Header {handleShare} onSave={handleSave} {onLoad} />
 
 		<main
-			class="grid-area-[options] h-full w-full grow overflow-y-auto bg-gradient-to-t from-surface-300 to-surface-200 px-2 py-2 shadow-theme dark:from-surface-950/50 dark:to-surface-950"
+			class="flex h-full w-full grow flex-col gap-5 overflow-y-auto bg-gradient-to-b from-[#144683] to-[#258BF0] px-2 py-5 shadow-theme [grid-area:options] dark:from-surface-950/50 dark:to-surface-950"
 		>
-			<section class="flex grow flex-col">
-				<h3 class="mb-4 hidden text-3xl lg:block">Weapon</h3>
-				<div class="pixel-corners bob mx-auto flex h-full w-full flex-col gap-3 md:max-w-md">
+			<section class="pixel-border flex grow flex-col bg-surface-200 p-3 pt-2 md:max-w-[380px]">
+				<h3 class="mb-2 text-center text-3xl lg:block">Weapon</h3>
+				<div class="pixel-corners mx-auto flex h-full w-full flex-col gap-3">
 					<div class="z-[3]">
 						<div class="pixel-corners z-[3] flex flex-col gap-5 bg-surface-50 px-5">
 							<WeaponPicker />
@@ -177,40 +177,49 @@
 
 			<!-- Rings -->
 			<section
-				class="flex w-full flex-wrap items-center justify-between gap-10 self-stretch py-1 pl-4 pr-1"
+				class="pixel-border flex w-full grow flex-col flex-wrap items-center justify-between gap-x-10 gap-y-3 self-stretch bg-surface-200 py-1 pb-4 pl-4 pr-1 pt-3"
 			>
-				<h3 class="text-2xl text-surface-950">Rings:</h3>
+				<h3 class="mb-2 text-center text-3xl lg:block">Rings</h3>
 				<fieldset class="flex justify-between gap-4">
 					<RingPairPicker type="left" />
 					<RingPairPicker type="right" />
 				</fieldset>
 			</section>
 
+			<section
+				class="pixel-border mt-auto flex w-full flex-wrap items-center justify-center gap-x-10 gap-y-3 bg-surface-200 px-3 pb-2 pt-3"
+			>
+				<h3 class="text-3xl">Skills</h3>
+				<SkillPicker />
+			</section>
+
 			<!-- LUCK AND BLESSING -->
-			<section class="mt-10 flex flex-col gap-5">
-				<div class="grid grid-cols-2">
+			<section class="pixel-border flex flex-col gap-5 bg-surface-200 px-3 py-3">
+				<h3 class="mb-2 text-center text-3xl lg:block">Buffs</h3>
+
+				<div class="flex flex-col justify-between gap-3">
 					<!-- Luck -->
-					<section class="flex flex-col items-center gap-5">
+					<section class="flex items-center justify-between gap-5">
 						<h3 class="text-2xl">Luck (from food)</h3>
 
 						<LuckFromFoodPicker />
 					</section>
 
 					<!-- Blessing -->
-					<section class="flex flex-col items-center gap-5">
+					<section class="flex items-center justify-between gap-5">
 						<label for="blessing-of-fangs"><h3 class="text-2xl">Blessing of Fangs</h3></label>
 
 						<label
 							class={`${buttonVariants({
-								variant: 'pixelated',
+								variant: 'pixelatedDynamic',
 								size: 'unset'
-							})} ${$hasBlessingOfFangsStore.selected ? '' : 'opacity-30 grayscale'} grid size-16 cursor-pointer place-content-center`}
+							})} ${$hasBlessingOfFangsStore.selected ? '' : 'opacity-30 grayscale'} grid size-12 cursor-pointer place-content-center md:size-16`}
 							for="blessing-of-fangs"
 						>
 							<img
 								src="https://stardewvalleywiki.com/mediawiki/images/a/af/Blessing_Of_Fangs.png"
 								alt="blessing of fangs"
-								class="size-10 object-cover"
+								class="size-8 object-cover md:size-10"
 							/>
 						</label>
 						<input
@@ -221,11 +230,6 @@
 						/>
 					</section>
 				</div>
-			</section>
-
-			<section class="mt-auto flex w-full flex-wrap items-center gap-10">
-				<h3 class="text-3xl">Skills</h3>
-				<SkillPicker />
 			</section>
 
 			<!-- RESULTS -->
@@ -265,5 +269,12 @@
 			'header'
 			'options'
 			'results';
+
+		@screen md {
+			grid-template-areas:
+				'header header'
+				'options results';
+			grid-template-columns: 1fr 400px;
+		}
 	}
 </style>

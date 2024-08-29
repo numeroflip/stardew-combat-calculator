@@ -35,8 +35,8 @@
 	<DropdownMenu.Trigger asChild let:builder>
 		<Button
 			builders={[builder]}
-			variant="pixelated"
-			class="no grid size-12 place-content-center rounded-none border-none  p-0  pl-0 pr-0 md:size-16"
+			variant="pixelatedDynamic"
+			class="no grid size-12 place-content-center rounded-none border-none  p-0  pl-0 pr-0 md:size-14"
 		>
 			{#if shownGem}
 				<img src={gemIcon[shownGem]} alt={shownGem} class="size-8 object-cover md:size-10" />

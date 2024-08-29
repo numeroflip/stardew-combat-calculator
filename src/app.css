@@ -127,6 +127,48 @@ html {
 
 	/*    https://pixelcorners.lukeb.co.uk/?radius=8&multiplier=4
  */
+
+	.pixel-corners--sm {
+		clip-path: polygon(
+			0px calc(100% - 15px),
+			3px calc(100% - 15px),
+			3px calc(100% - 9px),
+			6px calc(100% - 9px),
+			6px calc(100% - 6px),
+			9px calc(100% - 6px),
+			9px calc(100% - 3px),
+			15px calc(100% - 3px),
+			15px 100%,
+			calc(100% - 15px) 100%,
+			calc(100% - 15px) calc(100% - 3px),
+			calc(100% - 9px) calc(100% - 3px),
+			calc(100% - 9px) calc(100% - 6px),
+			calc(100% - 6px) calc(100% - 6px),
+			calc(100% - 6px) calc(100% - 9px),
+			calc(100% - 3px) calc(100% - 9px),
+			calc(100% - 3px) calc(100% - 15px),
+			100% calc(100% - 15px),
+			100% 15px,
+			calc(100% - 3px) 15px,
+			calc(100% - 3px) 9px,
+			calc(100% - 6px) 9px,
+			calc(100% - 6px) 6px,
+			calc(100% - 9px) 6px,
+			calc(100% - 9px) 3px,
+			calc(100% - 15px) 3px,
+			calc(100% - 15px) 0px,
+			15px 0px,
+			15px 3px,
+			9px 3px,
+			9px 6px,
+			6px 6px,
+			6px 9px,
+			3px 9px,
+			3px 15px,
+			0px 15px
+		);
+	}
+
 	.pixel-corners {
 		outline-offset: -3px !important;
 		outline-width: 10px !important;

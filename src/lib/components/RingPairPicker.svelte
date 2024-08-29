@@ -9,7 +9,7 @@
 	export { className as class };
 </script>
 
-<div class={cn('pixel-corners  flex gap-[2px]', className)}>
+<div class={cn('pixel-corners--sm  flex gap-[2px]', className)}>
 	<RingPicker class="pl-1" index={0} {type} />
 	<RingPicker class="pr-1" index={1} {type} />
 </div>

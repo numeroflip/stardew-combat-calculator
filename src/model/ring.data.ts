@@ -2,7 +2,7 @@ import { keysOf } from '$lib/objectUtils';
 import type { Ring, RingName } from './ring';
 import { getStatDescription } from './stat';
 
-export const rings: Record<RingName, Ring> = {
+export const ringsData: Record<RingName, Ring> = {
 	iridiumBand: {
 		name: 'Iridium Band',
 		effect: { damage: 0.1 },
@@ -46,7 +46,7 @@ export const rings: Record<RingName, Ring> = {
 };
 
 export function getRingDescription(ringName: RingName): string[] {
-	const effects = rings[ringName].effect;
+	const effects = ringsData[ringName].effect;
 
 	const effectStrings = keysOf(effects)
 		.map((effectKey) => {

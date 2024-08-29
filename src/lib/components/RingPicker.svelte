@@ -2,7 +2,7 @@
 	import { Button } from '$lib/components/ui/button/index.js';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
 	import { ringNames, type RingName } from '$model/ring';
-	import { getRingDescription, rings } from '$model/ring.data';
+	import { getRingDescription, ringsData } from '$model/ring.data';
 	import { cn } from '$lib/utils.js';
 	import { ringStore } from '$lib/store/calculatorOptions';
 
@@ -37,14 +37,21 @@
 			builders={[builder]}
 			variant="lightBase"
 			size="unset"
-			class={cn('grid   min-w-16  place-content-center   text-3xl', className)}
+			class={cn(
+				'grid size-14  h-12  place-content-center  text-3xl   md:min-h-12 md:min-w-16',
+				className
+			)}
 		>
 			{#if value}
-				<img src={rings[value].icon} alt={rings[value].name} class="m-2 size-10 object-cover" />
+				<img
+					src={ringsData[value].icon}
+					alt={ringsData[value].name}
+					class="m-2 size-10 object-cover"
+				/>
 			{:else}
 				<img
-					src={rings.topaz.icon}
-					alt={rings.topaz.name}
+					src={ringsData.topaz.icon}
+					alt={ringsData.topaz.name}
 					class="size-10 object-cover opacity-20 grayscale"
 				/>
 			{/if}
@@ -66,15 +73,15 @@
 					class="mr-0   flex gap-1 rounded-none p-2  pl-2 text-xl"
 				>
 					<img
-						src={rings.topaz.icon}
-						alt={rings.topaz.name}
+						src={ringsData.topaz.icon}
+						alt={ringsData.topaz.name}
 						class="size-10 object-cover opacity-20 grayscale"
 					/>
 
 					<div class="text-amber-900">No ring</div>
 				</DropdownMenu.RadioItem>
 				{#each ringNames as ringKey}
-					{@const ring = rings[ringKey]}
+					{@const ring = ringsData[ringKey]}
 					{@const disabled = disabledRings?.includes(ringKey)}
 					<DropdownMenu.RadioItem
 						indicator={false}

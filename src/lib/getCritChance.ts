@@ -82,3 +82,11 @@ function getEnchantmentCritChance(enchantment?: SelectedEnchantment) {
 	}
 	return 0;
 }
+
+export function getWeaponBaseCritChance(weapon: Weapon) {
+	let critChance = weapon.critStrikeChance;
+	if (weapon.type === 'dagger') {
+		critChance = (critChance + 0.005) * 1.12;
+	}
+	return critChance;
+}

@@ -64,10 +64,10 @@ export const innateEnchantments: InnateEnchantments = {
 			id: 'speed',
 			name: 'Speed',
 			options: [
-				defineOption(1, 0.01),
-				defineOption(2, 0.02),
-				defineOption(3, 0.03),
-				defineOption(4, 0.04)
+				defineOption(1, 0.1),
+				defineOption(2, 0.2),
+				defineOption(3, 0.3),
+				defineOption(4, 0.4)
 			]
 		})
 	])

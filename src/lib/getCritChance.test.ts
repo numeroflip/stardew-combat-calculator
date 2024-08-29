@@ -1,7 +1,7 @@
 import { expect, test } from 'vitest';
 import { getCritChance } from './getCritChance';
 import { weapons } from '../model/weapon.data';
-import { rings } from '../model/ring.data';
+import { ringsData } from '../model/ring.data';
 
 // Values based on https://stardewvalleywiki.com/Combat#Critical_hit_chance
 
@@ -33,7 +33,7 @@ test('galaxySword + 3 aquamarine gem is Crit chance is 15.8%', () => {
 test('galaxySword + 1 ring + 3 aquamarine', () => {
 	expect(
 		getCritChance(galaxySword, {
-			rings: [rings.aquamarine],
+			rings: [ringsData.aquamarine],
 			gems: ['aquamarine', 'aquamarine', 'aquamarine']
 		})
 	).toBe(0.1738);
@@ -42,7 +42,7 @@ test('galaxySword + 1 ring + 3 aquamarine', () => {
 test('galaxySword + 1 ring + 3 aquamarine', () => {
 	expect(
 		getCritChance(galaxySword, {
-			rings: [rings.aquamarine, rings.aquamarine],
+			rings: [ringsData.aquamarine, ringsData.aquamarine],
 			gems: ['aquamarine', 'aquamarine', 'aquamarine']
 		})
 	).toBe(0.1896);
@@ -51,7 +51,7 @@ test('galaxySword + 1 ring + 3 aquamarine', () => {
 test('galaxySword + 1 ring + 3 aquamarine + best enchantment', () => {
 	expect(
 		getCritChance(galaxySword, {
-			rings: [rings.aquamarine, rings.aquamarine],
+			rings: [ringsData.aquamarine, ringsData.aquamarine],
 			gems: ['aquamarine', 'aquamarine', 'aquamarine'],
 			enchantment: { key: 'critChance', optionName: '3' }
 		})
@@ -61,7 +61,7 @@ test('galaxySword + 1 ring + 3 aquamarine + best enchantment', () => {
 test('galaxySword + 2 ring + 3 aquamarine', () => {
 	expect(
 		getCritChance(galaxySword, {
-			rings: [rings.aquamarine, rings.aquamarine],
+			rings: [ringsData.aquamarine, ringsData.aquamarine],
 			gems: ['aquamarine', 'aquamarine', 'aquamarine']
 		})
 	).toBe(0.1896);
@@ -69,7 +69,7 @@ test('galaxySword + 2 ring + 3 aquamarine', () => {
 
 test('galaxySword + 2 ring + 3 aquamarine + blessing of Fangs', () => {
 	const chance = getCritChance(galaxySword, {
-		rings: [rings.aquamarine, rings.aquamarine],
+		rings: [ringsData.aquamarine, ringsData.aquamarine],
 		gems: ['aquamarine', 'aquamarine', 'aquamarine'],
 		hasBlessingOfFangs: true
 	});
@@ -78,7 +78,7 @@ test('galaxySword + 2 ring + 3 aquamarine + blessing of Fangs', () => {
 
 test('galaxySword + 2 ring + 3 aquamarine + blessing of Fangs + Scout', () => {
 	const chance = getCritChance(galaxySword, {
-		rings: [rings.aquamarine, rings.aquamarine],
+		rings: [ringsData.aquamarine, ringsData.aquamarine],
 		gems: ['aquamarine', 'aquamarine', 'aquamarine'],
 		hasBlessingOfFangs: true,
 		profession: { lvl5: 'scout' }
@@ -88,7 +88,7 @@ test('galaxySword + 2 ring + 3 aquamarine + blessing of Fangs + Scout', () => {
 
 test('galaxySword + 2 ring + 3 aquamarine + blessing of Fangs + Scout + Luck', () => {
 	const chance = getCritChance(galaxySword, {
-		rings: [rings.aquamarine, rings.aquamarine],
+		rings: [ringsData.aquamarine, ringsData.aquamarine],
 		gems: ['aquamarine', 'aquamarine', 'aquamarine'],
 		hasBlessingOfFangs: true,
 		profession: { lvl5: 'scout' },

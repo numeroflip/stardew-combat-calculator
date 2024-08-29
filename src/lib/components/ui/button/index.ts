@@ -11,13 +11,19 @@ const buttonVariants = tv({
 			defaultLight:
 				'shadow-theme-item bg-surface-50 text-amber-900 hover:bg-surface-200/40 active:bg-surface-200/60',
 			pixelated:
-				'bg-surface-50 shadow-inner-lg rounded-md text-surface-900 hover:bg-white active:bg-surface-50/80 pixel-corners',
+				'bg-surface-50  rounded-md text-surface-900 hover:bg-white active:bg-surface-50/80 pixel-corners',
+			pixelatedDynamic:
+				'bg-surface-50  rounded-md text-surface-900 hover:bg-white active:bg-surface-50/80 pixel-corners--sm md:pixel-corners',
 			lightBase: 'bg-surface-50 text-surface-900 hover:bg-white active:bg-surface-50/80',
 			destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
 			outline: 'border-input bg-background hover:bg-accent hover:text-accent-foreground border',
 			secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
 			ghost: 'hover:bg-accent hover:text-accent-foreground',
 			link: 'text-primary underline-offset-4 hover:underline'
+		},
+		pixelation: {
+			base: 'pixel-corners',
+			dynamic: 'pixel-corners--sm md:pixel-corners'
 		},
 		size: {
 			default: 'h-10 px-4 py-2',
