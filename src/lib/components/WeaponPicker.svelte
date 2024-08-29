@@ -74,7 +74,7 @@
 								<img
 									src="https://stardewvalleywiki.com/mediawiki/images/thumb/0/00/Attack.png/24px-Attack.png"
 									alt="attack"
-									class="size-5 object-cover"
+									class="size-4 object-cover"
 								/>
 								Dmg.:
 							</div>

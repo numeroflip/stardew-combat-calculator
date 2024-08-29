@@ -20,6 +20,9 @@
 	import { get } from 'svelte/store';
 	import { calculatorStorage } from '$lib/calculatorOptionsStorage';
 	import BlessingSelector from '$lib/components/BlessingSelector/BlessingSelector.svelte';
+	import SpeedFromFoodPicker from '$lib/components/SpeedFromFoodPicker.svelte';
+	import { LucideHeading5 } from 'lucide-svelte';
+	import { parseJSON } from '$lib/json';
 
 	let initialized = false;
 
@@ -62,10 +65,6 @@
 		}
 	}
 
-	function parseJSON(data: string) {
-		return JSON.parse(data, (key, value) => (value === null ? undefined : value));
-	}
-
 	const isOnClient = typeof window !== 'undefined';
 </script>
 
@@ -76,9 +75,9 @@
 		<Header />
 
 		<main
-			class="flex h-full w-full grow flex-col gap-5 overflow-y-auto bg-gradient-to-b from-[#144683] to-[#258BF0] px-1 py-5 shadow-theme [grid-area:options] dark:from-surface-950/50 dark:to-surface-950"
+			class="flex h-full w-full grow flex-col gap-5 overflow-y-auto bg-gradient-to-b from-[#144683] to-[#258BF0] px-1 py-5 shadow-theme [grid-area:options] dark:from-surface-950/50 dark:to-surface-950 md:px-4 md:py-5 md:pb-8 *:md:max-w-[460px]"
 		>
-			<section class="pixel-border flex grow flex-col bg-surface-200 p-3 pt-2 md:max-w-[380px]">
+			<section class="pixel-border flex grow flex-col bg-surface-200 p-3 pt-2">
 				<h3 class="mb-2 text-center text-3xl lg:block">Weapon</h3>
 				<div class="pixel-corners mx-auto flex h-full w-full flex-col gap-3">
 					<div class="z-[3]">
@@ -113,38 +112,38 @@
 			</section>
 
 			<section
-				class="pixel-border mt-auto flex w-full flex-wrap items-center justify-center gap-x-10 gap-y-3 bg-surface-200 px-3 pb-2 pt-3"
+				class="pixel-border flex w-full flex-col flex-wrap items-center justify-center gap-x-10 gap-y-3 bg-surface-200 px-3 pb-2 pt-3"
 			>
 				<h3 class="text-3xl">Skills</h3>
 				<SkillPicker />
 			</section>
 
-			<!-- LUCK AND BLESSING -->
 			<section class="pixel-border flex flex-col gap-5 bg-surface-200 px-3 py-3">
-				<h3 class="mb-2 text-center text-3xl lg:block">Buffs</h3>
+				<h3 class="mb-2 text-center text-3xl lg:block">Food Buffs</h3>
 
-				<div class="flex flex-col justify-between gap-3">
-					<!-- Luck -->
+				<div class="grid grid-cols-2 justify-items-center">
 					<section class="flex items-center justify-between gap-5">
-						<h3 class="text-2xl">Luck (from food)</h3>
+						<h5 class="text-2xl">Luck</h5>
 
 						<LuckFromFoodPicker />
 					</section>
-
-					<!-- Blessing -->
 					<section class="flex items-center justify-between gap-5">
-						<h3 class="text-2xl">Statue Of Blessings</h3>
-						<BlessingSelector />
+						<h5 class="text-2xl">Speed</h5>
+
+						<SpeedFromFoodPicker />
 					</section>
 				</div>
 			</section>
 
+			<section class="pixel-border flex flex-col gap-5 bg-surface-200 px-3 py-3">
+				<h3 class="mb-2 text-center text-3xl lg:block">Statue Of Blessings</h3>
+				<BlessingSelector />
+			</section>
+
 			<!-- RESULTS -->
 		</main>
-		<footer class="grid-area-[results]">
-			<section
-				class="flex h-full w-full flex-1 grow flex-col gap-3 p-0 [grid-area:results] lg:px-10 lg:pb-10 lg:pt-10"
-			>
+		<footer class="[grid-area:results]">
+			<section class="flex h-full w-full flex-1 grow flex-col gap-3 p-0 lg:p-5 lg:pl-8">
 				<!-- <h3 class="text-3xl">Results</h3> -->
 				<CalculationResults />
 			</section>
@@ -171,7 +170,6 @@
 		display: grid;
 		grid-template-rows: auto 1fr auto;
 
-		height: 100dvh;
 		grid-template-areas:
 			'header'
 			'options'

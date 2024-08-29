@@ -1,5 +1,6 @@
 import { calculatorOptionsSchema, type CalculatorOptions } from '$model/calculatorOptions';
 import { weapons } from '$model/weapon.data';
+import { parseJSON } from './json';
 
 const DEFAULT_OPTIONS_KEY = 'options';
 const NAMED_OPTION_INDICATOR = '__named__option__';
@@ -23,10 +24,6 @@ export function getOptionsFromStorage(key: string): CalculatorOptions | undefine
 	}
 
 	return valueValidated.data;
-}
-
-function parseJSON(data: string) {
-	return JSON.parse(data, (key, value) => (value === null ? undefined : value));
 }
 
 function getItemsFromLocalStorage() {

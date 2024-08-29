@@ -1,15 +1,16 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button/index.js';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
-	import { luckStore } from '$lib/store/calculatorOptions';
+	import { speedFromFoodStore } from '$lib/store/calculatorOptions';
 
-	type LuckAmount = number;
+	type SpeedAmount = number;
 
-	$: selectedLuck = $luckStore.selected;
-	$: focusedLuck = $luckStore.dirty;
-	$: shownLuck = focusedLuck ?? selectedLuck;
+	$: selectedSpeed = $speedFromFoodStore.selected;
+	$: focusedSpeed = $speedFromFoodStore.dirty;
 
-	const options: LuckAmount[] = [0, 1, 2, 3, 4, 5, 6].toReversed();
+	$: shownSpeed = focusedSpeed ?? selectedSpeed;
+
+	const options: SpeedAmount[] = [0, 0.5, 1, 1.5, 2].toReversed();
 </script>
 
 <DropdownMenu.Root>
@@ -19,7 +20,7 @@
 			builders={[builder]}
 			class="pixel-corners--sm grid size-12 cursor-pointer  place-content-center p-4 text-3xl md:size-16"
 		>
-			{shownLuck}
+			{shownSpeed}
 		</Button>
 	</DropdownMenu.Trigger>
 
@@ -27,9 +28,11 @@
 		<DropdownMenu.Group class="flex flex-col gap-2">
 			{#each options as option}
 				<DropdownMenu.Item
-					on:click={() => luckStore.setSelected(option)}
-					on:focusin={() => luckStore.setDirty(option)}
-					on:focusout={() => luckStore.clearDirty()}
+					on:click={() => {
+						speedFromFoodStore.setSelected(option);
+					}}
+					on:focusin={() => speedFromFoodStore.setDirty(option)}
+					on:focusout={() => speedFromFoodStore.clearDirty()}
 					class="mr-0 grid size-8 cursor-pointer place-content-center p-5 md:size-12 "
 				>
 					<div class="flex flex-col">

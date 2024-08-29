@@ -4,6 +4,7 @@
 	export let max: number;
 	export let value: number;
 	export let baseValue: number;
+	export let min: number | undefined = undefined;
 	let className;
 	export { className as class };
 </script>
@@ -13,6 +14,7 @@
 		{max}
 		{value}
 		{baseValue}
+		{min}
 		class="-z-10 h-full rounded-none border-surface-900/10 bg-white/40  "
 		barClass={className}
 	/>

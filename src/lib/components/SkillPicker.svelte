@@ -55,9 +55,9 @@
 	}
 </script>
 
-<div class="pixel-corners--sm md:pixel-corners flex w-full justify-center divide-x-2">
+<div class="pixel-corners--sm md:pixel-corners flex w-auto justify-between divide-x-2">
 	<DropdownMenu.Root bind:open closeOnItemClick={step === 'lvl10'}>
-		<DropdownMenu.Trigger class="pixel-corners" asChild let:builder>
+		<DropdownMenu.Trigger class="pixel-corners w-auto" asChild let:builder>
 			<Button
 				builders={[builder]}
 				on:click={() => clearLvl10()}

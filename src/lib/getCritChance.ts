@@ -65,6 +65,10 @@ export function getCritChance(
 		critChance = critChance * 1.5;
 	}
 
+	if (blessing === 'luck') {
+		luck += 1;
+	}
+
 	// Luck
 	critChance += (luck * critChance) / 40;
 	return critChance;

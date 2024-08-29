@@ -13,13 +13,15 @@
 		skillsStore,
 		ringStore,
 		luckStore,
-		blessingStore
+		blessingStore,
+		speedFromFoodStore
 	} from '$lib/store/calculatorOptions';
 	import { weapons } from '$model/weapon.data';
 	import { skillSchema, type CalculatorOptions } from '$model/calculatorOptions';
 	import { getSpeedValues, weaponBaseSpeed } from '$lib/getSpeedValues';
 	import CalculationResultSection from './CalculationResultSection.svelte';
 	import CalculationResultProgress from './CalculationResultProgress.svelte';
+	import type { Weapon } from '$model/weapon';
 
 	$: activeWeaponName = $weaponNameStore.dirty || $weaponNameStore.selected;
 	$: weapon = weapons.find((w) => w.name === activeWeaponName) || weapons[0];
@@ -49,6 +51,8 @@
 	};
 	$: luck = $luckStore.dirty ?? $luckStore.selected;
 	$: blessing = $blessingStore.dirty || $blessingStore.selected;
+
+	$: speedFromFood = $speedFromFoodStore.dirty || $speedFromFoodStore.selected;
 
 	type Results = {
 		critDmg: { min: number; max: number };
@@ -127,7 +131,8 @@
 			gems,
 			rings,
 			luck,
-			blessing
+			blessing,
+			speedFromFood
 		});
 	}
 
@@ -143,6 +148,14 @@
 		: undefined;
 	const MAX_DMG = 270;
 
+	const critMaxDmgMapping: Record<Weapon['type'], number> = {
+		club: 3000,
+		dagger: 1400,
+		sword: 2500
+	};
+
+	const MAX_CRIT_DMG = critMaxDmgMapping[weapon?.type] || 3000;
+
 	$: avgBaseDmg = (weapon.damage[0] + weapon.damage[1]) / 2;
 	$: baseCritMultiplier = getBaseCritMultiplier(weapon);
 	$: weaponBaseCritChance = getWeaponBaseCritChance(weapon);
@@ -150,7 +163,7 @@
 </script>
 
 <div
-	class="flex grid-cols-2 flex-col gap-2 border-t-3 border-surface-900 bg-surface-200 py-1 pb-2 text-[22px] leading-[28px] md:grid md:max-w-80 md:gap-2 md:border-t-0"
+	class="md:pixel-border flex flex-col gap-2 border-t-3 border-surface-900 bg-surface-200 py-1 pb-[10px] text-[22px] leading-[28px] md:-ml-1 md:w-full md:gap-4 md:gap-x-10 md:border-t-0 md:p-2 md:pb-5"
 >
 	<CalculationResultSection>
 		<div class="align-center flex flex-shrink-0 items-center gap-2">
@@ -184,7 +197,7 @@
 		</div>
 
 		<CalculationResultProgress
-			max={3000}
+			max={MAX_CRIT_DMG}
 			value={results.critDmg.min}
 			baseValue={weapon.damage[0] * getBaseCritMultiplier(weapon)}
 			class="bg-green-600"
@@ -204,7 +217,7 @@
 			Crit chance:
 		</div>
 		<CalculationResultProgress
-			max={100}
+			max={80}
 			baseValue={getWeaponBaseCritChance(weapon) * 100}
 			value={results.critChance * 100}
 			class="bg-blue-400"
@@ -227,7 +240,8 @@
 		</div>
 
 		<CalculationResultProgress
-			max={5.5}
+			max={5}
+			min={1}
 			value={1000 / results.speed}
 			baseValue={1000 / weaponBaseSpeed(weapon)}
 			class="bg-yellow-500"

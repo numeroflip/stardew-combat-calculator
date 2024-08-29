@@ -71,10 +71,11 @@ export function getSpeedValues(options: CalculatorOptions): number {
 		.reduce((a, b) => a + b, 0);
 
 	const speedFromBlessing = options.blessing === 'speed' ? speedLvlToMilliseconds(0.5) : 0;
-
+	const speedFromFood = options.speedFromFood ? speedLvlToMilliseconds(options.speedFromFood) : 0;
 	const multiplier = 1 - (speedRingEffects + secondaryEnchantmentSpeed);
 	const result =
-		(baseSpeed - speedFromWeaponStats - speedFromBlessing - speedFromGems) * multiplier;
+		(baseSpeed - speedFromWeaponStats - speedFromBlessing - speedFromGems - speedFromFood) *
+		multiplier;
 	return result < 200 ? 200 : result;
 }
 

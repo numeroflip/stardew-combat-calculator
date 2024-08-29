@@ -39,7 +39,8 @@ const DEFAULT_OPTIONS: Omit<
 		lvl10: undefined
 	},
 	luck: 0,
-	blessing: undefined
+	blessing: undefined,
+	speedFromFood: 0
 };
 
 export const lastLoadedOptionsKey = writable<string | undefined>();
@@ -49,6 +50,8 @@ export const blessingStore = createOption<Blessing | undefined, Blessing | undef
 	undefined,
 	undefined
 );
+
+export const speedFromFoodStore = createOption(DEFAULT_OPTIONS.speedFromFood, undefined);
 export const gemsStore = createOption(DEFAULT_OPTIONS.gems, DEFAULT_OPTIONS.gems);
 export const ringStore = createOption(DEFAULT_OPTIONS.rings, DEFAULT_OPTIONS.rings);
 export const skillsStore = createOption(DEFAULT_OPTIONS.skills, DEFAULT_OPTIONS.skills);
@@ -63,16 +66,26 @@ export const weaponStore = derived(weaponNameStore, ({ selected, dirty }) => {
 });
 
 export const calculatorOptionsStore = derived(
-	[weaponNameStore, blessingStore, gemsStore, skillsStore, luckStore, enchantmentStore, ringStore],
-	([weaponName, hasBlessingOfFangs, gems, skills, luck, enchantment, rings]) => {
+	[
+		weaponNameStore,
+		blessingStore,
+		gemsStore,
+		skillsStore,
+		luckStore,
+		enchantmentStore,
+		ringStore,
+		speedFromFoodStore
+	],
+	([weaponName, blessing, gems, skills, luck, enchantment, rings, speedFromFood]) => {
 		return {
 			weapon: weaponName,
-			hasBlessingOfFangs,
+			blessing,
 			gems,
 			skills,
 			luck,
 			enchantment,
-			rings
+			rings,
+			speedFromFood
 		};
 	}
 );
@@ -108,29 +121,36 @@ export function setCalculatorOptions(options: CalculatorOptions) {
 		ringStore.setSelected(defineRings(options.rings?.left, options.rings?.right));
 		ringStore.clearDirty();
 	}
+
+	if (typeof options.speedFromFood === 'number') {
+		speedFromFoodStore.setSelected(options.speedFromFood);
+		speedFromFoodStore.clearDirty();
+	}
 }
 
 export const selectedCalculatorOptionsStore = derived(calculatorOptionsStore, (options) => {
 	return {
 		weapon: options.weapon.selected,
-		hasBlessingOfFangs: options.hasBlessingOfFangs.selected,
+		blessing: options.blessing.selected,
 		gems: options.gems.selected,
 		skills: options.skills.selected,
 		luck: options.luck.selected,
 		enchantment: options.enchantment.selected,
-		rings: options.rings.selected
+		rings: options.rings.selected,
+		speedFromFood: options.speedFromFood.selected
 	};
 });
 
 export const dirtyCalculatorOptions = derived(calculatorOptionsStore, (options) => {
 	return {
 		weapon: options.weapon.dirty,
-		hasBlessingOfFangs: options.hasBlessingOfFangs.dirty,
+		blessing: options.blessing.dirty,
 		gems: options.gems.dirty,
 		skills: options.skills.dirty,
 		luck: options.luck.dirty,
 		enchantment: options.enchantment.dirty,
-		rings: options.rings.dirty
+		rings: options.rings.dirty,
+		speedFromFood: options.speedFromFood.dirty
 	};
 });
 

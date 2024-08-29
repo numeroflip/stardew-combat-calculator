@@ -1,10 +1,12 @@
 <script lang="ts">
-	import type { Blessing } from '$model/calculatorOptions';
+	import { type Blessing } from '$model/calculatorOptions';
+	import { blessingSchema } from '$model/calculatorOptions';
 	import * as ToggleGroup from '$lib/components/ui/toggle-group';
 	import * as Tooltip from '../ui/tooltip';
 	import ToggleGroupItem from '../ui/toggle-group/toggle-group-item.svelte';
 	import { blessingStore } from '$lib/store/calculatorOptions';
 	import clsx from 'clsx';
+	import { get } from 'svelte/store';
 
 	const blessings: {
 		value: Blessing;
@@ -39,23 +41,24 @@
 			}
 		}
 	];
-
-	let value: Blessing | undefined;
-
-	$: {
-		blessingStore.setSelected(value);
-	}
 </script>
 
-<ToggleGroup.Root bind:value type="single">
+<ToggleGroup.Root
+	value={$blessingStore.selected}
+	type="single"
+	onValueChange={(val) => {
+		const validated = blessingSchema.safeParse(val);
+		if (validated.data) {
+			blessingStore.setSelected(validated.data);
+		}
+	}}
+	class="md:gap-7"
+>
 	{#each blessings as blessing}
-		{@const isSelected = value === blessing.value}
+		{@const isSelected = $blessingStore.selected === blessing.value}
 		<Tooltip.Root openDelay={700} closeDelay={200}>
 			<Tooltip.Trigger>
 				<ToggleGroupItem
-					on:select={() => {
-						blessingStore.setSelected(blessing.value);
-					}}
 					class={'pixel-corners--sm md:pixel-corners size-14 md:size-16'}
 					size="unset"
 					value={blessing.value}
@@ -70,7 +73,7 @@
 					/>
 				</ToggleGroupItem>
 			</Tooltip.Trigger>
-			<Tooltip.Content class="pixel-corners--sm px-5 text-center font-stardewTitle text-lg">
+			<Tooltip.Content class="pixel-corners--sm  px-5 text-center font-stardewTitle text-lg">
 				<p class="text-surface-900">{blessing.tooltip.title}</p>
 				<p class="text-surface-900/50">{blessing.tooltip.description}</p>
 			</Tooltip.Content>
