@@ -22,39 +22,39 @@
 	<!-- 2nd border -->
 	<div
 		role="presentation"
-		class="absolute -left-[var(--bw)] -right-[var(--bw)] -top-[calc(var(--bw)*2)] h-[var(--bw)] bg-[#dc7b05]"
+		class="absolute -left-[var(--bw)] -right-[var(--bw)] -top-[calc(var(--bw)*2)] z-[1] h-[var(--bw)] bg-[#dc7b05]"
 	/>
 	<div
 		role="presentation"
-		class="absolute -bottom-[var(--bw)] -right-[calc(var(--bw)*2)] -top-[var(--bw)] w-[var(--bw)] bg-[#dc7b05]"
+		class="absolute -bottom-[var(--bw)] -right-[calc(var(--bw)*2)] -top-[var(--bw)] z-[1] w-[var(--bw)] bg-[#dc7b05]"
 	/>
 
 	<div
 		role="presentation"
-		class="absolute -bottom-[calc(var(--bw)*2)] -left-[var(--bw)] -right-[var(--bw)] h-[var(--bw)] bg-[#dc7b05]"
+		class="absolute -bottom-[calc(var(--bw)*2)] -left-[var(--bw)] -right-[var(--bw)] z-[1] h-[var(--bw)] bg-[#dc7b05]"
 	/>
 	<div
 		role="presentation"
-		class="absolute -bottom-[var(--bw)] -left-[calc(var(--bw)*2)] -top-[var(--bw)] w-[var(--bw)] bg-[#dc7b05]"
+		class="absolute -bottom-[var(--bw)] -left-[calc(var(--bw)*2)] -top-[var(--bw)] z-[1] w-[var(--bw)] bg-[#dc7b05]"
 	/>
 
 	<!-- 3rd border -->
 	<div
 		role="presentation"
-		class="absolute -left-[var(--bw)] -right-[var(--bw)] -top-[calc(var(--bw)*3)] h-[var(--bw)] bg-[#5b2b2a]"
+		class="absolute -left-[var(--bw)] -right-[var(--bw)] -top-[calc(var(--bw)*3)] z-[1] h-[var(--bw)] bg-[#5b2b2a]"
 	/>
 	<div
 		role="presentation"
-		class="absolute -bottom-[var(--bw)] -right-[calc(var(--bw)*3)] -top-[var(--bw)] w-[var(--bw)] bg-[#5b2b2a]"
+		class="absolute -bottom-[var(--bw)] -right-[calc(var(--bw)*3)] -top-[var(--bw)] z-[1] w-[var(--bw)] bg-[#5b2b2a]"
 	/>
 
 	<div
 		role="presentation"
-		class="absolute -bottom-[calc(var(--bw)*3)] -left-[var(--bw)] -right-[var(--bw)] h-[var(--bw)] bg-[#5b2b2a]"
+		class="absolute -bottom-[calc(var(--bw)*3)] -left-[var(--bw)] -right-[var(--bw)] z-[1] h-[var(--bw)] bg-[#5b2b2a]"
 	/>
 	<div
 		role="presentation"
-		class="absolute -bottom-[var(--bw)] -left-[calc(var(--bw)*3)] -top-[var(--bw)] w-[var(--bw)] bg-[#5b2b2a]"
+		class="absolute -bottom-[var(--bw)] -left-[calc(var(--bw)*3)] -top-[var(--bw)] z-[1] w-[var(--bw)] bg-[#5b2b2a]"
 	/>
 	<!-- SHADOW -->
 	<div
@@ -69,18 +69,18 @@
 	<!-- CORNERS -->
 	<div
 		role="presentation"
-		class="absolute -left-[calc(var(--bw)*2)] -top-[calc(var(--bw)*2)] size-[var(--bw)] bg-[#b14e05]"
+		class="absolute -left-[calc(var(--bw)*2)] -top-[calc(var(--bw)*2)] z-[1] size-[var(--bw)] bg-[#b14e05]"
 	/>
 	<div
 		role="presentation"
-		class="absolute -bottom-[calc(var(--bw)*2)] -left-[calc(var(--bw)*2)] size-[var(--bw)] bg-[#b14e05]"
+		class="absolute -bottom-[calc(var(--bw)*2)] -left-[calc(var(--bw)*2)] z-[1] size-[var(--bw)] bg-[#b14e05]"
 	/>
 	<div
 		role="presentation"
-		class="absolute -right-[calc(var(--bw)*2)] -top-[calc(var(--bw)*2)] size-[var(--bw)] bg-[#b14e05]"
+		class="absolute -right-[calc(var(--bw)*2)] -top-[calc(var(--bw)*2)] z-[1] size-[var(--bw)] bg-[#b14e05]"
 	/>
 	<div
 		role="presentation"
-		class="absolute -bottom-[calc(var(--bw)*2)] -right-[calc(var(--bw)*2)] size-[var(--bw)] bg-[#b14e05]"
+		class="absolute -bottom-[calc(var(--bw)*2)] -right-[calc(var(--bw)*2)] z-[1] size-[var(--bw)] bg-[#b14e05]"
 	/>
 </div>

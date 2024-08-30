@@ -46,8 +46,8 @@
 		</Button>
 	</DropdownMenu.Trigger>
 
-	<DropdownMenu.Content sideOffset={10} class="w-fit min-w-0 ">
-		<DropdownMenu.Group class="font-funky max-h-[40vh] overflow-y-auto  ">
+	<DropdownMenu.Content sideOffset={10} class="w-fit min-w-0 font-stardew text-black ">
+		<DropdownMenu.Group class=" max-h-[40vh] overflow-y-auto  ">
 			<DropdownMenu.Item
 				on:click={() => removeGem('selected')}
 				on:focusin={() => removeGem('dirty')}
@@ -61,7 +61,7 @@
 						class="size-8 object-cover opacity-20 grayscale lg:size-10"
 					/>
 				</div>
-				<div class="text-amber-900">No Gem</div>
+				<div class="text-black">No Gem</div>
 			</DropdownMenu.Item>
 
 			{#each gemNames as gemName}
@@ -73,7 +73,7 @@
 				>
 					<img src={gemIcon[gemName]} alt={gemName} class="size-8 lg:size-10" />
 					<div class="flex flex-col">
-						<div class="capitalize text-surface-900">
+						<div class="capitalize text-black">
 							{gemName}
 						</div>
 

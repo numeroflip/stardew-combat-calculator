@@ -27,7 +27,9 @@ const config = {
 				'inner-lg': 'inset 0 8px 8px 0 rgb(67 27 7 / 10%)',
 				theme: 'inset 0px 0px 0px 4px rgb(67 27 7 /10%)',
 				'theme-item':
-					'inset -3px 3px 0px rgb(67 27 7 /20%),inset 3px -3px 0px rgb(255 255 255 /47%)'
+					'inset -3px 3px 0px rgb(67 27 7 /20%),inset 3px -3px 0px rgb(255 255 255 /47%)',
+				'theme-item-reverse':
+					'inset -3px 3px 0px rgb(255 255 255 /47%),inset 3px -3px 0px rgb(67 27 7 /20%)'
 			},
 			backgroundImage: {
 				'blue-gradient': 'linear-gradient(to bottom, #144683 0%, #258BF0 100%)',

@@ -15,24 +15,24 @@
 </script>
 
 <section
-	class={`pixel-corners z-[2] flex w-full justify-between gap-5 py-1 pl-2 ${canBeEnchanted ? '' : 'opacity-50 grayscale '}`}
+	class={`flex w-full flex-wrap justify-between gap-5 py-1 pl-2 ${canBeEnchanted ? '' : 'opacity-50 grayscale '}`}
 >
-	<div class="flex items-center text-2xl">
+	<div class="flex items-center font-sans text-2xl text-black">
 		Enchantment
-		<img
+		<!-- 		<img
 			src="https://stardewvalleywiki.com/mediawiki/images/thumb/9/9f/Gold_Quality.png/16px-Gold_Quality.png"
 			alt=""
 			class="mx-2 size-5 object-cover"
-		/>:
+		/>: -->
 	</div>
 	<DropdownMenu.Root>
-		<div class=" flex w-fit items-center">
+		<div class=" flex w-fit items-center font-stardew text-black">
 			<DropdownMenu.Trigger asChild let:builder>
 				<Button
 					disabled={!canBeEnchanted}
 					builders={[builder]}
-					variant="pixelatedDynamic"
-					class="grid  place-content-center rounded-none  border-none px-5  py-6 text-xl md:py-7 md:text-2xl"
+					variant="default"
+					class="grid min-w-[166px] place-content-center  rounded-none border-none  px-5 py-6  text-xl text-black md:py-7 md:text-xl"
 				>
 					{#if !canBeEnchanted}
 						<div>Not Available</div>
@@ -49,22 +49,24 @@
 		</div>
 
 		<DropdownMenu.Content fitViewport sideOffset={5} class="w-fit min-w-0" align="end">
-			<DropdownMenu.Group class="font-funky max-h-[40vh] overflow-y-auto overflow-x-hidden">
+			<DropdownMenu.Group class=" max-h-[40vh] overflow-y-auto overflow-x-hidden p-0">
 				<DropdownMenu.Item
 					on:focusin={enchantmentStore.clearDirty}
 					on:focusout={enchantmentStore.clearDirty}
 					on:click={() => enchantmentStore.setSelected(undefined)}
-					class="mr-0 cursor-pointer  "
+					class="mr-0 cursor-pointer p-0  "
 				>
-					<div class="size-12 w-full place-content-center text-center text-xl">🚫</div>
+					<div class="size-12 w-full place-content-center text-center text-xl shadow-theme-item">
+						🚫
+					</div>
 				</DropdownMenu.Item>
 				{#each keysOf(innateEnchantments.guaranteed) as enchantmentKey}
 					{@const _enchantment = innateEnchantments.guaranteed[enchantmentKey]}
 					<DropdownMenu.Separator class="bg-surface-200" />
-					<DropdownMenu.Label class="text-xl font-normal text-amber-900"
+					<DropdownMenu.Label class="text-xl  font-normal text-black"
 						>{_enchantment.name}</DropdownMenu.Label
 					>
-					<div class="flex gap-2">
+					<div class="flex">
 						{#each _enchantment.options as option}
 							<DropdownMenu.Item
 								on:focusin={() =>
@@ -78,7 +80,7 @@
 										key: enchantmentKey,
 										optionName: option.name
 									})}
-								class=" mr-0  size-12 cursor-pointer p-2 text-center  text-xl"
+								class=" mr-0 size-12 cursor-pointer p-2 text-center text-xl  shadow-theme-item"
 							>
 								<div class="font-funky w-full">
 									<span>+</span>{option.name}

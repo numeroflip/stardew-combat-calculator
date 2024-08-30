@@ -11,7 +11,7 @@
 
 	let className: $$Props['class'] = undefined;
 	export let inset: $$Props['inset'] = undefined;
-	export let variant: $$Props['variant'] = 'pixelated';
+	export let variant: $$Props['variant'] = 'default';
 	export { className as class };
 </script>
 

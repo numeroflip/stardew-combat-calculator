@@ -86,13 +86,13 @@
 		<main
 			class="flex h-full w-full grow flex-col gap-7 overflow-y-auto bg-blue-gradient px-3 py-5 shadow-theme [grid-area:options] dark:from-surface-950/50 dark:to-surface-950 sm:grid sm:grid-cols-2 sm:px-3 md:gap-8 md:px-4 md:py-5 md:pb-8 lg:px-10 lg:py-10"
 		>
-			<div class="flex flex-col gap-[inherit] lg:justify-between">
-				<Surface class="px-5 py-3  ">
-					<FlagText class="mx-auto mb-2 ">
+			<div class="flex flex-col gap-[inherit] sm:order-2 lg:justify-between">
+				<Surface class="max-h-full px-5 py-3  ">
+					<FlagText class="mx-auto mb-4 lg:mb-5 ">
 						<h3 class=" text-center text-3xl lg:block">Weapon</h3>
 					</FlagText>
 
-					<div class="pixel-corners mx-auto flex h-full w-full flex-col gap-3">
+					<div class="mx-auto flex h-full w-full flex-col gap-3 lg:gap-5">
 						<div class="z-[3]">
 							<div class=" z-[3] flex flex-col gap-5">
 								<WeaponPicker />
@@ -100,7 +100,7 @@
 						</div>
 
 						<section class=" z-[2] flex w-full justify-between gap-5 pl-2">
-							<div class="flex items-center text-2xl">Gems:</div>
+							<div class="flex items-center font-sans text-2xl text-black">Gems</div>
 							<div class=" flex gap-[1px]">
 								<GemPicker index={0} />
 								<GemPicker index={1} />
@@ -115,7 +115,7 @@
 
 				<!-- Rings -->
 				<Surface class="px-5 py-3  ">
-					<FlagText class="mx-auto mb-2">
+					<FlagText class="mx-auto mb-4 lg:mb-5">
 						<h3 class=" text-center text-3xl lg:block">Rings</h3>
 					</FlagText>
 
@@ -127,20 +127,20 @@
 			</div>
 			<div class="flex flex-col gap-[inherit] lg:justify-between">
 				<Surface class="px-5 py-3  ">
-					<FlagText class="mx-auto mb-2">
+					<FlagText class="mx-auto mb-4 lg:mb-5">
 						<h3 class=" text-center text-3xl lg:block">Skills</h3>
 					</FlagText>
 
 					<SkillPicker />
 				</Surface>
 				<Surface class="px-5 py-3  ">
-					<FlagText class="mx-auto mb-2">
+					<FlagText class="mx-auto mb-4 lg:mb-5">
 						<h3 class=" text-center text-3xl lg:block">Food Buffs</h3>
 					</FlagText>
 
-					<div class="grid grid-cols-1 justify-items-center px-2">
+					<div class="grid grid-cols-1 justify-items-center px-2 font-sans text-black">
 						<section class="flex w-full items-center justify-center gap-8">
-							<h5 class="flex shrink-0 basis-20 items-center gap-2 text-2xl">
+							<h5 class="flex shrink-0 basis-[95px] items-center gap-2 text-2xl">
 								<img
 									src="https://stardewvalleywiki.com/mediawiki/images/thumb/f/f0/Luck.png/24px-Luck.png"
 									alt=""
@@ -151,10 +151,10 @@
 							<div class=" grow">
 								<LuckFromFoodSlider />
 							</div>
-							<div class="basis-5 text-xl">{$luckStore.dirty ?? $luckStore.selected}</div>
+							<div class="basis-6 text-xl">{$luckStore.dirty ?? $luckStore.selected}</div>
 						</section>
 						<section class="flex w-full items-center justify-center gap-8">
-							<h5 class="flex shrink-0 basis-20 items-center gap-2 text-2xl">
+							<h5 class="flex shrink-0 basis-[95px] items-center gap-2 text-2xl">
 								<img
 									src="https://stardewvalleywiki.com/mediawiki/images/thumb/9/94/Speed.png/24px-Speed.png"
 									alt=""
@@ -165,7 +165,7 @@
 							<div class=" grow">
 								<SpeedFromFoodSlider />
 							</div>
-							<div class="basis-5 text-xl">
+							<div class="basis-6 text-xl">
 								{$speedFromFoodStore.dirty ?? $speedFromFoodStore.selected}
 							</div>
 						</section>
@@ -174,9 +174,9 @@
 
 				<Surface class="px-5 py-3  ">
 					<div
-						class="flex flex-col justify-center gap-5 @md:flex-row @md:items-center @md:justify-between"
+						class="flex flex-col justify-center gap-4 @md:flex-row @md:items-center @md:justify-between lg:gap-5"
 					>
-						<FlagText class=" mb-2 self-start">
+						<FlagText class=" self-start">
 							<h3 class="">Blessings</h3>
 						</FlagText>
 
@@ -187,26 +187,10 @@
 
 			<!-- RESULTS -->
 		</main>
-		<footer class="border-surface-900 [grid-area:results] lg:border-l-4 lg:px-4 lg:py-4">
-			<Surface class="mx-[5px] -mb-[2px] flex flex-col  gap-3 p-0 lg:px-5 lg:py-2 lg:pb-6">
+		<footer class="border-surface-900 [grid-area:results] lg:border-l-4 lg:px-8 lg:py-10">
+			<Surface class="mx-[-3px] -mb-[2px] flex flex-col  gap-3 p-0 lg:px-5 lg:py-2 lg:pb-6">
 				<CalculationResults />
 			</Surface>
 		</footer>
 	{/if}
 </Surface>
-
-<style>
-	.bob {
-		background-color: transparent;
-
-		--color: theme('colors.surface.100');
-
-		background-image: radial-gradient(
-			ellipse farthest-corner at 2px 2px,
-			var(--color),
-			var(--color) 50%,
-			transparent 50%
-		);
-		background-size: 2px 2px;
-	}
-</style>

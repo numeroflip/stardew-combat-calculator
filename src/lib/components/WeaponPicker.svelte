@@ -50,7 +50,7 @@
 		<Button
 			builders={[builder]}
 			variant="default"
-			class=" relative flex h-fit w-full shrink-0 items-center justify-center self-center rounded-none border-none  p-3 py-1 shadow-theme-item"
+			class=" relative flex h-fit w-full shrink-0 items-center justify-center self-center rounded-none border-none  p-3 py-0 shadow-theme-item"
 		>
 			{#if weapon}
 				<div class="flex w-full shrink-0">
@@ -63,14 +63,14 @@
 						<span class="absolute -bottom-4 -right-2 text-lg opacity-70">{weapon.level}</span>
 					</div>
 
-					<div class=" ml-5 flex w-full flex-col gap-2 p-3">
+					<div class=" ml-5 flex w-full flex-col gap-2 p-3 py-2">
 						<div
 							class="grid w-full min-w-36 grid-cols-[1fr_auto] items-center gap-1 gap-x-5 text-xl text-amber-950/40"
 						>
 							<div class="col-span-2 self-start text-start text-2xl text-surface-900">
 								{weapon.name}
 							</div>
-							<div class="flex items-center gap-2">
+							<div class="flex items-center gap-1">
 								<img
 									src="https://stardewvalleywiki.com/mediawiki/images/thumb/0/00/Attack.png/24px-Attack.png"
 									alt="attack"

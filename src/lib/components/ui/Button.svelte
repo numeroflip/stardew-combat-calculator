@@ -14,7 +14,7 @@
 	on:keydown
 	style={`--borderWidth: ${borderWidth}px; --shadowOffset: ${shadowOffset}px`}
 	class={cn(
-		' relative z-10 flex items-center gap-2 bg-[#fa9305] px-4 py-0 pb-[2px] pt-[3px] font-stardew text-lg leading-7 text-black hover:brightness-110 md:py-1 md:pt-[6px] md:text-2xl',
+		' relative z-10 flex items-center gap-2 bg-[#fa9305] px-3 py-0 pb-[2px] pt-[3px] font-stardew text-lg leading-7 text-black hover:brightness-110 md:px-4 md:py-1 md:pt-[6px] md:text-2xl',
 		$$props.class
 	)}
 >

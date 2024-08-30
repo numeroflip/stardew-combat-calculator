@@ -56,21 +56,21 @@
 	}
 </script>
 
-<div class=" flex w-auto justify-between divide-x-2">
+<div class=" flex w-auto flex-wrap justify-between divide-x-2 font-sans">
 	<DropdownMenu.Root bind:open closeOnItemClick={step === 'lvl10'}>
 		<DropdownMenu.Trigger class=" w-auto" asChild let:builder>
 			<Button
 				builders={[builder]}
 				on:click={() => clearLvl10()}
 				variant="default"
-				class="relative grid h-12 w-fit min-w-36  shrink-0 grow basis-1 place-content-center rounded-none border-orange-900/20  px-4 pr-10   text-2xl md:h-14"
+				class="relative grid h-12 w-fit   shrink-0 grow basis-32 place-content-center rounded-none border-orange-900/20  px-4  text-2xl  text-black md:h-14"
 			>
 				{#if lvl5Skill}
 					<div class="flex items-center gap-2 text-2xl">
 						<img src={lvl5Skill.icon} alt={lvl5Skill.name} class="size-5 object-cover" />
-						<div>{lvl5Skill.name}</div>
+						<div class="relative top-[2px]">{lvl5Skill.name}</div>
 					</div>
-					<span class="absolute bottom-0 right-5 text-sm text-surface-900/30">Lvl 5</span>
+					<span class="absolute bottom-0 right-2 text-sm text-surface-900/30">Lvl 5</span>
 				{:else}
 					<div class="opacity-50">Lvl 5</div>
 				{/if}
@@ -79,15 +79,15 @@
 			<Button
 				on:click={() => (open = true)}
 				variant="default"
-				class="relative grid h-12 w-fit min-w-40 shrink-0 grow basis-1 place-content-center rounded-none border-orange-900/20 px-4   text-2xl md:h-14"
+				class="relative grid h-12 w-fit shrink-0 grow basis-40  place-content-center rounded-none border-orange-900/20 px-4 text-2xl   text-black md:h-14"
 				disabled={!selectedLvl5}
 			>
 				{#if lvl10Skill}
 					<div class="flex items-center gap-2">
 						<img src={lvl10Skill.icon} alt={lvl10Skill.name} class="size-5 object-cover" />
-						<div class="text-2xl">{lvl10Skill.name}</div>
+						<div class="relative top-[2px] text-2xl">{lvl10Skill.name}</div>
 					</div>
-					<span class="absolute bottom-0 right-5 text-sm text-surface-900/30">Lvl 10</span>
+					<span class="absolute bottom-0 right-2 text-sm text-surface-900/30">Lvl 10</span>
 				{:else}
 					<div class="opacity-50">Lvl 10</div>
 				{/if}

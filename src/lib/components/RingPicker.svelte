@@ -5,6 +5,7 @@
 	import { getRingDescription, ringsData } from '$model/ring.data';
 	import { cn } from '$lib/utils.js';
 	import { ringStore } from '$lib/store/calculatorOptions';
+	import clsx from 'clsx';
 
 	export let type: 'left' | 'right';
 	export let index: 0 | 1;
@@ -35,7 +36,7 @@
 	<DropdownMenu.Trigger asChild let:builder>
 		<Button
 			builders={[builder]}
-			variant="lightBase"
+			variant="default"
 			size="unset"
 			class={cn(
 				'grid size-14  h-12  place-content-center  text-3xl   md:min-h-12 md:min-w-16',
@@ -58,7 +59,7 @@
 		</Button>
 	</DropdownMenu.Trigger>
 
-	<DropdownMenu.Content sideOffset={10} class="font-funky w-fit min-w-0 ">
+	<DropdownMenu.Content sideOffset={10} class="w-fit min-w-0 font-stardew ">
 		<div class=" max-h-[50vh] cursor-pointer overflow-y-auto overflow-x-hidden">
 			<DropdownMenu.RadioGroup {value}>
 				<DropdownMenu.RadioItem
@@ -75,7 +76,7 @@
 						class="size-10 object-cover opacity-20 grayscale"
 					/>
 
-					<div class="text-amber-900">No ring</div>
+					<div class="text-2xl text-black">No ring</div>
 				</DropdownMenu.RadioItem>
 				{#each ringNames as ringKey}
 					{@const ring = ringsData[ringKey]}
@@ -87,12 +88,12 @@
 						on:focusin={() => selectRing(ringKey, 'dirty')}
 						on:focusout={() => removeRing('dirty')}
 						{disabled}
-						class="mr-0 flex cursor-pointer gap-1 rounded-none p-2  pl-2 text-xl"
+						class={clsx('mr-0 flex  gap-1 rounded-none p-2  pl-2 text-xl')}
 					>
 						<img src={ring.icon} alt={ring.name} class="size-10" />
-						<div class=" text-2xl text-amber-900">
+						<div class=" text-2xl text-black">
 							{ring.name}
-							<div class="text-lg leading-3 text-amber-900/30">
+							<div class="text-lg leading-3 text-slate-500">
 								{getRingDescription(ringKey)}
 							</div>
 						</div>

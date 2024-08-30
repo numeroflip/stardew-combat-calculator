@@ -3,7 +3,9 @@
 @tailwind utilities;
 
 html {
-	color-scheme: light dark;
+	font-smooth: never;
+	-webkit-font-smoothing: none;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 * ::-webkit-scrollbar {
@@ -28,7 +30,7 @@ html {
 		'results';
 
 	@screen lg {
-		grid-template-columns: 1fr 1fr 1fr;
+		grid-template-columns: 1fr 1.1fr 1fr;
 		grid-template-areas:
 			'header header header'
 			'options options results'
@@ -40,6 +42,7 @@ html {
 	body {
 		font-smooth: never;
 		-webkit-font-smoothing: none;
+		-moz-osx-font-smoothing: grayscale;
 	}
 
 	@font-face {

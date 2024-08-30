@@ -18,7 +18,7 @@ export const dropdownItemVariants = tv({
 	variants: {
 		variant: {
 			default:
-				'shadow-theme-item bg-surface data-[highlighted]:bg-white/20 data-[highlighted]:text-accent-foreground',
+				'bg-surface data-[highlighted]:bg-white/20 data-[highlighted]:text-accent-foreground',
 			light:
 				'shadow-theme-item bg-surface-50 data-[highlighted]:bg-surface-400/50 data-[highlighted]:text-accent-foreground',
 			pixelated:
