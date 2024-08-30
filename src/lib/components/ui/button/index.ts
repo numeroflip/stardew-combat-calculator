@@ -14,6 +14,8 @@ const buttonVariants = tv({
 				'bg-surface-50  rounded-md text-surface-900 hover:bg-white active:bg-surface-50/80 pixel-corners',
 			pixelatedDynamic:
 				'bg-surface-50  rounded-md text-surface-900 hover:bg-white active:bg-surface-50/80 pixel-corners--sm md:pixel-corners',
+			pixelatedSm:
+				'bg-surface-50  rounded-md text-surface-900 hover:bg-white active:bg-surface-50/80 pixel-corners--sm',
 			lightBase: 'bg-surface-50 text-surface-900 hover:bg-white active:bg-surface-50/80',
 			destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
 			outline: 'border-input bg-background hover:bg-accent hover:text-accent-foreground border',

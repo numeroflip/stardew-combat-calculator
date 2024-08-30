@@ -7,12 +7,14 @@
 
 <Sonner
 	theme={$mode}
-	class="toaster group"
+	class="toaster group max-w-[600px] lg:w-[450px]"
 	toastOptions={{
+		style: `width: fit-content;`,
+
 		classes: {
-			title: 'font-stardewTitle text-[21px] leading-6 text-surface-950',
+			title: 'font-funky text-[21px] leading-6 text-surface-950',
 			toast:
-				'group toast group-[.toaster]:bg-surface-50 group-[.toaster]:text-foreground group-[.toaster]:shadow-md group-[.toaster]:pixel-corners ',
+				'group toast bg-transparent group-[.toaster]:text-foreground group-[.toaster]:shadow-md  ',
 			description: 'group-[.toast]:text-muted-foreground',
 			actionButton: 'group-[.toast]:bg-primary group-[.toast]:text-primary-foreground',
 			cancelButton: 'group-[.toast]:bg-muted group-[.toast]:text-muted-foreground'

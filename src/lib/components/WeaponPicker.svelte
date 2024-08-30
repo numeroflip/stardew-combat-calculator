@@ -49,8 +49,8 @@
 	<DropdownMenu.Trigger asChild let:builder>
 		<Button
 			builders={[builder]}
-			variant="lightBase"
-			class=" pixel-corners relative flex h-fit w-full shrink-0 items-center justify-center self-center rounded-none border-none bg-surface-50 p-3 py-1"
+			variant="default"
+			class=" relative flex h-fit w-full shrink-0 items-center justify-center self-center rounded-none border-none  p-3 py-1 shadow-theme-item"
 		>
 			{#if weapon}
 				<div class="flex w-full shrink-0">
@@ -95,16 +95,14 @@
 				class=" flex h-fit gap-1 rounded-none border-b-4 border-surface-900  bg-surface-200"
 			>
 				{#each tabs as tab}
-					<Tabs.Trigger class="bg-transparent font-stardewTitle text-xl" value={tab.value}
+					<Tabs.Trigger class="font-funky bg-transparent text-xl" value={tab.value}
 						>{tab.name}
 						<img src={tab.icon} alt={tab.name} class=" size-8 p-1 md:size-8" /></Tabs.Trigger
 					>
 				{/each}
 			</Tabs.List>
 
-			<DropdownMenu.Group
-				class="flex max-h-[40vh] w-full gap-4 overflow-y-auto  p-0 backdrop-blur-md"
-			>
+			<DropdownMenu.Group class="flex max-h-[40vh] w-full gap-4 overflow-y-auto  p-0 ">
 				{#each tabs as tab}
 					<Tabs.Content class="w-full" value={tab.value}>
 						{#each tab.list as _weapon}
@@ -125,7 +123,7 @@
 									>
 								</div>
 								<div
-									class="flex w-full items-center justify-between font-stardewTitle text-xl text-surface-900"
+									class="font-funky flex w-full items-center justify-between text-xl text-surface-900"
 								>
 									{_weapon.name}
 									<span class=" ml-2 opacity-30">{_weapon.damage[0]}-{_weapon.damage[1]}</span>

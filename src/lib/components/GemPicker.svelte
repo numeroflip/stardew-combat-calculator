@@ -35,23 +35,19 @@
 	<DropdownMenu.Trigger asChild let:builder>
 		<Button
 			builders={[builder]}
-			variant="pixelatedDynamic"
-			class="no grid size-12 place-content-center rounded-none border-none  p-0  pl-0 pr-0 md:size-14"
+			variant="default"
+			class="no grid size-12 place-content-center rounded-none border-none  p-0  pl-0 pr-0 "
 		>
 			{#if shownGem}
-				<img src={gemIcon[shownGem]} alt={shownGem} class="size-8 object-cover md:size-10" />
+				<img src={gemIcon[shownGem]} alt={shownGem} class="size-8 object-cover" />
 			{:else}
-				<img
-					src={gemIcon.diamond}
-					alt=""
-					class="size-8 object-cover opacity-20 grayscale md:size-10"
-				/>
+				<img src={gemIcon.diamond} alt="" class="size-8 object-cover opacity-20 grayscale" />
 			{/if}
 		</Button>
 	</DropdownMenu.Trigger>
 
 	<DropdownMenu.Content sideOffset={10} class="w-fit min-w-0 ">
-		<DropdownMenu.Group class="max-h-[40vh] overflow-y-auto font-stardewTitle  ">
+		<DropdownMenu.Group class="font-funky max-h-[40vh] overflow-y-auto  ">
 			<DropdownMenu.Item
 				on:click={() => removeGem('selected')}
 				on:focusin={() => removeGem('dirty')}

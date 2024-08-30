@@ -48,8 +48,8 @@
 			</DropdownMenu.Trigger>
 		</div>
 
-		<DropdownMenu.Content fitViewport sideOffset={5} class="w-fit min-w-0">
-			<DropdownMenu.Group class="max-h-[40vh] overflow-y-auto overflow-x-hidden font-stardewTitle">
+		<DropdownMenu.Content fitViewport sideOffset={5} class="w-fit min-w-0" align="end">
+			<DropdownMenu.Group class="font-funky max-h-[40vh] overflow-y-auto overflow-x-hidden">
 				<DropdownMenu.Item
 					on:focusin={enchantmentStore.clearDirty}
 					on:focusout={enchantmentStore.clearDirty}
@@ -80,7 +80,7 @@
 									})}
 								class=" mr-0  size-12 cursor-pointer p-2 text-center  text-xl"
 							>
-								<div class="w-full font-stardewTitle">
+								<div class="font-funky w-full">
 									<span>+</span>{option.name}
 								</div>
 							</DropdownMenu.Item>

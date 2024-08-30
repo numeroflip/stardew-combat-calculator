@@ -1,4 +1,5 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
+import bcontainerQueries from '@tailwindcss/container-queries';
 
 /** @type {import('tailwindcss').Config} */
 const config = {
@@ -18,8 +19,9 @@ const config = {
 				3: '3px'
 			},
 			fontFamily: {
-				stardewTitle: ['Stardew Cursive', ...defaultTheme.fontFamily.sans],
-				stardew: ['Stardew', ...defaultTheme.fontFamily.sans]
+				funky: ['Stardew Cursive', ...defaultTheme.fontFamily.sans],
+				stardew: ['Stardew', ...defaultTheme.fontFamily.sans],
+				sans: ['Stardew', ...defaultTheme.fontFamily.sans]
 			},
 			boxShadow: {
 				'inner-lg': 'inset 0 8px 8px 0 rgb(67 27 7 / 10%)',
@@ -27,10 +29,19 @@ const config = {
 				'theme-item':
 					'inset -3px 3px 0px rgb(67 27 7 /20%),inset 3px -3px 0px rgb(255 255 255 /47%)'
 			},
+			backgroundImage: {
+				'blue-gradient': 'linear-gradient(to bottom, #144683 0%, #258BF0 100%)',
+				'blue-gradient-light': 'linear-gradient(to bottom, #516c8c 0%, #6eaeea 100%)',
+				'surface-gradient': 'linear-gradient(to top, #eba867 0%, #ffcb7b 100%)',
+				'surface-gradient-light': 'linear-gradient(to top, #f8ba70 0%, #ffcb7b 100%)'
+			},
 
 			colors: {
+				text: '#56160c',
+				title: '#994513',
 				surface: {
 					DEFAULT: '#FCCB78',
+					light: '#ffd789',
 					50: '#fff9ed',
 					100: '#fff2d5',
 					150: '#FAE7C2',
@@ -84,7 +95,8 @@ const config = {
 				sm: 'calc(var(--radius) - 4px)'
 			}
 		}
-	}
+	},
+	plugins: [bcontainerQueries]
 };
 
 export default config;

@@ -167,8 +167,12 @@ function createOption<T, K>(selectedValue: T, dirtyValue: K | T) {
 
 	return {
 		subscribe,
-		setSelected: (value: T) => {
-			update((v) => ({ ...v, selected: value }));
+		setSelected: (value: T | ((val: T) => T)) => {
+			if (value instanceof Function) {
+				update((v) => ({ ...v, selected: value(v.selected) }));
+			} else {
+				update((v) => ({ ...v, selected: value }));
+			}
 		},
 		setDirty: (value: K | T) => {
 			update((v) => ({ ...v, dirty: value }));

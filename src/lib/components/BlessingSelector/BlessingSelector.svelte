@@ -6,7 +6,6 @@
 	import ToggleGroupItem from '../ui/toggle-group/toggle-group-item.svelte';
 	import { blessingStore } from '$lib/store/calculatorOptions';
 	import clsx from 'clsx';
-	import { get } from 'svelte/store';
 
 	const blessings: {
 		value: Blessing;
@@ -16,14 +15,6 @@
 			description: string;
 		};
 	}[] = [
-		{
-			value: 'fangs',
-			img: 'https://stardewvalleywiki.com/mediawiki/images/a/af/Blessing_Of_Fangs.png',
-			tooltip: {
-				title: 'Blessing of Fangs',
-				description: '+10% crit chance'
-			}
-		},
 		{
 			value: 'luck',
 			img: 'https://stardewvalleywiki.com/mediawiki/images/thumb/6/6e/Blessing_Of_Luck.png/36px-Blessing_Of_Luck.png',
@@ -39,43 +30,54 @@
 				title: 'Blessing of Speed',
 				description: '+0.5 speed'
 			}
+		},
+		{
+			value: 'fangs',
+			img: 'https://stardewvalleywiki.com/mediawiki/images/a/af/Blessing_Of_Fangs.png',
+			tooltip: {
+				title: 'Blessing of Fangs',
+				description: '+10% crit chance'
+			}
 		}
 	];
+
+	$: console.info('value', $blessingStore.selected);
 </script>
 
 <ToggleGroup.Root
-	value={$blessingStore.selected}
+	value={$blessingStore.selected || ''}
 	type="single"
 	onValueChange={(val) => {
 		const validated = blessingSchema.safeParse(val);
-		if (validated.data) {
-			blessingStore.setSelected(validated.data);
-		}
+		blessingStore.setSelected(validated.data || undefined);
 	}}
-	class="md:gap-7"
+	class=" mx-auto grid w-full max-w-96 grid-cols-3 gap-0 divide-x-3 divide-surface-300/60   "
 >
 	{#each blessings as blessing}
 		{@const isSelected = $blessingStore.selected === blessing.value}
 		<Tooltip.Root openDelay={700} closeDelay={200}>
-			<Tooltip.Trigger>
+			<Tooltip.Trigger class="">
 				<ToggleGroupItem
-					class={'pixel-corners--sm md:pixel-corners size-14 md:size-16'}
+					class={clsx(
+						'h-12  w-full rounded-none bg-surface-300 text-amber-900 shadow-theme-item hover:bg-surface-400/40 active:bg-surface-400/60 md:h-12'
+					)}
 					size="unset"
+					variant="default"
 					value={blessing.value}
 				>
 					<img
 						src={blessing.img}
 						alt={blessing.value}
 						class={clsx(
-							isSelected ? '' : 'opacity-50 grayscale',
-							' size-8 object-cover md:size-10'
+							isSelected ? '' : 'opacity-20  grayscale',
+							' relative  size-9  object-cover '
 						)}
 					/>
 				</ToggleGroupItem>
 			</Tooltip.Trigger>
-			<Tooltip.Content class="pixel-corners--sm  px-5 text-center font-stardewTitle text-lg">
-				<p class="text-surface-900">{blessing.tooltip.title}</p>
-				<p class="text-surface-900/50">{blessing.tooltip.description}</p>
+			<Tooltip.Content class="">
+				<p class="mb-1 text-base text-black">{blessing.tooltip.title}</p>
+				<p class="text-slate-900/50">{blessing.tooltip.description}</p>
 			</Tooltip.Content>
 		</Tooltip.Root>
 	{/each}

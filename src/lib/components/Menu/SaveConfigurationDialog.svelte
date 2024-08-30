@@ -4,8 +4,11 @@
 		selectedCalculatorOptionsStore
 	} from '$lib/store/calculatorOptions';
 	import { DialogContent, DialogHeader, DialogTitle, Dialog, DialogTrigger } from '../ui/dialog';
-	import { Button } from '../ui/button';
 	import { calculatorStorage } from '$lib/calculatorOptionsStorage';
+	import { PinInput } from 'bits-ui';
+	import Input from '../ui/Input.svelte';
+	import Button from '../ui/Button.svelte';
+	import FlagText from '../ui/FlagText.svelte';
 
 	let value = '';
 	let open = false;
@@ -21,35 +24,39 @@
 	}
 </script>
 
-<Dialog portal={document.querySelector('main')} bind:open>
-	<DialogTrigger>
-		<slot />
-	</DialogTrigger>
+<Dialog bind:open>
+	<DialogTrigger><slot /></DialogTrigger>
 
-	<DialogContent class=" bg-gradient-to-br from-surface-200 to-surface-300/80 shadow-theme">
-		<DialogHeader>
-			<DialogTitle class="text-3xl font-normal">Choose a name for the configuration</DialogTitle>
-		</DialogHeader>
-		<form
-			on:submit={(e) => {
-				e.preventDefault();
-				handleSave();
-			}}
-		>
-			<div class="mt-5 flex flex-col items-center gap-5">
-				<input
-					class="mx-auto w-fit border-none bg-surface-300 px-4 py-2 text-lg shadow-theme-item"
-					required
-					name="name"
-					bind:value
-				/>
-				<Button
-					variant="defaultLight"
-					size="sm"
-					class="w-fit  bg-surface-300 px-5 py-0 text-lg leading-7 shadow-theme-item"
-					type="submit">Save</Button
-				>
-			</div>
-		</form>
+	<DialogContent class="max-w-lg border-none bg-transparent p-0 shadow-none">
+		<div class="font-funky bg-surface-gradient-light p-5 text-surface-900 shadow-theme">
+			<DialogHeader>
+				<DialogHeader>
+					<DialogTitle>
+						<FlagText
+							class="pointer-events-none relative -top-2 flex justify-center  text-2xl md:text-4xl"
+							>Choose a name</FlagText
+						></DialogTitle
+					>
+				</DialogHeader>
+			</DialogHeader>
+			<form
+				class="mt-10"
+				on:submit={(e) => {
+					e.preventDefault();
+					handleSave();
+				}}
+			>
+				<div class="mt-5 flex flex-col items-center gap-5 md:gap-10">
+					<Input
+						required
+						name="name"
+						bind:value
+						class=" h-9 bg-surface-300 px-3 font-stardew text-xl text-black"
+					/>
+
+					<Button class="self-end" type="submit">Save</Button>
+				</div>
+			</form>
+		</div>
 	</DialogContent>
 </Dialog>

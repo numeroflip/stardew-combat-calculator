@@ -18,6 +18,24 @@ html {
 	padding-block: 10px;
 }
 
+.main-grid {
+	display: grid;
+	grid-template-rows: auto 1fr auto;
+
+	grid-template-areas:
+		'header'
+		'options'
+		'results';
+
+	@screen lg {
+		grid-template-columns: 1fr 1fr 1fr;
+		grid-template-areas:
+			'header header header'
+			'options options results'
+			'options options menu';
+	}
+}
+
 @layer base {
 	body {
 		font-smooth: never;

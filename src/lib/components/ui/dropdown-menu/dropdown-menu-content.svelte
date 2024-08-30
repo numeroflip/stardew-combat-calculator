@@ -2,6 +2,7 @@
 	import { DropdownMenu as DropdownMenuPrimitive } from 'bits-ui';
 	import { cn, flyAndScale } from '$lib/utils.js';
 	import { dropdownContentVariants } from '.';
+	import Surface from '../Surface.svelte';
 
 	type $$Props = DropdownMenuPrimitive.ContentProps;
 	type $$Events = DropdownMenuPrimitive.ContentEvents;
@@ -17,9 +18,11 @@
 	{transition}
 	{transitionConfig}
 	{sideOffset}
-	class={cn(dropdownContentVariants({ variant: 'pixelated', className }))}
+	class={cn('z-50', className)}
 	{...$$restProps}
 	on:keydown
 >
-	<slot />
+	<Surface>
+		<slot />
+	</Surface>
 </DropdownMenuPrimitive.Content>

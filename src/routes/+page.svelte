@@ -5,24 +5,26 @@
 	import EnchantmentPicker from '$lib/components/EnchantmentPicker.svelte';
 	import SkillPicker from '$lib/components/SkillPicker.svelte';
 	import CalculationResults from '$lib/components/CalculationResults/CalculationResults.svelte';
-	import LuckFromFoodPicker from '$lib/components/LuckFromFoodPicker.svelte';
+	import LuckFromFoodSlider from '$lib/components/LuckFromFoodSlider.svelte';
 
 	import queryString from 'query-string';
 	import { calculatorOptionsSchema, type CalculatorOptions } from '$model/calculatorOptions';
-	import { buttonVariants } from '$lib/components/ui/button';
 	import Header from '$lib/components/Header.svelte';
-	import { onMount, tick } from 'svelte';
+	import { onMount } from 'svelte';
 	import {
 		setCalculatorOptions,
-		blessingStore,
-		selectedCalculatorOptionsStore
+		selectedCalculatorOptionsStore,
+		luckStore,
+		speedFromFoodStore
 	} from '$lib/store/calculatorOptions';
 	import { get } from 'svelte/store';
 	import { calculatorStorage } from '$lib/calculatorOptionsStorage';
 	import BlessingSelector from '$lib/components/BlessingSelector/BlessingSelector.svelte';
-	import SpeedFromFoodPicker from '$lib/components/SpeedFromFoodPicker.svelte';
-	import { LucideHeading5 } from 'lucide-svelte';
+	import SpeedFromFoodSlider from '$lib/components/SpeedFromFoodSlider.svelte';
 	import { parseJSON } from '$lib/json';
+	import Menu from '$lib/components/Menu/Menu.svelte';
+	import FlagText from '$lib/components/ui/FlagText.svelte';
+	import Surface from '$lib/components/ui/Surface.svelte';
 
 	let initialized = false;
 
@@ -66,90 +68,132 @@
 	}
 
 	const isOnClient = typeof window !== 'undefined';
+
+	let innerWidth: number;
+	$: isLg = innerWidth >= 1024;
 </script>
 
-<div
-	class="lg:pixel-corners-border--lg haupt-grid bg container mx-auto flex h-full min-h-dvh w-full max-w-screen-lg flex-col border-surface-900 bg-surface-300 px-0 dark:bg-surface-900 md:min-h-0 md:border-4 lg:border-none"
+<svelte:head>
+	<title>Stardew Combat Calculator</title>
+</svelte:head>
+<svelte:window bind:innerWidth />
+<Surface
+	class="main-grid main-grid bg max-w:none container mx-auto flex min-h-dvh w-full  flex-col  border-none  border-transparent bg-none  px-0 md:min-h-0   md:border-[#b14e05]  md:bg-surface-gradient-light lg:max-w-[calc(100vw-3rem)] lg:border-solid xl:max-w-screen-xl "
 >
 	{#if isOnClient}
 		<Header />
 
 		<main
-			class="flex h-full w-full grow flex-col gap-5 overflow-y-auto bg-gradient-to-b from-[#144683] to-[#258BF0] px-1 py-5 shadow-theme [grid-area:options] dark:from-surface-950/50 dark:to-surface-950 md:px-4 md:py-5 md:pb-8 *:md:max-w-[460px]"
+			class="flex h-full w-full grow flex-col gap-7 overflow-y-auto bg-blue-gradient px-3 py-5 shadow-theme [grid-area:options] dark:from-surface-950/50 dark:to-surface-950 sm:grid sm:grid-cols-2 sm:px-3 md:gap-8 md:px-4 md:py-5 md:pb-8 lg:px-10 lg:py-10"
 		>
-			<section class="pixel-border flex grow flex-col bg-surface-200 p-3 pt-2">
-				<h3 class="mb-2 text-center text-3xl lg:block">Weapon</h3>
-				<div class="pixel-corners mx-auto flex h-full w-full flex-col gap-3">
-					<div class="z-[3]">
-						<div class="pixel-corners z-[3] flex flex-col gap-5 bg-surface-50 px-5">
-							<WeaponPicker />
+			<div class="flex flex-col gap-[inherit] lg:justify-between">
+				<Surface class="px-5 py-3  ">
+					<FlagText class="mx-auto mb-2 ">
+						<h3 class=" text-center text-3xl lg:block">Weapon</h3>
+					</FlagText>
+
+					<div class="pixel-corners mx-auto flex h-full w-full flex-col gap-3">
+						<div class="z-[3]">
+							<div class=" z-[3] flex flex-col gap-5">
+								<WeaponPicker />
+							</div>
 						</div>
+
+						<section class=" z-[2] flex w-full justify-between gap-5 pl-2">
+							<div class="flex items-center text-2xl">Gems:</div>
+							<div class=" flex gap-[1px]">
+								<GemPicker index={0} />
+								<GemPicker index={1} />
+								<GemPicker index={2} />
+							</div>
+						</section>
+						<!-- Enchantment -->
+
+						<EnchantmentPicker />
 					</div>
+				</Surface>
 
-					<section class=" z-[2] flex w-full justify-between gap-5 pl-2">
-						<div class="flex items-center text-2xl">Gems:</div>
-						<div class="flex gap-3">
-							<GemPicker index={0} />
-							<GemPicker index={1} />
-							<GemPicker index={2} />
-						</div>
-					</section>
-					<!-- Enchantment -->
+				<!-- Rings -->
+				<Surface class="px-5 py-3  ">
+					<FlagText class="mx-auto mb-2">
+						<h3 class=" text-center text-3xl lg:block">Rings</h3>
+					</FlagText>
 
-					<EnchantmentPicker />
-				</div>
-			</section>
+					<fieldset class="flex justify-between gap-4">
+						<RingPairPicker type="left" />
+						<RingPairPicker type="right" />
+					</fieldset>
+				</Surface>
+			</div>
+			<div class="flex flex-col gap-[inherit] lg:justify-between">
+				<Surface class="px-5 py-3  ">
+					<FlagText class="mx-auto mb-2">
+						<h3 class=" text-center text-3xl lg:block">Skills</h3>
+					</FlagText>
 
-			<!-- Rings -->
-			<section
-				class="pixel-border flex w-full grow flex-col flex-wrap items-center justify-between gap-x-10 gap-y-3 self-stretch bg-surface-200 py-1 pb-4 pl-4 pr-1 pt-3"
-			>
-				<h3 class="mb-2 text-center text-3xl lg:block">Rings</h3>
-				<fieldset class="flex justify-between gap-4">
-					<RingPairPicker type="left" />
-					<RingPairPicker type="right" />
-				</fieldset>
-			</section>
+					<SkillPicker />
+				</Surface>
+				<Surface class="px-5 py-3  ">
+					<FlagText class="mx-auto mb-2">
+						<h3 class=" text-center text-3xl lg:block">Food Buffs</h3>
+					</FlagText>
 
-			<section
-				class="pixel-border flex w-full flex-col flex-wrap items-center justify-center gap-x-10 gap-y-3 bg-surface-200 px-3 pb-2 pt-3"
-			>
-				<h3 class="text-3xl">Skills</h3>
-				<SkillPicker />
-			</section>
+					<div class="grid grid-cols-1 justify-items-center px-2">
+						<section class="flex w-full items-center justify-center gap-8">
+							<h5 class="flex shrink-0 basis-20 items-center gap-2 text-2xl">
+								<img
+									src="https://stardewvalleywiki.com/mediawiki/images/thumb/f/f0/Luck.png/24px-Luck.png"
+									alt=""
+									class="size-6 object-cover"
+								/>
+								Luck
+							</h5>
+							<div class=" grow">
+								<LuckFromFoodSlider />
+							</div>
+							<div class="basis-5 text-xl">{$luckStore.dirty ?? $luckStore.selected}</div>
+						</section>
+						<section class="flex w-full items-center justify-center gap-8">
+							<h5 class="flex shrink-0 basis-20 items-center gap-2 text-2xl">
+								<img
+									src="https://stardewvalleywiki.com/mediawiki/images/thumb/9/94/Speed.png/24px-Speed.png"
+									alt=""
+									class="size-6 object-cover"
+								/>
+								Speed
+							</h5>
+							<div class=" grow">
+								<SpeedFromFoodSlider />
+							</div>
+							<div class="basis-5 text-xl">
+								{$speedFromFoodStore.dirty ?? $speedFromFoodStore.selected}
+							</div>
+						</section>
+					</div>
+				</Surface>
 
-			<section class="pixel-border flex flex-col gap-5 bg-surface-200 px-3 py-3">
-				<h3 class="mb-2 text-center text-3xl lg:block">Food Buffs</h3>
+				<Surface class="px-5 py-3  ">
+					<div
+						class="flex flex-col justify-center gap-5 @md:flex-row @md:items-center @md:justify-between"
+					>
+						<FlagText class=" mb-2 self-start">
+							<h3 class="">Blessings</h3>
+						</FlagText>
 
-				<div class="grid grid-cols-2 justify-items-center">
-					<section class="flex items-center justify-between gap-5">
-						<h5 class="text-2xl">Luck</h5>
-
-						<LuckFromFoodPicker />
-					</section>
-					<section class="flex items-center justify-between gap-5">
-						<h5 class="text-2xl">Speed</h5>
-
-						<SpeedFromFoodPicker />
-					</section>
-				</div>
-			</section>
-
-			<section class="pixel-border flex flex-col gap-5 bg-surface-200 px-3 py-3">
-				<h3 class="mb-2 text-center text-3xl lg:block">Statue Of Blessings</h3>
-				<BlessingSelector />
-			</section>
+						<BlessingSelector />
+					</div>
+				</Surface>
+			</div>
 
 			<!-- RESULTS -->
 		</main>
-		<footer class="[grid-area:results]">
-			<section class="flex h-full w-full flex-1 grow flex-col gap-3 p-0 lg:p-5 lg:pl-8">
-				<!-- <h3 class="text-3xl">Results</h3> -->
+		<footer class="border-surface-900 [grid-area:results] lg:border-l-4 lg:px-4 lg:py-4">
+			<Surface class="mx-[5px] -mb-[2px] flex flex-col  gap-3 p-0 lg:px-5 lg:py-2 lg:pb-6">
 				<CalculationResults />
-			</section>
+			</Surface>
 		</footer>
 	{/if}
-</div>
+</Surface>
 
 <style>
 	.bob {
@@ -164,22 +208,5 @@
 			transparent 50%
 		);
 		background-size: 2px 2px;
-	}
-
-	.haupt-grid {
-		display: grid;
-		grid-template-rows: auto 1fr auto;
-
-		grid-template-areas:
-			'header'
-			'options'
-			'results';
-
-		@screen md {
-			grid-template-areas:
-				'header header'
-				'options results';
-			grid-template-columns: 1fr 400px;
-		}
 	}
 </style>

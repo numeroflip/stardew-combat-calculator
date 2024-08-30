@@ -6,16 +6,19 @@
 		luckStore,
 		ringStore,
 		selectedCalculatorOptionsStore,
-		setCalculatorOptions,
 		skillsStore,
-		weaponNameStore
+		weaponNameStore,
+		speedFromFoodStore
 	} from '$lib/store/calculatorOptions';
-	import { toast } from 'svelte-sonner';
-	import { calculatorOptionsSchema } from '$model/calculatorOptions';
+	/* 	import SaveIcon from '/icons/saveIcon.svg';
+	 */ import { toast } from 'svelte-sonner';
 	import queryString from 'query-string';
-	import { Dialog, DialogTrigger } from '../ui/dialog';
 	import SaveConfigurationDialog from './SaveConfigurationDialog.svelte';
 	import LoadConfigDialog from './LoadConfigDialog.svelte';
+	import clsx from 'clsx';
+	import Button from '../ui/Button.svelte';
+	import FlagText from '../ui/FlagText.svelte';
+	import ShareNotificationToaster from './ShareNotificationToaster.svelte';
 
 	function onReset() {
 		gemsStore.reset();
@@ -26,6 +29,7 @@
 		blessingStore.reset();
 		skillsStore.reset();
 		enchantmentStore.reset();
+		speedFromFoodStore.reset();
 	}
 
 	function handleShare() {
@@ -38,35 +42,45 @@
 			navigator.share({ text: link });
 		} else {
 			navigator.clipboard.writeText(link);
-			toast('The link is copied to the clipboard');
+			toast(ShareNotificationToaster, {
+				unstyled: true
+			});
 		}
 	}
 
-	function loadLocalStorageOption(key: string) {
-		const loadedOptions = localStorage.getItem(key);
-		if (!loadedOptions) {
-			return;
-		}
-		const parsedOptions = calculatorOptionsSchema.safeParse(parseJSON(loadedOptions));
+	export let className = '';
 
-		if (parsedOptions.data) {
-			setCalculatorOptions(parsedOptions.data);
-		}
-	}
-
-	function parseJSON(data: string) {
-		return JSON.parse(data, (key, value) => (value === null ? undefined : value));
-	}
+	export { className as class };
 </script>
 
-<div class="flex justify-center gap-2 bg-surface-100/30 p-1 text-xl">
-	<button class=" bg-surface-300 px-3 py-1 shadow-theme-item" on:click={handleShare}>Share</button>
+<div class={clsx('flex gap-4', className)}>
+	<Button on:click={handleShare}>
+		<img src="/icons/share.svg" alt="" class="hidden size-4 object-cover sm:block" />
+		<div class="relative text-lg">Share</div></Button
+	>
 
-	<SaveConfigurationDialog>
-		<button class=" bg-surface-300 px-3 py-1 shadow-theme-item">Save</button>
-	</SaveConfigurationDialog>
 	<LoadConfigDialog>
-		<button class=" bg-surface-300 px-3 py-1 shadow-theme-item">Load</button>
+		<Button>
+			<img src="/icons/load.svg" alt="" class="hidden size-5 object-cover sm:block" />
+			<div class="relative text-lg">Load</div>
+		</Button>
 	</LoadConfigDialog>
-	<button class=" bg-surface-300 px-3 py-1 shadow-theme-item" on:click={onReset}>Reset</button>
+	<Button class="bg-red-400" on:click={onReset}>
+		<img
+			src="/icons/close.svg"
+			alt=""
+			class="relative bottom-[2px] hidden size-6 object-cover sm:block"
+		/>
+		<div class="relative text-lg">Reset</div>
+	</Button>
+	<SaveConfigurationDialog>
+		<Button class="bg-green-600 ">
+			<img
+				src="/icons/save.svg"
+				alt=""
+				class="relative bottom-[2px] hidden size-5 object-cover sm:block"
+			/>
+			<div class="relative text-lg">Save</div>
+		</Button>
+	</SaveConfigurationDialog>
 </div>

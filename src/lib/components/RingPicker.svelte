@@ -58,7 +58,7 @@
 		</Button>
 	</DropdownMenu.Trigger>
 
-	<DropdownMenu.Content sideOffset={10} class="w-fit min-w-0 font-stardewTitle ">
+	<DropdownMenu.Content sideOffset={10} class="font-funky w-fit min-w-0 ">
 		<div class=" max-h-[50vh] cursor-pointer overflow-y-auto overflow-x-hidden">
 			<DropdownMenu.RadioGroup {value}>
 				<DropdownMenu.RadioItem
