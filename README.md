@@ -25,3 +25,7 @@ Fonts:
 - [regular pixelated](https://fontstruct.com/fontstructions/show/2216855/svthin-6)  
 
 Most of the icons and assets are sourced from the [wiki](https://stardewvalleywiki.com/)
+
+
+## Technical details 
+It's a [Sveltekit](https://kit.svelte.dev/) (4) app, with [Typescript](https://www.typescriptlang.org/), [Tailwind](https://tailwindcss.com/), and [shadcn](https://www.shadcn-svelte.com/docs/components/tooltip)
