@@ -44,13 +44,13 @@
 				<img
 					src={ringsData[value].icon}
 					alt={ringsData[value].name}
-					class="m-2 size-10 object-cover"
+					class="m-2 size-10 object-cover @xs:size-12"
 				/>
 			{:else}
 				<img
 					src={ringsData.topaz.icon}
 					alt={ringsData.topaz.name}
-					class="size-10 object-cover opacity-20 grayscale"
+					class="size-10 object-cover opacity-20 grayscale @xs:size-12"
 				/>
 			{/if}
 		</Button>
@@ -65,12 +65,12 @@
 					on:click={() => removeRing()}
 					on:focusin={() => removeRing('dirty')}
 					on:focusout={() => removeRing('dirty')}
-					class="mr-0 flex cursor-pointer gap-1 rounded-none p-2  pl-2 text-xl"
+					class="mr-0 flex cursor-pointer gap-1 rounded-none p-2  text-xl"
 				>
 					<img
 						src={ringsData.topaz.icon}
 						alt={ringsData.topaz.name}
-						class="size-10 object-cover opacity-20 grayscale"
+						class="size-10 object-cover opacity-20 grayscale @xs:size-12"
 					/>
 
 					<div class="text-2xl text-black">No ring</div>
@@ -85,7 +85,7 @@
 						on:focusin={() => selectRing(ringKey, 'dirty')}
 						on:focusout={() => removeRing('dirty')}
 						{disabled}
-						class={clsx('mr-0 flex  gap-1 rounded-none p-2  pl-2 text-xl')}
+						class={clsx('mr-0 flex  gap-1 rounded-none p-2  text-xl')}
 					>
 						<img src={ring.icon} alt={ring.name} class="size-10" />
 						<div class=" text-2xl text-black">

@@ -9,10 +9,10 @@
 
 <svelte:window bind:innerWidth />
 <Surface
-	class="  mt-[-3px]  w-full shadow-theme  [grid-area:header]  md:flex md:items-center md:justify-between md:divide-none md:pr-4"
+	class="  z-10 mx-[-3px] my-[-3px]  w-[calc(100%+6px)] shadow-theme  [grid-area:header]  md:flex md:items-center md:justify-between md:divide-none md:pr-4"
 >
 	<h1
-		class="h1 text-text font-funky border-b-3 border-[#dc7b05] px-5 py-3 text-center text-2xl capitalize [text-shadow:2px_2px_0px_rgb(153,69,19,0.4)] sm:text-4xl md:border-none md:py-4 xl:text-5xl"
+		class="h1 text-text font-funky border-b-3 border-[#dc7b05] px-5 py-3 text-center text-3xl capitalize [text-shadow:2px_2px_0px_rgb(153,69,19,0.4)] sm:text-4xl md:border-none md:py-4 xl:text-5xl"
 	>
 		Stardew Combat calculator
 	</h1>

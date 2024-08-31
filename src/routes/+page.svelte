@@ -99,7 +99,7 @@
 							</div>
 						</div>
 
-						<section class=" z-[2] flex w-full justify-between gap-5 pl-2">
+						<section class=" z-[2] flex w-full justify-between gap-5 pl-2 @container">
 							<div class="flex items-center font-sans text-2xl text-black">Gems</div>
 							<div class=" flex gap-[1px]">
 								<GemPicker index={0} />
@@ -187,15 +187,14 @@
 
 			<!-- RESULTS -->
 		</main>
-		<footer
-			class="border-surface-900 @container [grid-area:results] lg:border-l-4 lg:px-8 lg:py-10"
+		<Surface
+			class="mx-[-2px] my-[-2px] border-surface-900 @container [grid-area:results] lg:border-l-4 lg:px-8 lg:py-10"
 		>
-			<div class="absolute inset-0 h-full w-full bg-surface-gradient-light brightness-110" />
 			<Surface
 				class="mx-[-3px] -mb-[2px] flex snap-start flex-col items-center justify-center p-0 sm:gap-0 sm:pt-2 lg:gap-3 lg:px-5 lg:py-2 lg:pb-6"
 			>
 				<CalculationResults />
 			</Surface>
-		</footer>
+		</Surface>
 	{/if}
 </Surface>

@@ -11,6 +11,6 @@
 </script>
 
 <div class={cn(' flex gap-[2px]', className)}>
-	<RingPicker class="pl-1" index={0} {type} />
-	<RingPicker class="pr-1" index={1} {type} />
+	<RingPicker index={0} {type} />
+	<RingPicker index={1} {type} />
 </div>

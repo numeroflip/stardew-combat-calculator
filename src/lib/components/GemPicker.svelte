@@ -36,12 +36,16 @@
 		<Button
 			builders={[builder]}
 			variant="default"
-			class="no grid size-12 place-content-center rounded-none border-none  p-0  pl-0 pr-0 "
+			class="no grid size-12 place-content-center rounded-none border-none p-0  pl-0  pr-0 @xs:size-14 "
 		>
 			{#if shownGem}
-				<img src={gemIcon[shownGem]} alt={shownGem} class="size-8 object-cover" />
+				<img src={gemIcon[shownGem]} alt={shownGem} class="size-8 object-cover @xs:size-10" />
 			{:else}
-				<img src={gemIcon.diamond} alt="" class="size-8 object-cover opacity-20 grayscale" />
+				<img
+					src={gemIcon.diamond}
+					alt=""
+					class="size-8 object-cover opacity-20 grayscale @xs:size-10"
+				/>
 			{/if}
 		</Button>
 	</DropdownMenu.Trigger>

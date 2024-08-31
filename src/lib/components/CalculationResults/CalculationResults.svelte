@@ -163,11 +163,11 @@
 	$: avgBaseWithCrits = avgBaseDmg + (avgBaseDmg * 1 + baseCritMultiplier * weaponBaseCritChance);
 </script>
 
-<FlagText class="  hidden lg:flex">
+<FlagText class="  hidden lg:mb-4 lg:flex">
 	<h3 class=" text-center text-3xl">Results</h3>
 </FlagText>
 <div
-	class=" lg:shadow-theme-item-reverse flex w-full flex-col gap-4 border-surface-900 px-2 py-1 pb-[15px] font-stardew text-[22px] leading-[28px] text-black sm:max-w-md md:-ml-1 md:w-full md:gap-4 md:gap-x-10 md:border-t-0 md:px-4 md:pb-8 lg:gap-7 lg:p-3 lg:pb-10"
+	class=" flex w-full flex-col gap-4 border-surface-900 px-2 py-1 pb-[15px] font-stardew text-[22px] leading-[28px] text-black sm:max-w-md md:-ml-1 md:w-full md:gap-4 md:gap-x-10 md:border-t-0 md:px-4 md:pb-8 lg:gap-7 lg:p-3 lg:pb-10 lg:shadow-theme-item"
 >
 	<CalculationResultSection>
 		<div class="align-center flex flex-shrink-0 items-center gap-2">
