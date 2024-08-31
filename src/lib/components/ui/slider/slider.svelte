@@ -1,23 +1,23 @@
 <script lang="ts">
-	import { builderActions, Slider as SliderPrimitive } from 'bits-ui';
+	import { Slider as SliderPrimitive } from 'bits-ui';
 	import { cn } from '$lib/utils.js';
 	import clsx from 'clsx';
-	import Surface from '../Surface.svelte';
 
-	type $$Props = SliderPrimitive.Props & {
+	type $$Props = Omit<SliderPrimitive.Props, 'value'> & {
 		bg?: string;
+		value: number[];
 	};
 
 	let className: $$Props['class'] = undefined;
 	export let bg: string = 'bg-surface-900';
 
-	export let value: $$Props['value'] = [0];
+	export let value: $$Props['value'];
 	export { className as class };
 </script>
 
 <div>
 	<SliderPrimitive.Root
-		bind:value
+		{value}
 		class={cn('relative flex w-full touch-none select-none items-center   ', className)}
 		{...$$restProps}
 		let:thumbs
@@ -37,7 +37,7 @@
 					use:builder.action
 					{...builder}
 					class={clsx(
-						' shadow-theme-item-reverse  absolute block h-full w-8   translate-x-0 border-3 border-[#5b2b2a] bg-[#dc7b05] transition-colors focus:outline-none  disabled:pointer-events-none disabled:opacity-50',
+						' absolute  block h-full w-8 translate-x-0   border-3 border-[#5b2b2a] bg-[#dc7b05] shadow-theme-item-reverse transition-colors focus:outline-none  disabled:pointer-events-none disabled:opacity-50',
 						'cursor-pointer'
 						/* 	'ring-surface-900 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2'  */
 					)}
