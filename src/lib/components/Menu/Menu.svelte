@@ -54,7 +54,7 @@
 </script>
 
 <div class={clsx('flex gap-4', className)}>
-	<Button class="bg-red-400" on:click={onReset}>
+	<Button class="bg-red-700/50" on:click={onReset}>
 		<img
 			src="/icons/close.svg"
 			alt=""

@@ -7,6 +7,7 @@
 	import PixelBorders from '../PixelBorders.svelte';
 
 	import closeIcon from '$assets/icons/close.svg?raw';
+	import CloseIcon from '../CloseIcon.svelte';
 
 	type $$Props = DialogPrimitive.ContentProps;
 
@@ -36,12 +37,7 @@
 		<DialogPrimitive.Close
 			class="absolute right-4 top-2 rounded-sm bg-[#ffd284] opacity-70 ring-offset-background  focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
 		>
-			<div class="relative text-red-600 transition-all *:stroke-red-400 *:stroke-1 hover:scale-110">
-				<PixelBorders />
-				{@html closeIcon}
-			</div>
-
-			<span class="sr-only">Close</span>
+			<CloseIcon />
 		</DialogPrimitive.Close>
 	</DialogPrimitive.Content>
 </Dialog.Portal>
