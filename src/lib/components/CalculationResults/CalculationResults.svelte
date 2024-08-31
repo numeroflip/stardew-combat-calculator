@@ -163,11 +163,11 @@
 	$: avgBaseWithCrits = avgBaseDmg + (avgBaseDmg * 1 + baseCritMultiplier * weaponBaseCritChance);
 </script>
 
-<FlagText class=" mx-auto mb-2 hidden lg:flex">
+<FlagText class="  hidden lg:flex">
 	<h3 class=" text-center text-3xl">Results</h3>
 </FlagText>
 <div
-	class="flex flex-col gap-2 border-surface-900 bg-surface-400/20 py-1 pb-[10px] font-stardew text-[22px] leading-[28px] text-black md:-ml-1 md:w-full md:gap-4 md:gap-x-10 md:border-t-0 md:p-2 md:pb-5 lg:gap-7 lg:shadow-theme-item"
+	class=" lg:shadow-theme-item-reverse flex w-full flex-col gap-4 border-surface-900 px-2 py-1 pb-[15px] font-stardew text-[22px] leading-[28px] text-black sm:max-w-md md:-ml-1 md:w-full md:gap-4 md:gap-x-10 md:border-t-0 md:px-4 md:pb-8 lg:gap-7 lg:p-3 lg:pb-10"
 >
 	<CalculationResultSection>
 		<div class="align-center flex flex-shrink-0 items-center gap-2">
@@ -248,7 +248,7 @@
 			min={1}
 			value={1000 / results.speed}
 			baseValue={1000 / weaponBaseSpeed(weapon)}
-			class="bg-yellow-500"
+			class="bg-slate-400"
 		/>
 
 		<div class="ml-auto">

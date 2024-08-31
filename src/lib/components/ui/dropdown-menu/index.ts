@@ -17,8 +17,7 @@ export const dropdownItemVariants = tv({
 	base: ' mb-1 flex cursor-default select-none items-center rounded-none  border-none px-2 py-1.5 text-sm outline-none data-[disabled]:pointer-events-none  data-[disabled]:opacity-50',
 	variants: {
 		variant: {
-			default:
-				'bg-surface data-[highlighted]:bg-white/20 data-[highlighted]:text-accent-foreground',
+			default: 'data-[highlighted]:bg-white/20 data-[highlighted]:text-accent-foreground',
 			light:
 				'shadow-theme-item bg-surface-50 data-[highlighted]:bg-surface-400/50 data-[highlighted]:text-accent-foreground',
 			pixelated:
@@ -34,7 +33,7 @@ export const dropdownContentVariants = tv({
 	base: 'z-50 min-w-[8rem] p-1 text-popover-foreground focus:outline-none',
 	variants: {
 		variant: {
-			default: 'bg-surface border-4 border-surface-900 shadow-theme',
+			default: 'bg-surface border-4 border-surface-900 ',
 			light: 'bg-surface-100 border-4 border-surface-900 shadow-theme',
 			pixelated: 'pixel-border text-surface-900 bg-surface-50/60 backdrop-blur-md'
 		}

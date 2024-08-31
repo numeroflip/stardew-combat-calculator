@@ -53,7 +53,7 @@
 			class=" relative flex h-fit w-full shrink-0 items-center justify-center self-center rounded-none border-none  p-3 py-0 shadow-theme-item"
 		>
 			{#if weapon}
-				<div class="flex w-full shrink-0">
+				<div class="flex w-full shrink-0 font-sans">
 					<div class="relative h-fit w-fit shrink-0 self-center">
 						<img
 							src={weapon.icon}
@@ -89,22 +89,22 @@
 		</Button>
 	</DropdownMenu.Trigger>
 
-	<DropdownMenu.Content sideOffset={1} class="relative w-fit min-w-80 bg-surface-100 p-0  ">
+	<DropdownMenu.Content sideOffset={1} class="relative w-fit min-w-80  p-0  ">
 		<Tabs.Root bind:value={activeTab}>
 			<Tabs.List
-				class=" flex h-fit gap-1 rounded-none border-b-4 border-surface-900  bg-surface-200"
+				class="after:contents-[''] before:contents-[''] relative flex h-fit gap-1 rounded-none border-b-4 border-[#b14e05] bg-surface-gradient before:absolute before:-bottom-[9px] before:left-0 before:right-0 before:z-10 before:h-[3px]   before:bg-[#b14e05] after:absolute after:-bottom-[6px] after:left-[-3px] after:right-[-3px] after:z-10 after:h-[3px]   after:bg-[#dc7b05]"
 			>
 				{#each tabs as tab}
-					<Tabs.Trigger class="font-funky bg-transparent text-xl" value={tab.value}
-						>{tab.name}
-						<img src={tab.icon} alt={tab.name} class=" size-8 p-1 md:size-8" /></Tabs.Trigger
-					>
+					<Tabs.Trigger class="  text-xl shadow-theme-item" value={tab.value}>
+						<img src={tab.icon} alt={tab.name} class=" size-8 p-1 md:size-8" />
+						{tab.name}
+					</Tabs.Trigger>
 				{/each}
 			</Tabs.List>
 
-			<DropdownMenu.Group class="flex max-h-[40vh] w-full gap-4 overflow-y-auto  p-0 ">
+			<DropdownMenu.Group class="flex max-h-[40vh] w-full gap-4  overflow-y-auto  p-0 ">
 				{#each tabs as tab}
-					<Tabs.Content class="w-full" value={tab.value}>
+					<Tabs.Content class="w-full divide-y-2 divide-solid divide-white/20 " value={tab.value}>
 						{#each tab.list as _weapon}
 							<DropdownMenu.Item
 								on:click={() => weaponNameStore.setSelected(_weapon.name)}
@@ -122,9 +122,7 @@
 										>{_weapon.level}</span
 									>
 								</div>
-								<div
-									class="font-funky flex w-full items-center justify-between text-xl text-surface-900"
-								>
+								<div class=" flex w-full items-center justify-between text-xl text-black">
 									{_weapon.name}
 									<span class=" ml-2 opacity-30">{_weapon.damage[0]}-{_weapon.damage[1]}</span>
 								</div>

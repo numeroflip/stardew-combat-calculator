@@ -56,7 +56,7 @@
 	}
 </script>
 
-<div class=" flex w-auto flex-wrap justify-between divide-x-2 font-sans">
+<div class=" flex w-auto flex-wrap justify-between font-sans">
 	<DropdownMenu.Root bind:open closeOnItemClick={step === 'lvl10'}>
 		<DropdownMenu.Trigger class=" w-auto" asChild let:builder>
 			<Button
@@ -95,10 +95,12 @@
 		</DropdownMenu.Trigger>
 
 		<DropdownMenu.Content
-			class="w-fit  min-w-0 rounded-none p-2 font-sans text-3xl shadow-theme backdrop-blur-md transition-all"
+			class="w-fit min-w-0 divide-y-2 divide-solid  divide-white/20 rounded-none p-2 font-sans text-3xl  transition-all"
 		>
 			{#if step === 'lvl5'}
-				<div class=" max-h-[60vh] overflow-y-auto overflow-x-hidden">
+				<div
+					class=" max-h-[60vh] divide-y-2 divide-solid divide-white/20 overflow-y-auto overflow-x-hidden"
+				>
 					{#each keysOf(skills) as skillKey}
 						{@const skill = skills[skillKey]}
 						<DropdownMenu.Item
@@ -114,7 +116,7 @@
 								{skill.name}
 							</div>
 
-							<div class="text-center text-base leading-5 opacity-45">
+							<div class="text-center text-base leading-5 text-slate-800">
 								{skill.description}
 							</div>
 						</DropdownMenu.Item>
@@ -124,14 +126,14 @@
 				<div class="relative grid max-w-xl grid-cols-2">
 					<DropdownMenu.Item
 						disabled
-						class="relative flex cursor-pointer flex-col justify-center gap-2"
+						class="relative flex cursor-pointer flex-col justify-center gap-2 bg-white/20"
 					>
 						<div class="flex items-center gap-2 text-2xl">
 							<img src={lvl5Skill.icon} alt={lvl5Skill.name} class=" size-10" />
 							{lvl5Skill.name}
 						</div>
 
-						<div class=" text-center text-base leading-5 opacity-45">
+						<div class=" text-center text-base leading-5 text-slate-800">
 							{lvl5Skill.description}
 						</div>
 					</DropdownMenu.Item>
@@ -147,7 +149,9 @@
 						>
 					</div>
 
-					<Surface class="text-text mx-2 my-2 flex flex-col gap-1 ">
+					<Surface
+						class="text-text mx-2 my-2 flex flex-col gap-1 divide-y-2 divide-solid divide-white/20 "
+					>
 						{#each keysOf(lvl5Skill.lvl10Skills) as _lvl10SkillKey}
 							{@const skill = lvl5Skill.lvl10Skills.hasOwnProperty(_lvl10SkillKey)
 								? /* @ts-expect-error */
@@ -167,7 +171,7 @@
 									<span class="text-2xl"> {skill.name}</span>
 								</div>
 								<div class=" text-center text-base leading-5">
-									<span class="opacity-45">
+									<span class="text-slate-800">
 										{skill.description}
 									</span>
 								</div>

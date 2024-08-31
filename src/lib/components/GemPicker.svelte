@@ -47,7 +47,9 @@
 	</DropdownMenu.Trigger>
 
 	<DropdownMenu.Content sideOffset={10} class="w-fit min-w-0 font-stardew text-black ">
-		<DropdownMenu.Group class=" max-h-[40vh] overflow-y-auto  ">
+		<DropdownMenu.Group
+			class=" max-h-[40vh] divide-y-2 divide-solid divide-white/20 overflow-y-auto  "
+		>
 			<DropdownMenu.Item
 				on:click={() => removeGem('selected')}
 				on:focusin={() => removeGem('dirty')}

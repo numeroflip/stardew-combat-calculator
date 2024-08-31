@@ -38,10 +38,7 @@
 			builders={[builder]}
 			variant="default"
 			size="unset"
-			class={cn(
-				'grid size-14  h-12  place-content-center  text-3xl   md:min-h-12 md:min-w-16',
-				className
-			)}
+			class={cn('grid size-14  place-content-center  text-3xl  @xs:size-16', className)}
 		>
 			{#if value}
 				<img
@@ -61,7 +58,7 @@
 
 	<DropdownMenu.Content sideOffset={10} class="w-fit min-w-0 font-stardew ">
 		<div class=" max-h-[50vh] cursor-pointer overflow-y-auto overflow-x-hidden">
-			<DropdownMenu.RadioGroup {value}>
+			<DropdownMenu.RadioGroup {value} class="divide-y-2 divide-solid divide-white/20">
 				<DropdownMenu.RadioItem
 					indicator={false}
 					value=""

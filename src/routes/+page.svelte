@@ -78,16 +78,16 @@
 </svelte:head>
 <svelte:window bind:innerWidth />
 <Surface
-	class="main-grid main-grid bg max-w:none container mx-auto flex min-h-dvh w-full  flex-col  border-none  border-transparent bg-none  px-0 md:min-h-0   md:border-[#b14e05]  md:bg-surface-gradient-light lg:max-w-[calc(100vw-3rem)] lg:border-solid xl:max-w-screen-xl "
+	class="main-grid main-grid  max-w:none container mx-auto flex min-h-dvh w-full  flex-col  border-transparent   bg-blue-gradient   px-0 md:min-h-0  md:border-[#b14e05] lg:max-w-[calc(100vw-3rem)] lg:border-solid xl:max-w-screen-xl "
 >
 	{#if isOnClient}
 		<Header />
 
 		<main
-			class="flex h-full w-full grow flex-col gap-7 overflow-y-auto bg-blue-gradient px-3 py-5 shadow-theme [grid-area:options] dark:from-surface-950/50 dark:to-surface-950 sm:grid sm:grid-cols-2 sm:px-3 md:gap-8 md:px-4 md:py-5 md:pb-8 lg:px-10 lg:py-10"
+			class="flex h-full w-full grow snap-y snap-mandatory scroll-p-5 flex-col gap-7 overflow-y-auto px-3 py-5 pb-10 shadow-theme [grid-area:options] sm:grid sm:grid-cols-2 sm:px-3 sm:shadow-none md:gap-8 md:px-4 md:py-5 md:pb-8 lg:px-10 lg:py-10 lg:shadow-theme"
 		>
 			<div class="flex flex-col gap-[inherit] sm:order-2 lg:justify-between">
-				<Surface class="max-h-full px-5 py-3  ">
+				<Surface class="max-h-full snap-start px-5 py-3  ">
 					<FlagText class="mx-auto mb-4 lg:mb-5 ">
 						<h3 class=" text-center text-3xl lg:block">Weapon</h3>
 					</FlagText>
@@ -114,26 +114,26 @@
 				</Surface>
 
 				<!-- Rings -->
-				<Surface class="px-5 py-3  ">
+				<Surface class="snap-start px-5 py-3  ">
 					<FlagText class="mx-auto mb-4 lg:mb-5">
 						<h3 class=" text-center text-3xl lg:block">Rings</h3>
 					</FlagText>
 
-					<fieldset class="flex justify-between gap-4">
+					<fieldset class="flex justify-between gap-4 @container">
 						<RingPairPicker type="left" />
 						<RingPairPicker type="right" />
 					</fieldset>
 				</Surface>
 			</div>
 			<div class="flex flex-col gap-[inherit] lg:justify-between">
-				<Surface class="px-5 py-3  ">
+				<Surface class="snap-start px-5 py-3  ">
 					<FlagText class="mx-auto mb-4 lg:mb-5">
 						<h3 class=" text-center text-3xl lg:block">Skills</h3>
 					</FlagText>
 
 					<SkillPicker />
 				</Surface>
-				<Surface class="px-5 py-3  ">
+				<Surface class="snap-start px-5 py-3 ">
 					<FlagText class="mx-auto mb-4 lg:mb-5">
 						<h3 class=" text-center text-3xl lg:block">Food Buffs</h3>
 					</FlagText>
@@ -172,7 +172,7 @@
 					</div>
 				</Surface>
 
-				<Surface class="px-5 py-3  ">
+				<Surface class="snap-start px-5 py-3 ">
 					<div
 						class="flex flex-col justify-center gap-4 @md:flex-row @md:items-center @md:justify-between lg:gap-5"
 					>
@@ -187,8 +187,13 @@
 
 			<!-- RESULTS -->
 		</main>
-		<footer class="border-surface-900 [grid-area:results] lg:border-l-4 lg:px-8 lg:py-10">
-			<Surface class="mx-[-3px] -mb-[2px] flex flex-col  gap-3 p-0 lg:px-5 lg:py-2 lg:pb-6">
+		<footer
+			class="border-surface-900 @container [grid-area:results] lg:border-l-4 lg:px-8 lg:py-10"
+		>
+			<div class="absolute inset-0 h-full w-full bg-surface-gradient-light brightness-110" />
+			<Surface
+				class="mx-[-3px] -mb-[2px] flex snap-start flex-col items-center justify-center p-0 sm:gap-0 sm:pt-2 lg:gap-3 lg:px-5 lg:py-2 lg:pb-6"
+			>
 				<CalculationResults />
 			</Surface>
 		</footer>
