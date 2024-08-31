@@ -22,24 +22,6 @@
 	}
 
 	$: shownGem = $gemsStore.dirty[index] || $gemsStore.selected[index];
-
-	$: shownGems = [
-		$gemsStore.dirty[0] || $gemsStore.selected[0],
-		$gemsStore.dirty[1] || $gemsStore.selected[1],
-		$gemsStore.dirty[2] || $gemsStore.selected[2]
-	];
-
-	$: selectedGems = $gemsStore.selected;
-
-	$: {
-		console.info('selectedGems', selectedGems);
-	}
-
-	$: gemLevel = selectedGems.filter((gem) => gem === shownGem).length as 1 | 2 | 3;
-
-	$: {
-		console.info('gemLevel', gemLevel);
-	}
 </script>
 
 <DropdownMenu.Root>
