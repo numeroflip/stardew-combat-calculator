@@ -8,8 +8,8 @@ export const gemData: Record<GemName, { stats: [Stats, Stats, Stats] }> = {
 			{
 				speed: 2
 			},
-			{ speed: 2 },
-			{ speed: 3 }
+			{ speed: 3 },
+			{ speed: 2 }
 		]
 	},
 	amethyst: {
@@ -59,14 +59,17 @@ export const gemData: Record<GemName, { stats: [Stats, Stats, Stats] }> = {
 	}
 };
 
-export function getGemDescription(gemName: GemName, level: 1 | 2 | 3): string[] {
+export function getGemDescription(gemName: GemName, level: number): string[] {
 	const stats = gemData[gemName].stats;
 	const stat = stats[level - 1];
+
+	if (!stat) {
+		return [''];
+	}
 
 	const statStrings = keysOf(stat)
 		.map((statKey) => {
 			const effectValue = stat[statKey];
-
 			if (effectValue) {
 				return getStatDescription(statKey, effectValue);
 			}

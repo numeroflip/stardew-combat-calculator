@@ -51,11 +51,13 @@ export function getSpeedValues(options: CalculatorOptions): number {
 			}
 
 			let speedAdditions = 0;
+			const maxIndex = level - 1;
 
 			data.stats.forEach((stat, index) => {
-				if (index > level - 1) {
+				if (index > maxIndex) {
 					return;
 				}
+
 				if (stat.speed) {
 					speedAdditions += stat.speed;
 				}

@@ -28,7 +28,18 @@
 		$gemsStore.dirty[1] || $gemsStore.selected[1],
 		$gemsStore.dirty[2] || $gemsStore.selected[2]
 	];
-	$: gemLevel = shownGems.filter((gem) => gem === shownGem).length as 1 | 2 | 3;
+
+	$: selectedGems = $gemsStore.selected;
+
+	$: {
+		console.info('selectedGems', selectedGems);
+	}
+
+	$: gemLevel = selectedGems.filter((gem) => gem === shownGem).length as 1 | 2 | 3;
+
+	$: {
+		console.info('gemLevel', gemLevel);
+	}
 </script>
 
 <DropdownMenu.Root>
@@ -71,6 +82,7 @@
 			</DropdownMenu.Item>
 
 			{#each gemNames as gemName}
+				{@const _gemLevel = $gemsStore.selected.filter((gem) => gem === shownGem).length}
 				<DropdownMenu.Item
 					on:click={() => selectGem(gemName, 'selected')}
 					on:focusin={() => selectGem(gemName, 'dirty')}
@@ -84,7 +96,7 @@
 						</div>
 
 						<div class="text-sm leading-3 text-surface-900/50">
-							{getGemDescription(gemName, gemLevel)}
+							{getGemDescription(gemName, _gemLevel)}
 						</div>
 					</div>
 				</DropdownMenu.Item>
