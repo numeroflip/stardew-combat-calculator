@@ -1,38 +1,27 @@
-# create-svelte
+# Stardew Combat Calculator 
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+Easily visualize the effects of your items on combat statistics.
 
-## Creating a project
+![image](https://github.com/user-attachments/assets/5e585fff-3817-4fc3-954e-b63e113cffa5)
 
-If you're seeing this, you've probably already done this step. Congrats!
+[website](https://www.stardew-combat-calculator.com/)
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+## Features
 
-## Developing
+- Your options are saved and remembered, if you come here again (saved in localstorage)
+- You can save and load configurations (local)
+- You can share a config (by a url)
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+## Story
+In Stardew Valley, it's not very straightforward to understand how your items and buffs effect damage, crit chance, etc... 
 
-```bash
-npm run dev
+This calculator grew out my frustration trying to understand all these. Digging deep into the wiki, I made it to better understand these things.
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+## Credits
 
-## Building
+Fonts: 
+- [curvy](https://www.reddit.com/r/StardewValley/comments/4dtgp7/by_popular_request_a_stardew_valley_font_for_your/)
+- [regular pixelated](https://fontstruct.com/fontstructions/show/2216855/svthin-6)  
 
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+Most of the icons and assets are sourced from the [wiki](https://stardewvalleywiki.com/)
