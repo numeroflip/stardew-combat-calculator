@@ -181,7 +181,7 @@
 			<h3 class=" text-center text-3xl">Results</h3>
 		</FlagText>
 		<div
-			class="grid w-full grid-cols-2 flex-col gap-1 border-surface-900 py-1 pb-[6px] font-stardew text-[22px] leading-[28px] text-black sm:grid sm:w-full sm:max-w-xl sm:gap-x-10 sm:pb-8 md:-ml-1 md:w-full md:border-t-0 md:px-4 lg:flex lg:gap-2 lg:p-3 lg:pb-10"
+			class="grid w-full grid-cols-2 flex-col gap-1 border-surface-900 py-1 pb-[8px] font-stardew text-[22px] leading-[28px] text-black sm:grid sm:w-full sm:max-w-xl sm:gap-x-10 sm:pb-8 md:-ml-1 md:w-full md:border-t-0 md:px-4 lg:flex lg:gap-2 lg:p-3 lg:pb-10"
 		>
 			<div class="flex flex-col gap-[inherit] lg:p-3 lg:pb-4 lg:shadow-theme-item">
 				<CalculationResultSection>
