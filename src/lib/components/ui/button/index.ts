@@ -6,8 +6,7 @@ const buttonVariants = tv({
 	base: ' focus-visible:ring-ring items-center justify-center whitespace-nowrap  text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
 	variants: {
 		variant: {
-			default:
-				'shadow-theme-item bg-surface-300 text-amber-900 hover:bg-surface-400/40 active:bg-surface-400/60',
+			default: 'shadow-theme-item  text-amber-900 hover:bg-surface-400/40 active:bg-surface-400/60',
 			defaultLight:
 				'shadow-theme-item bg-surface-50 text-amber-900 hover:bg-surface-200/40 active:bg-surface-200/60',
 			pixelated:

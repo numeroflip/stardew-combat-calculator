@@ -4,8 +4,6 @@
 	import { getBaseCritMultiplier, getCritMultiplier } from '$lib/getCritMultiplier';
 	import { getDamageValues } from '$lib/getDamageValues';
 	import { ringsData as ringData } from '$model/ring.data';
-	import clsx from 'clsx';
-	import Progress from '../ui/progress/progress.svelte';
 	import {
 		weaponNameStore,
 		enchantmentStore,
@@ -18,11 +16,17 @@
 	} from '$lib/store/calculatorOptions';
 	import { weapons } from '$model/weapon.data';
 	import { skillSchema, type CalculatorOptions } from '$model/calculatorOptions';
-	import { getSpeedValues, weaponBaseSpeed } from '$lib/getSpeedValues';
+	import {
+		ABSOLUTE_MIN_WEAPON_SPEED_IN_MILLISECONDS,
+		getEffectiveSpeedLimit,
+		getSpeedValues,
+		weaponBaseSpeed
+	} from '$lib/getSpeedValues';
 	import CalculationResultSection from './CalculationResultSection.svelte';
 	import CalculationResultProgress from './CalculationResultProgress.svelte';
 	import type { Weapon } from '$model/weapon';
 	import FlagText from '../ui/FlagText.svelte';
+	import Surface from '../ui/Surface.svelte';
 
 	$: activeWeaponName = $weaponNameStore.dirty || $weaponNameStore.selected;
 	$: weapon = weapons.find((w) => w.name === activeWeaponName) || weapons[0];
@@ -151,156 +155,150 @@
 
 	const critMaxDmgMapping: Record<Weapon['type'], number> = {
 		club: 3000,
-		dagger: 1400,
+		dagger: 2000,
 		sword: 2500
 	};
 
-	const MAX_CRIT_DMG = critMaxDmgMapping[weapon?.type] || 3000;
+	$: MAX_CRIT_DMG = 1600;
 
 	$: avgBaseDmg = (weapon.damage[0] + weapon.damage[1]) / 2;
 	$: baseCritMultiplier = getBaseCritMultiplier(weapon);
 	$: weaponBaseCritChance = getWeaponBaseCritChance(weapon);
-	$: avgBaseWithCrits = avgBaseDmg + (avgBaseDmg * 1 + baseCritMultiplier * weaponBaseCritChance);
+
+	$: hitsPerSec = formatNumber(1000 / results.speed, 1);
+
+	$: dmgPerSec = formatNumber(results.avgWithCrits * hitsPerSec, 1);
 </script>
 
-<FlagText class="  hidden lg:mb-4 lg:flex">
-	<h3 class=" text-center text-3xl">Results</h3>
-</FlagText>
-<div
-	class=" flex w-full flex-col gap-4 border-surface-900 px-2 py-1 pb-[15px] font-stardew text-[22px] leading-[28px] text-black sm:max-w-md md:-ml-1 md:w-full md:gap-4 md:gap-x-10 md:border-t-0 md:px-4 md:pb-8 lg:gap-7 lg:p-3 lg:pb-10 lg:shadow-theme-item"
+<Surface
+	shadow
+	class="z-10 mx-[-7px] my-[-7px] mt-[-4px] border-surface-900 @container [grid-area:results] lg:mx-[-2px] lg:my-[-2px] lg:mt-[6px] lg:grid lg:items-center lg:border-l-4 lg:px-8 lg:py-10"
 >
-	<CalculationResultSection>
-		<div class="align-center flex flex-shrink-0 items-center gap-2">
-			<img
-				src="https://stardewvalleywiki.com/mediawiki/images/thumb/0/00/Attack.png/24px-Attack.png"
-				alt="attack"
-				class="size-5 object-cover"
-			/>
-			Dmg:
-		</div>
-
-		<CalculationResultProgress
-			max={MAX_DMG}
-			value={results.dmg.max}
-			baseValue={weapon.damage[1]}
-			class="bg-red-600"
-		/>
-		<div class="ml-auto">
-			{formatNumber(results.dmg.min, 0)}-{formatNumber(results.dmg.max, 0)}
-		</div>
-	</CalculationResultSection>
-
-	<CalculationResultSection>
-		<div class="align-center flex flex-shrink-0 items-center gap-2">
-			<img
-				src="https://stardewvalleywiki.com/mediawiki/images/thumb/0/06/Crit._Power.png/24px-Crit._Power.png"
-				alt="crit"
-				class="size-5 object-cover"
-			/>
-			Crit: (x{results.critMultiplier})
-		</div>
-
-		<CalculationResultProgress
-			max={MAX_CRIT_DMG}
-			value={results.critDmg.min}
-			baseValue={weapon.damage[0] * getBaseCritMultiplier(weapon)}
-			class="bg-green-600"
-		/>
-
-		<div class="ml-auto">
-			{formatNumber(results.critDmg.min)}-{formatNumber(results.critDmg.max, 0)}
-		</div>
-	</CalculationResultSection>
-	<CalculationResultSection>
-		<div class="align-center flex flex-shrink-0 items-center gap-2">
-			<img
-				src="https://stardewvalleywiki.com/mediawiki/images/thumb/a/a9/Crit._Chance.png/24px-Crit._Chance.png"
-				alt="crit chance"
-				class="mr-1 size-4 object-cover"
-			/>
-			Crit chance:
-		</div>
-		<CalculationResultProgress
-			max={80}
-			baseValue={getWeaponBaseCritChance(weapon) * 100}
-			value={results.critChance * 100}
-			class="bg-blue-400"
-		/>
-
-		<div class="ml-auto">
-			{formatNumber(results.critChance * 100, 1)}%
-		</div>
-	</CalculationResultSection>
-
-	<CalculationResultSection>
-		<div class="align-center flex flex-shrink-0 items-center gap-2">
-			<img
-				src="https://stardewvalleywiki.com/mediawiki/images/thumb/2/26/Speed_w.png/24px-Speed_w.png"
-				alt="speed"
-				class="size-5 object-cover"
-			/>
-
-			Speed
-		</div>
-
-		<CalculationResultProgress
-			max={5}
-			min={1}
-			value={1000 / results.speed}
-			baseValue={1000 / weaponBaseSpeed(weapon)}
-			class="bg-slate-400"
-		/>
-
-		<div class="ml-auto">
-			{formatNumber(1000 / results.speed, 1)} hits/s
-		</div>
-	</CalculationResultSection>
-
-	<!-- <CalculationResultSection>
-		<div class="align-center flex flex-shrink-0 items-center gap-2">
-			<img
-				src="https://stardewvalleywiki.com/mediawiki/images/thumb/0/00/Attack.png/24px-Attack.png"
-				alt="attack"
-				class="size-5 object-cover"
-			/>
-			<div>Avg</div>
-		</div>
-
-		<CalculationResultProgress
-			max={1500}
-			baseValue={avgBaseWithCrits}
-			value={results.avgWithCrits}
-			class="bg-black/30"
-		/>
-
-		<div class="ml-auto">
-			{formatNumber(results.avgWithCrits, 0)}
-		</div>
-	</CalculationResultSection> -->
-
-	<!-- <section
-		class="md:pixel-border relative z-10 flex h-fit w-full flex-col gap-2 bg-surface-100 px-3 py-1 text-amber-900/60 md:shadow-theme"
+	<Surface
+		class="mx-[-3px] -mb-[2px] flex snap-start flex-col items-center justify-center p-0 sm:gap-0 sm:pt-2 lg:gap-3 lg:px-3 lg:py-2 lg:pb-6"
 	>
-		<div class="flex items-center gap-5 text-amber-950">
-			<img
-				src="https://stardewvalleywiki.com/mediawiki/images/thumb/0/00/Attack.png/24px-Attack.png"
-				alt="attack"
-				class="size-8 object-cover"
-			/>
-			<div>Avg</div>
-			<div class="absolute bottom-0 left-0 right-0 top-0">
-				<Progress
-					max={MAX_DMG}
-					value={results.avgWithCrits}
-					class="-z-10 h-full rounded-none  border-surface-900/10 bg-surface-800/20  "
-					barClass="bg-black/30"
-				/>
+		<FlagText class="  hidden lg:mb-4 lg:flex">
+			<h3 class=" text-center text-3xl">Results</h3>
+		</FlagText>
+		<div
+			class="grid w-full grid-cols-2 flex-col gap-1 border-surface-900 py-1 pb-[6px] font-stardew text-[22px] leading-[28px] text-black sm:grid sm:w-full sm:max-w-xl sm:gap-x-10 sm:pb-8 md:-ml-1 md:w-full md:border-t-0 md:px-4 lg:flex lg:gap-2 lg:p-3 lg:pb-10"
+		>
+			<div class="flex flex-col gap-[inherit] lg:p-3 lg:pb-4 lg:shadow-theme-item">
+				<CalculationResultSection>
+					<div class="align-center flex flex-shrink-0 items-center gap-2">
+						<img
+							src="https://stardewvalleywiki.com/mediawiki/images/thumb/0/00/Attack.png/24px-Attack.png"
+							alt="attack"
+							class="size-5 object-cover"
+						/>
+						Dmg:
+					</div>
+
+					<div class="ml-auto">
+						{formatNumber(results.dmg.min, 0)}-{formatNumber(results.dmg.max, 0)}
+					</div>
+					<CalculationResultProgress
+						slot="progress"
+						max={MAX_DMG}
+						value={results.dmg.max}
+						baseValue={weapon.damage[1]}
+						class="bg-red-600"
+					/>
+				</CalculationResultSection>
+
+				<CalculationResultSection>
+					<div class="align-center flex flex-shrink-0 items-center gap-2">
+						<img
+							src="https://stardewvalleywiki.com/mediawiki/images/thumb/0/06/Crit._Power.png/24px-Crit._Power.png"
+							alt="crit"
+							class="size-5 object-cover"
+						/>
+						<div>
+							Crit: <span class="text-[0.8em]">(x{results.critMultiplier})</span>
+						</div>
+					</div>
+
+					<div class="ml-auto">
+						{formatNumber(results.critDmg.min, 0)}-{formatNumber(results.critDmg.max, 0)}
+					</div>
+					<CalculationResultProgress
+						slot="progress"
+						max={MAX_CRIT_DMG}
+						value={(results.critDmg.min + results.critDmg.max) / 2}
+						baseValue={weapon.damage[0] * getBaseCritMultiplier(weapon)}
+						class="bg-green-600"
+					/>
+				</CalculationResultSection>
+				<CalculationResultSection>
+					<div class="align-center flex flex-shrink-0 items-center gap-2">
+						<img
+							src="https://stardewvalleywiki.com/mediawiki/images/thumb/a/a9/Crit._Chance.png/24px-Crit._Chance.png"
+							alt="crit chance"
+							class="mr-1 size-4 object-cover"
+						/>
+						Crit chance:
+					</div>
+
+					<div class="ml-auto">
+						{formatNumber(results.critChance * 100, 1)}%
+					</div>
+					<CalculationResultProgress
+						slot="progress"
+						max={80}
+						baseValue={getWeaponBaseCritChance(weapon) * 100}
+						value={results.critChance * 100}
+						class="bg-blue-400"
+					/>
+				</CalculationResultSection>
 			</div>
-			<div class="ml-auto">
-				{#if isOnClient}
-					{formatNumber(results.avgWithCrits, 0)}
-				{/if}
+			<div class="flex flex-col gap-[inherit] lg:mt-10 lg:p-3 lg:pb-4 lg:shadow-theme-item">
+				<CalculationResultSection>
+					<div class="align-center flex flex-shrink-0 items-center gap-2">
+						<img
+							src="https://stardewvalleywiki.com/mediawiki/images/thumb/2/26/Speed_w.png/24px-Speed_w.png"
+							alt="speed"
+							class="size-5 object-cover"
+						/>
+
+						Speed
+					</div>
+
+					<CalculationResultProgress
+						slot="progress"
+						max={1000 / ABSOLUTE_MIN_WEAPON_SPEED_IN_MILLISECONDS}
+						min={1}
+						cap={1000 / getEffectiveSpeedLimit(weapon)}
+						value={1000 / results.speed}
+						baseValue={1000 / weaponBaseSpeed(weapon)}
+						class="bg-slate-400"
+					/>
+
+					<div class="ml-auto">
+						{hitsPerSec} hits/s
+					</div>
+				</CalculationResultSection>
+				<CalculationResultSection class="w-full">
+					<div class="align-center flex flex-shrink-0 items-center gap-2">
+						<img
+							src="https://stardewvalleywiki.com/mediawiki/images/thumb/0/00/Attack.png/24px-Attack.png"
+							alt="attack"
+							class="size-5 object-cover"
+						/>
+						<div>Dps (dmg/s)</div>
+					</div>
+
+					<div class="ml-auto">
+						{formatNumber(dmgPerSec, 0)}
+					</div>
+					<CalculationResultProgress
+						slot="progress"
+						max={7000}
+						baseValue={0}
+						value={dmgPerSec}
+						class="bg-[#fa9305]"
+					/>
+				</CalculationResultSection>
 			</div>
 		</div>
-	</section> -->
-</div>
+	</Surface>
+</Surface>

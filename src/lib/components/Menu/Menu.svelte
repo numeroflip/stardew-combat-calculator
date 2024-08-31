@@ -54,6 +54,14 @@
 </script>
 
 <div class={clsx('flex gap-4', className)}>
+	<Button class="bg-red-400" on:click={onReset}>
+		<img
+			src="/icons/close.svg"
+			alt=""
+			class="relative bottom-[2px] hidden size-6 object-cover sm:block"
+		/>
+		<div class="relative text-lg">Reset</div>
+	</Button>
 	<Button on:click={handleShare}>
 		<img src="/icons/share.svg" alt="" class="hidden size-4 object-cover sm:block" />
 		<div class="relative text-lg">Share</div></Button
@@ -65,14 +73,6 @@
 			<div class="relative text-lg">Load</div>
 		</Button>
 	</LoadConfigDialog>
-	<Button class="bg-red-400" on:click={onReset}>
-		<img
-			src="/icons/close.svg"
-			alt=""
-			class="relative bottom-[2px] hidden size-6 object-cover sm:block"
-		/>
-		<div class="relative text-lg">Reset</div>
-	</Button>
 	<SaveConfigurationDialog>
 		<Button class="bg-green-600 ">
 			<img

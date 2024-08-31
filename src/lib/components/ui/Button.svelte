@@ -20,8 +20,19 @@
 >
 	<slot />
 
+	<div
+		class="absolute left-0 right-0 top-[var(--borderWidth)] size-[var(--borderWidth)] bg-white/30"
+	/>
+	<div class="absolute right-0 top-[var(--borderWidth)] size-[var(--borderWidth)] bg-white/30" />
+
 	<div class="absolute left-0 right-0 top-0 h-[var(--borderWidth)] bg-white/30" />
 	<div class="absolute bottom-0 left-0 right-0 h-[var(--borderWidth)] bg-black/20" />
+
+	<div
+		class="absolute bottom-[var(--borderWidth)] left-0 right-0 size-[var(--borderWidth)] bg-black/20"
+	/>
+	<div class="absolute bottom-[var(--borderWidth)] right-0 size-[var(--borderWidth)] bg-black/20" />
+
 	<div
 		class="absolute -top-[var(--borderWidth)] left-0 right-0 h-[var(--borderWidth)] bg-[#853605]"
 	/>

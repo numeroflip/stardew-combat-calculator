@@ -57,7 +57,7 @@
 			<Tooltip.Trigger class="">
 				<ToggleGroupItem
 					class={clsx(
-						' h-14 w-full rounded-none bg-surface-300 text-amber-900 shadow-theme-item hover:bg-surface-400/40 active:bg-surface-400/60'
+						' h-14 w-full rounded-none  text-amber-900 shadow-theme-item hover:bg-surface-400/40 active:bg-surface-400/60'
 					)}
 					size="unset"
 					variant="default"

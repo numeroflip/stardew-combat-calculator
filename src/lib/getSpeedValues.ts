@@ -5,10 +5,20 @@ import { ringsData } from '$model/ring.data';
 import type { Weapon } from '$model/weapon';
 import { weapons } from '$model/weapon.data';
 
+const MILLISECOND_PER_SPEED_POINT = 40;
 const BASE_SPEED_BY_WEAPON_TYPE: Record<Weapon['type'], number> = {
 	club: 720,
 	sword: 400,
-	dagger: 240
+	dagger: 125 // 8 click per second. The game migh allow quicker, but it's a sensible default, as it's hard to click much quicker
+};
+
+export const ABSOLUTE_MIN_WEAPON_SPEED_IN_MILLISECONDS = BASE_SPEED_BY_WEAPON_TYPE.dagger;
+
+export const getEffectiveSpeedLimit = (weapon: Weapon) => {
+	if (weapon.type === 'dagger') {
+		return BASE_SPEED_BY_WEAPON_TYPE.dagger;
+	}
+	return BASE_SPEED_BY_WEAPON_TYPE.sword - 4 * MILLISECOND_PER_SPEED_POINT;
 };
 
 function speedLvlToMilliseconds(lvl: number) {
@@ -20,6 +30,10 @@ export function getSpeedValues(options: CalculatorOptions): number {
 
 	if (!weapon) {
 		return 0;
+	}
+
+	if (weapon.type === 'dagger') {
+		return 125;
 	}
 
 	const baseSpeed = BASE_SPEED_BY_WEAPON_TYPE[weapon.type];
@@ -76,7 +90,7 @@ export function getSpeedValues(options: CalculatorOptions): number {
 	const result =
 		(baseSpeed - speedFromWeaponStats - speedFromBlessing - speedFromGems - speedFromFood) *
 		multiplier;
-	return result < 200 ? 200 : result;
+	return Math.max(getEffectiveSpeedLimit(weapon), result);
 }
 
 export function weaponBaseSpeed(weapon: Weapon) {

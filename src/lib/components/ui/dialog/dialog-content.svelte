@@ -4,6 +4,9 @@
 	import * as Dialog from './index.js';
 	import { cn, flyAndScale } from '$lib/utils.js';
 	import Surface from '../Surface.svelte';
+	import PixelBorders from '../PixelBorders.svelte';
+
+	import closeIcon from '$assets/icons/close.svg?raw';
 
 	type $$Props = DialogPrimitive.ContentProps;
 
@@ -31,10 +34,11 @@
 		</Surface>
 
 		<DialogPrimitive.Close
-			class="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background  focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
+			class="absolute right-4 top-2 rounded-sm bg-[#ffd284] opacity-70 ring-offset-background  focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
 		>
-			<div class="text-surface-900">
-				<img src="/icons/close.svg" alt="" class="size-6" />
+			<div class="relative text-red-600 transition-all *:stroke-red-400 *:stroke-1 hover:scale-110">
+				<PixelBorders />
+				{@html closeIcon}
 			</div>
 
 			<span class="sr-only">Close</span>

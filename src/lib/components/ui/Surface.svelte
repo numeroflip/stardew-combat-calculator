@@ -4,13 +4,18 @@
 
 	type $$Props = HTMLBaseAttributes & {
 		borderWidth?: number;
+		shadow?: boolean;
 	};
 	export let borderWidth = 3;
 	const shadowOffset = 6;
+	export let shadow = true;
+
+	let data: HTMLElement;
 </script>
 
 <div
 	{...$$props}
+	bind:this={data}
 	style={`--bw: ${borderWidth}px; --shadowOffset: ${shadowOffset}px`}
 	class={cn(
 		'relative border-[#b14e05] bg-surface-gradient-light [border-width:var(--bw)] [box-shadow:inset_calc(0px_-_var(--bw))_var(--bw)_0_#e4ae6e]',
@@ -57,14 +62,16 @@
 		class="absolute -bottom-[var(--bw)] -left-[calc(var(--bw)*3)] -top-[var(--bw)] z-[1] w-[var(--bw)] bg-[#5b2b2a]"
 	/>
 	<!-- SHADOW -->
-	<div
-		role="presentation"
-		class="absolute -bottom-[var(--shadowOffset)] -left-[calc(var(--shadowOffset)_-_var(--bw))] right-0 -z-10 h-[8px] bg-[#926c41]"
-	/>
-	<div
-		role="presentation"
-		class="absolute -bottom-1 -left-[var(--shadowOffset)] top-[var(--shadowOffset)] -z-10 w-[6px] bg-[#926c41]"
-	/>
+	{#if shadow}
+		<div
+			role="presentation"
+			class="absolute -bottom-[var(--shadowOffset)] -left-[calc(var(--shadowOffset)_-_var(--bw))] right-0 -z-10 h-[8px] bg-[#926c41]"
+		/>
+		<div
+			role="presentation"
+			class="absolute -bottom-1 -left-[var(--shadowOffset)] top-[var(--shadowOffset)] -z-10 w-[6px] bg-[#926c41]"
+		/>
+	{/if}
 
 	<!-- CORNERS -->
 	<div

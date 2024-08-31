@@ -38,19 +38,19 @@
 			builders={[builder]}
 			variant="default"
 			size="unset"
-			class={cn('grid size-14  place-content-center  text-3xl  @xs:size-16', className)}
+			class={cn('grid size-14  place-content-center  text-3xl  @xs:size-14', className)}
 		>
 			{#if value}
 				<img
 					src={ringsData[value].icon}
 					alt={ringsData[value].name}
-					class="m-2 size-10 object-cover @xs:size-12"
+					class="m-2 size-10 object-cover @xs:m-1 @xs:size-12"
 				/>
 			{:else}
 				<img
 					src={ringsData.topaz.icon}
 					alt={ringsData.topaz.name}
-					class="size-10 object-cover opacity-20 grayscale @xs:size-12"
+					class="size-10 object-cover opacity-20 grayscale @xs:m-1 @xs:size-12"
 				/>
 			{/if}
 		</Button>
