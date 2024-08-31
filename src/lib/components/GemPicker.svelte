@@ -64,7 +64,7 @@
 			</DropdownMenu.Item>
 
 			{#each gemNames as gemName}
-				{@const _gemLevel = $gemsStore.selected.filter((gem) => gem === shownGem).length}
+				{@const _gemLevel = $gemsStore.selected.filter((gem) => gem === gemName).length + 1}
 				<DropdownMenu.Item
 					on:click={() => selectGem(gemName, 'selected')}
 					on:focusin={() => selectGem(gemName, 'dirty')}
