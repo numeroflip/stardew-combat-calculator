@@ -109,6 +109,7 @@
 							<DropdownMenu.Item
 								on:click={() => weaponNameStore.setSelected(_weapon.name)}
 								on:focusin={() => weaponNameStore.setDirty(_weapon.name)}
+								on:focusout={() => weaponNameStore.clearDirty()}
 								class="mr-0 flex w-full cursor-pointer  gap-4 p-2 pl-2"
 							>
 								<div class=" relative shrink-0 p-0">
