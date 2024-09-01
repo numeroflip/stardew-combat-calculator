@@ -28,7 +28,9 @@
 	<DialogTrigger><slot /></DialogTrigger>
 
 	<DialogContent class="max-w-lg border-none bg-transparent p-0 shadow-none">
-		<div class="font-funky bg-surface-gradient-light p-5 text-surface-900 shadow-theme">
+		<div
+			class="dark:bg-surface-gradient-night bg-surface-gradient-light p-5 font-funky text-surface-900 shadow-theme"
+		>
 			<DialogHeader>
 				<DialogHeader>
 					<DialogTitle>
@@ -51,7 +53,7 @@
 						required
 						name="name"
 						bind:value
-						class=" h-9 bg-surface-300 px-3 font-stardew text-xl text-black"
+						class=" h-9 bg-surface-300 px-3 font-stardew text-xl text-black dark:bg-surface-800/10"
 					/>
 
 					<Button class="self-end" type="submit">Save</Button>

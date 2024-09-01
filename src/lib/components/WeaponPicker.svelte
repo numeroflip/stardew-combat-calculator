@@ -10,6 +10,11 @@
 	const orderedDaggers = daggers.toSorted((a, b) => b.level - a.level);
 	const orderedClubs = clubs.toSorted((a, b) => b.level - a.level);
 
+	let open = false;
+	$: if (open === false) {
+		weaponNameStore.clearDirty();
+	}
+
 	$: activeWeaponName = $weaponNameStore.dirty || $weaponNameStore.selected;
 	$: weapon = weapons.find((w) => w.name === activeWeaponName);
 
@@ -45,7 +50,7 @@
 	const imageSize = 'md:size-15 size-9';
 </script>
 
-<DropdownMenu.Root>
+<DropdownMenu.Root bind:open>
 	<DropdownMenu.Trigger asChild let:builder>
 		<Button
 			builders={[builder]}
@@ -67,7 +72,7 @@
 						<div
 							class="grid w-full min-w-36 grid-cols-[1fr_auto] items-center gap-1 gap-x-5 text-xl text-amber-950/40"
 						>
-							<div class="col-span-2 self-start text-start text-2xl text-surface-900">
+							<div class="col-span-2 self-start text-start text-2xl text-black">
 								{weapon.name}
 							</div>
 							<div class="flex items-center gap-1">
@@ -90,48 +95,49 @@
 	</DropdownMenu.Trigger>
 
 	<DropdownMenu.Content sideOffset={1} class="relative w-fit min-w-80  p-0  ">
-		<Tabs.Root bind:value={activeTab}>
-			<Tabs.List
-				class="after:contents-[''] before:contents-[''] relative flex h-fit gap-1 rounded-none border-b-4 border-[#b14e05] bg-surface-gradient p-[3px] before:absolute before:-bottom-[9px] before:left-0 before:right-0 before:z-10 before:h-[3px]   before:bg-[#b14e05] after:absolute after:-bottom-[6px] after:left-[-3px] after:right-[-3px] after:z-10 after:h-[3px]   after:bg-[#dc7b05]"
-			>
-				{#each tabs as tab}
-					<Tabs.Trigger class="  text-xl shadow-theme-item" value={tab.value}>
-						<img src={tab.icon} alt={tab.name} class=" size-8 p-1 md:size-8" />
-						{tab.name}
-					</Tabs.Trigger>
-				{/each}
-			</Tabs.List>
+		<div>
+			<Tabs.Root bind:value={activeTab}>
+				<Tabs.List
+					class="after:contents-[''] before:contents-[''] dark:bg-surface-gradient-night relative flex h-fit gap-1 rounded-none border-b-4 border-[#b14e05] bg-surface-gradient p-[3px] transition-colors before:absolute before:-bottom-[9px] before:left-0 before:right-0 before:z-10   before:h-[3px] before:bg-[#b14e05] after:absolute after:-bottom-[6px] after:left-[-3px] after:right-[-3px] after:z-10 after:h-[3px]  after:bg-[#dc7b05]"
+				>
+					{#each tabs as tab}
+						<Tabs.Trigger class="  text-xl shadow-theme-item" value={tab.value}>
+							<img src={tab.icon} alt={tab.name} class=" size-8 p-1 md:size-8" />
+							{tab.name}
+						</Tabs.Trigger>
+					{/each}
+				</Tabs.List>
 
-			<DropdownMenu.Group class="flex max-h-[40vh] w-full gap-4  overflow-y-auto  p-0 ">
-				{#each tabs as tab}
-					<Tabs.Content class="w-full divide-y-2 divide-solid divide-white/20 " value={tab.value}>
-						{#each tab.list as _weapon}
-							<DropdownMenu.Item
-								on:click={() => weaponNameStore.setSelected(_weapon.name)}
-								on:focusin={() => weaponNameStore.setDirty(_weapon.name)}
-								on:focusout={() => weaponNameStore.clearDirty()}
-								class="mr-0 flex w-full cursor-pointer  gap-4 p-2 pl-2"
-							>
-								<div class=" relative shrink-0 p-0">
-									<img
-										src={_weapon.icon}
-										alt={_weapon.name}
-										class=" size-7 object-cover md:size-9"
-									/>
-									<span
-										class="absolute -bottom-1 -right-2 block p-1 text-sm leading-3 text-surface-900/30"
-										>{_weapon.level}</span
-									>
-								</div>
-								<div class=" flex w-full items-center justify-between text-xl text-black">
-									{_weapon.name}
-									<span class=" ml-2 opacity-30">{_weapon.damage[0]}-{_weapon.damage[1]}</span>
-								</div>
-							</DropdownMenu.Item>
-						{/each}
-					</Tabs.Content>
-				{/each}
-			</DropdownMenu.Group>
-		</Tabs.Root>
+				<DropdownMenu.Group class="flex max-h-[40vh] w-full gap-4  overflow-y-auto  p-0 ">
+					{#each tabs as tab}
+						<Tabs.Content class="w-full divide-y-2 divide-solid divide-white/20 " value={tab.value}>
+							{#each tab.list as _weapon}
+								<DropdownMenu.Item
+									on:click={() => weaponNameStore.setSelected(_weapon.name)}
+									on:focusin={() => weaponNameStore.setDirty(_weapon.name)}
+									class="mr-0 flex w-full cursor-pointer  gap-4 p-2 pl-2"
+								>
+									<div class=" relative shrink-0 p-0">
+										<img
+											src={_weapon.icon}
+											alt={_weapon.name}
+											class=" size-7 object-cover md:size-9"
+										/>
+										<span
+											class="absolute -bottom-1 -right-2 block p-1 text-sm leading-3 text-surface-900/30"
+											>{_weapon.level}</span
+										>
+									</div>
+									<div class=" flex w-full items-center justify-between text-xl text-black">
+										{_weapon.name}
+										<span class=" ml-2 opacity-30">{_weapon.damage[0]}-{_weapon.damage[1]}</span>
+									</div>
+								</DropdownMenu.Item>
+							{/each}
+						</Tabs.Content>
+					{/each}
+				</DropdownMenu.Group>
+			</Tabs.Root>
+		</div>
 	</DropdownMenu.Content>
 </DropdownMenu.Root>

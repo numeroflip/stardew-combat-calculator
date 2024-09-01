@@ -27,6 +27,7 @@
 	import FlagText from '$lib/components/ui/FlagText.svelte';
 	import Surface from '$lib/components/ui/Surface.svelte';
 	import AttackFromFoodSlider from '$lib/components/AttackFromFoodSlider.svelte';
+	import DarkModeSwitcher from '$lib/components/DarkModeSwitcher.svelte';
 
 	let initialized = false;
 
@@ -80,8 +81,11 @@
 </svelte:head>
 <svelte:window bind:innerWidth />
 <Surface
-	class="main-grid main-grid  max-w:none container mx-auto flex min-h-dvh w-full  flex-col  border-transparent   bg-blue-gradient   px-0 md:min-h-0  md:border-[#b14e05] lg:max-w-[calc(100vw-3rem)] lg:border-solid xl:max-w-screen-xl "
+	class="main-grid main-grid  max-w:none dark:bg-night-gradient container mx-auto flex min-h-dvh  w-full  flex-col border-transparent  bg-blue-gradient   px-0 md:min-h-0  md:border-[#b14e05] lg:max-w-[calc(100vw-3rem)] lg:border-solid xl:max-w-screen-xl "
 >
+	<div class="absolute bottom-[1px] right-2 z-20 sm:bottom-2 sm:right-5">
+		<DarkModeSwitcher />
+	</div>
 	{#if isOnClient}
 		<Header />
 

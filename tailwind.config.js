@@ -3,7 +3,7 @@ import bcontainerQueries from '@tailwindcss/container-queries';
 
 /** @type {import('tailwindcss').Config} */
 const config = {
-	darkMode: 'class',
+	darkMode: ['class'],
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 	safelist: ['dark'],
 	theme: {
@@ -33,8 +33,12 @@ const config = {
 			},
 			backgroundImage: {
 				'blue-gradient': 'linear-gradient(to bottom, #144683 0%, #258BF0 100%)',
-				'blue-gradient-light': 'linear-gradient(to bottom, #516c8c 0%, #6eaeea 100%)',
+				'blue-gradient-light': 'linear-gradient(to bottom, #262448 0%, #1d1c21 100%)',
+				'night-gradient': 'linear-gradient(to top, #0f2027 0%, #203a43 100%)',
 				'surface-gradient': 'linear-gradient(to top, #eba867 0%, #ffcb7b 100%)',
+				'surface-gradient-night': 'linear-gradient(to top,#bc8753 0%, #cca262 100%)',
+				'surface-gradient-night-dark': 'linear-gradient(to top,#a3814e 0%, #966c42 100%)',
+
 				'surface-gradient-light': 'linear-gradient(to top, #f8ba70 0%, #ffcb7b 100%)'
 			},
 

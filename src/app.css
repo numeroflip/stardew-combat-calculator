@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+	color-scheme: light dark;
+}
+
 html {
 	font-smooth: never;
 	-webkit-font-smoothing: none;

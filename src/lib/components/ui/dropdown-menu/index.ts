@@ -14,7 +14,7 @@ import { tv } from 'tailwind-variants';
 export type DropdownVariant = 'default' | 'light' | 'pixelated';
 
 export const dropdownItemVariants = tv({
-	base: ' mb-1 flex cursor-default select-none items-center rounded-none  border-none px-2 py-1.5 text-sm outline-none data-[disabled]:pointer-events-none  data-[disabled]:opacity-50',
+	base: ' flex cursor-default select-none items-center rounded-none  border-none px-2 py-1.5 text-sm outline-none data-[disabled]:pointer-events-none  data-[disabled]:opacity-50',
 	variants: {
 		variant: {
 			default: 'data-[highlighted]:bg-white/20 data-[highlighted]:text-accent-foreground',

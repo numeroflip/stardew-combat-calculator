@@ -18,7 +18,7 @@
 	bind:this={data}
 	style={`--bw: ${borderWidth}px; --shadowOffset: ${shadowOffset}px`}
 	class={cn(
-		'relative border-[#b14e05] bg-surface-gradient-light [border-width:var(--bw)] [box-shadow:inset_calc(0px_-_var(--bw))_var(--bw)_0_#e4ae6e]',
+		'dark:bg-surface-gradient-night relative border-[#b14e05] bg-surface-gradient-light [border-width:var(--bw)] [box-shadow:inset_calc(0px_-_var(--bw))_var(--bw)_0_#00000020]',
 		$$props.class
 	)}
 >

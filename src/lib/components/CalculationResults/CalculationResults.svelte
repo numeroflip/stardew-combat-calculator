@@ -175,7 +175,7 @@
 
 <Surface
 	shadow
-	class="z-10 mx-[-7px] my-[-7px] mt-[-4px] border-surface-900 @container [grid-area:results] lg:mx-[-2px] lg:my-[-2px] lg:mt-[6px] lg:grid lg:items-center lg:border-l-4 lg:px-8 lg:py-10"
+	class="dark:bg-surface-gradient-night-dark z-10 mx-[-7px] my-[-7px] mt-[-4px] border-surface-900 transition-all @container [grid-area:results] lg:mx-[-2px] lg:my-[-2px] lg:mt-[6px] lg:grid lg:items-center lg:border-l-4 lg:px-8 lg:py-10"
 >
 	<Surface
 		class="mx-[-3px] -mb-[2px] flex snap-start flex-col items-center justify-center p-0 sm:gap-0 sm:pt-2 lg:gap-3 lg:px-3 lg:py-2 lg:pb-6"

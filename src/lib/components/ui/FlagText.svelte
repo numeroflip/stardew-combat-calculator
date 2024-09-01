@@ -12,7 +12,7 @@
 </script>
 
 <div style={`--height: ${height}px`} class={cn('relative  flex text-3xl', className)}>
-	<img src={Left} alt="" class="h-[var(--height)]" />
+	<img src={Left} alt="" class="h-[var(--height)] dark:brightness-90" />
 
 	<div class="relative grid h-[var(--height)] place-content-center">
 		<img
@@ -20,15 +20,15 @@
 			alt=""
 			class={cn(
 				textLength && textLength > 10 ? 'object-fill' : 'object-cover',
-				'absolute inset-0  -z-0 h-full w-full'
+				'absolute inset-0 -z-0  h-full w-full dark:brightness-90'
 			)}
 		/>
 		<div
 			bind:this={data}
-			class="text-text font-funky z-[1] font-normal [text-shadow:1px_2px_0px_theme(colors.surface.400)]"
+			class="z-[1] font-funky font-normal text-text [text-shadow:1px_2px_0px_theme(colors.surface.400)]"
 		>
 			<slot />
 		</div>
 	</div>
-	<img src={Right} alt="" class="h-[var(--height)]" />
+	<img src={Right} alt="" class="h-[var(--height)] dark:brightness-90" />
 </div>

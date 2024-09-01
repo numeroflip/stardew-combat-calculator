@@ -142,15 +142,15 @@
 							on:click={() => clearLvl10()}
 							aria-label="Back"
 							variant="ghost"
-							class=" text-text pixel-corners--sm left-0 w-fit bg-surface-100  bg-transparent"
-							><div class="font-funky rotate-180 text-3xl font-black leading-3">
+							class=" pixel-corners--sm left-0 w-fit bg-surface-100 bg-transparent  text-text"
+							><div class="rotate-180 font-funky text-3xl font-black leading-3">
 								{'>'}
 							</div></Button
 						>
 					</div>
 
 					<Surface
-						class="text-text mx-2 my-2 flex flex-col gap-1 divide-y-2 divide-solid divide-white/20 "
+						class="mx-2 my-2 flex flex-col divide-y-2 divide-solid divide-white/20 text-text "
 					>
 						{#each keysOf(lvl5Skill.lvl10Skills) as _lvl10SkillKey}
 							{@const skill = lvl5Skill.lvl10Skills.hasOwnProperty(_lvl10SkillKey)

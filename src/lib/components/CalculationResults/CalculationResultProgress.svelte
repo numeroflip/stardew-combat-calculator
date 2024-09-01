@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { cn } from '$lib/utils';
 	import { Progress } from '../ui/progress';
 
 	export let max: number;
@@ -17,16 +18,20 @@
 		{baseValue}
 		{min}
 		{cap}
-		class="h-full rounded-none border-3 border-[#44121c]  bg-white/40 sm:border-3   sm:border-solid  "
-		barClass={className}
+		class="bright h-full rounded-none border-3 border-[#44121c]  bg-white/40 dark:bg-[#bdac8f] sm:border-3   sm:border-solid  "
+		barClass={cn('dark:brightness-105 border-solid border-r-3 border-[#44121c] ', className)}
 	/>
 
-	<div class="absolute -left-[0] -top-[0] z-[1] size-[3px] bg-[#fbc275] sm:block sm:size-[3px]" />
 	<div
-		class="absolute -bottom-[0] -left-[0] z-[1] size-[3px] bg-[#fbc275] sm:block sm:size-[3px]"
+		class="absolute -left-[0] -top-[0] z-[1] size-[3px] bg-[#fbc275] transition-colors dark:bg-[#c4955b] sm:block sm:size-[3px]"
 	/>
-	<div class="absolute -right-[0] -top-[0] z-[1] size-[3px] bg-[#fbc275] sm:block sm:size-[3px]" />
 	<div
-		class="absolute -bottom-[0] -right-[0] z-[1] size-[3px] bg-[#fbc275] sm:block sm:size-[3px]"
+		class="absolute -bottom-[0] -left-[0] z-[1] size-[3px] bg-[#fbc275] transition-colors dark:bg-[#c4955b] sm:block sm:size-[3px]"
+	/>
+	<div
+		class="absolute -right-[0] -top-[0] z-[1] size-[3px] bg-[#fbc275] transition-colors dark:bg-[#c4955b] sm:block sm:size-[3px]"
+	/>
+	<div
+		class="absolute -bottom-[0] -right-[0] z-[1] size-[3px] bg-[#fbc275] transition-colors dark:bg-[#c4955b] sm:block sm:size-[3px]"
 	/>
 </div>

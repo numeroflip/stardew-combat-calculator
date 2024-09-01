@@ -5,7 +5,6 @@
 	import { keysOf } from '$lib/objectUtils';
 	import { enchantmentStore, weaponStore } from '$lib/store/calculatorOptions';
 	import * as Tooltip from '$lib/components/ui/tooltip';
-	import { Trigger } from './ui/dialog';
 
 	$: weapon = $weaponStore.dirty || $weaponStore.selected;
 	$: canBeEnchanted =
@@ -106,7 +105,7 @@
 										})}
 									class=" mr-0 size-12 cursor-pointer p-2 text-center text-xl  shadow-theme-item"
 								>
-									<div class="font-funky w-full">
+									<div class="w-full font-funky">
 										<span>+</span>{option.name}
 									</div>
 								</DropdownMenu.Item>
