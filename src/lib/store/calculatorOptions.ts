@@ -40,7 +40,8 @@ const DEFAULT_OPTIONS: Omit<
 	},
 	luck: 0,
 	blessing: undefined,
-	speedFromFood: 0
+	speedFromFood: 0,
+	attackFromFood: 0
 };
 
 export const lastLoadedOptionsKey = writable<string | undefined>();
@@ -52,6 +53,9 @@ export const blessingStore = createOption<Blessing | undefined, Blessing | undef
 );
 
 export const speedFromFoodStore = createOption(DEFAULT_OPTIONS.speedFromFood, undefined);
+
+export const attackFromFoodStore = createOption(DEFAULT_OPTIONS.attackFromFood, undefined);
+
 export const gemsStore = createOption(DEFAULT_OPTIONS.gems, DEFAULT_OPTIONS.gems);
 export const ringStore = createOption(DEFAULT_OPTIONS.rings, DEFAULT_OPTIONS.rings);
 export const skillsStore = createOption(DEFAULT_OPTIONS.skills, DEFAULT_OPTIONS.skills);
@@ -74,9 +78,20 @@ export const calculatorOptionsStore = derived(
 		luckStore,
 		enchantmentStore,
 		ringStore,
-		speedFromFoodStore
+		speedFromFoodStore,
+		attackFromFoodStore
 	],
-	([weaponName, blessing, gems, skills, luck, enchantment, rings, speedFromFood]) => {
+	([
+		weaponName,
+		blessing,
+		gems,
+		skills,
+		luck,
+		enchantment,
+		rings,
+		speedFromFood,
+		attackFromFood
+	]) => {
 		return {
 			weapon: weaponName,
 			blessing,
@@ -85,7 +100,8 @@ export const calculatorOptionsStore = derived(
 			luck,
 			enchantment,
 			rings,
-			speedFromFood
+			speedFromFood,
+			attackFromFood
 		};
 	}
 );
@@ -126,6 +142,11 @@ export function setCalculatorOptions(options: CalculatorOptions) {
 		speedFromFoodStore.setSelected(options.speedFromFood);
 		speedFromFoodStore.clearDirty();
 	}
+
+	if (typeof options.attackFromFood === 'number') {
+		attackFromFoodStore.setSelected(options.attackFromFood);
+		attackFromFoodStore.clearDirty();
+	}
 }
 
 export const selectedCalculatorOptionsStore = derived(calculatorOptionsStore, (options) => {
@@ -137,7 +158,8 @@ export const selectedCalculatorOptionsStore = derived(calculatorOptionsStore, (o
 		luck: options.luck.selected,
 		enchantment: options.enchantment.selected,
 		rings: options.rings.selected,
-		speedFromFood: options.speedFromFood.selected
+		speedFromFood: options.speedFromFood.selected,
+		attackFromFood: options.attackFromFood.selected
 	};
 });
 
@@ -150,7 +172,8 @@ export const dirtyCalculatorOptions = derived(calculatorOptionsStore, (options) 
 		luck: options.luck.dirty,
 		enchantment: options.enchantment.dirty,
 		rings: options.rings.dirty,
-		speedFromFood: options.speedFromFood.dirty
+		speedFromFood: options.speedFromFood.dirty,
+		attackFromFood: options.attackFromFood.dirty
 	};
 });
 

@@ -15,7 +15,8 @@
 		setCalculatorOptions,
 		selectedCalculatorOptionsStore,
 		luckStore,
-		speedFromFoodStore
+		speedFromFoodStore,
+		attackFromFoodStore
 	} from '$lib/store/calculatorOptions';
 	import { get } from 'svelte/store';
 	import { calculatorStorage } from '$lib/calculatorOptionsStorage';
@@ -25,6 +26,7 @@
 	import Menu from '$lib/components/Menu/Menu.svelte';
 	import FlagText from '$lib/components/ui/FlagText.svelte';
 	import Surface from '$lib/components/ui/Surface.svelte';
+	import AttackFromFoodSlider from '$lib/components/AttackFromFoodSlider.svelte';
 
 	let initialized = false;
 
@@ -138,7 +140,7 @@
 						<h3 class=" text-center text-3xl lg:block">Food Buffs</h3>
 					</FlagText>
 
-					<div class="grid grid-cols-1 justify-items-center px-2 font-sans text-black">
+					<div class="grid grid-cols-1 justify-items-center px-2 font-sans text-black md:gap-1">
 						<section class="flex w-full items-center justify-center gap-8">
 							<h5 class="flex shrink-0 basis-[95px] items-center gap-2 text-2xl">
 								<img
@@ -167,6 +169,22 @@
 							</div>
 							<div class="basis-6 text-xl">
 								{$speedFromFoodStore.dirty ?? $speedFromFoodStore.selected}
+							</div>
+						</section>
+						<section class="flex w-full items-center justify-center gap-8">
+							<h5 class="flex shrink-0 basis-[95px] items-center gap-2 text-2xl">
+								<img
+									src="https://stardewvalleywiki.com/mediawiki/images/thumb/0/00/Attack.png/24px-Attack.png"
+									alt=""
+									class="size-6 object-cover"
+								/>
+								Attack
+							</h5>
+							<div class=" grow">
+								<AttackFromFoodSlider />
+							</div>
+							<div class="basis-6 text-xl">
+								{$attackFromFoodStore.dirty ?? $attackFromFoodStore.selected}
 							</div>
 						</section>
 					</div>

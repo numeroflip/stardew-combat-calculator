@@ -6,23 +6,26 @@ import { BRUTE_DMG_MULTIPLIER, FIGHTER_DMG_MULTIPLIER } from '../model/professio
 import { ringsData } from '../model/ring.data';
 
 const galaxySword = weapons.find((weapon) => weapon.name === 'Galaxy Sword');
+
+const MIN_DMG_GALAXY_SWORD = 60;
+
 if (!galaxySword) {
 	throw new Error('Galaxy Sword not found');
 }
 
 test('base damage is correct', () => {
-	expect(getDamageValues(galaxySword)[0]).toBe(60);
+	expect(getDamageValues(galaxySword).min).toBe(MIN_DMG_GALAXY_SWORD);
 });
 
 test('profession perks are applied correctly', () => {
-	expect(getDamageValues(galaxySword, { profession: { lvl5: 'fighter', lvl10: 'brute' } })[0]).toBe(
-		60 * (1 + (FIGHTER_DMG_MULTIPLIER + BRUTE_DMG_MULTIPLIER))
-	);
+	expect(
+		getDamageValues(galaxySword, { profession: { lvl5: 'fighter', lvl10: 'brute' } }).min
+	).toBe(MIN_DMG_GALAXY_SWORD * (1 + (FIGHTER_DMG_MULTIPLIER + BRUTE_DMG_MULTIPLIER)));
 });
 
 test('ring perks are applied correctly', () => {
-	expect(getDamageValues(galaxySword, { rings: [ringsData.ruby, ringsData.ruby] })[0]).toBe(
-		60 * 1.2
+	expect(getDamageValues(galaxySword, { rings: [ringsData.ruby, ringsData.ruby] }).min).toBe(
+		MIN_DMG_GALAXY_SWORD * 1.2
 	);
 });
 
@@ -31,8 +34,8 @@ test('gem perks are applied correctly', () => {
 		getDamageValues(galaxySword, {
 			rings: [ringsData.ruby, ringsData.ruby],
 			gems: ['ruby', 'ruby', 'ruby']
-		})[0]
-	).toBe(60 * (1 + 0.2 + 0.3));
+		}).min
+	).toBe(MIN_DMG_GALAXY_SWORD * (1 + 0.2 + 0.3));
 });
 
 test('ring perks are applied correctly', () => {
@@ -40,6 +43,30 @@ test('ring perks are applied correctly', () => {
 	expect(
 		getDamageValues(galaxySword, {
 			enchantment: { key: 'attack', optionName: attackEnchValue }
-		})[0]
-	).toBe(60 + Number(attackEnchValue) * 3);
+		}).min
+	).toBe(MIN_DMG_GALAXY_SWORD + Number(attackEnchValue) * 3);
+});
+
+test('Extra attack points are applied correctly to base dmg', () => {
+	const attackBuff = 3;
+	expect(
+		getDamageValues(galaxySword, {
+			attackBuff: attackBuff
+		}).min
+	).toBe(MIN_DMG_GALAXY_SWORD + attackBuff * 3);
+});
+
+test('Extra attack points are applied correctly to crit dmg', () => {
+	const attackBuff = 3;
+	const critMultiplier = 4;
+
+	const expecTedBaseCrit = MIN_DMG_GALAXY_SWORD * critMultiplier;
+	const expectedExtraDmg = attackBuff * 3;
+
+	expect(
+		getDamageValues(galaxySword, {
+			attackBuff: attackBuff,
+			critMultiplier: 4
+		}).minCrit
+	).toBe(expecTedBaseCrit + expectedExtraDmg);
 });

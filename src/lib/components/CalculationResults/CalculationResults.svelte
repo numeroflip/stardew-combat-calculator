@@ -12,7 +12,8 @@
 		ringStore,
 		luckStore,
 		blessingStore,
-		speedFromFoodStore
+		speedFromFoodStore,
+		attackFromFoodStore
 	} from '$lib/store/calculatorOptions';
 	import { weapons } from '$model/weapon.data';
 	import { skillSchema, type CalculatorOptions } from '$model/calculatorOptions';
@@ -57,6 +58,8 @@
 	$: luck = $luckStore.dirty ?? $luckStore.selected;
 	$: blessing = $blessingStore.dirty || $blessingStore.selected;
 
+	$: attackFromFood = $attackFromFoodStore.dirty ?? $attackFromFoodStore.selected;
+
 	$: speedFromFood = $speedFromFoodStore.dirty || $speedFromFoodStore.selected;
 
 	type Results = {
@@ -76,13 +79,6 @@
 		const skills = args.skills;
 		const gems = args.gems?.filter(Boolean) || [];
 		const enchantment = args.enchantment;
-
-		const [min, max] = getDamageValues(weapon, {
-			enchantment,
-			gems,
-			profession: skills,
-			rings
-		});
 		const critMultiplier = formatNumber(
 			getCritMultiplier(weapon, {
 				gems,
@@ -91,11 +87,17 @@
 				rings
 			})
 		);
-		const [critMin, critMax] = [
-			formatNumber(min * critMultiplier),
-			formatNumber(max * critMultiplier)
-		];
-		const critAvg = formatNumber((critMin + critMax) / 2);
+
+		const { min, max, minCrit, maxCrit } = getDamageValues(weapon, {
+			enchantment,
+			gems,
+			profession: skills,
+			rings,
+			attackBuff: args.attackFromFood,
+			critMultiplier
+		});
+
+		const critAvg = formatNumber((minCrit + maxCrit) / 2);
 		const critChance = formatNumber(
 			getCritChance(weapon, {
 				gems,
@@ -113,7 +115,7 @@
 
 		return {
 			dmg: { min, max },
-			critDmg: { min: critMin, max: critMax },
+			critDmg: { min: minCrit, max: maxCrit },
 			critMultiplier,
 			critChance,
 			normalAvg,
@@ -137,7 +139,8 @@
 			rings,
 			luck,
 			blessing,
-			speedFromFood
+			speedFromFood,
+			attackFromFood
 		});
 	}
 

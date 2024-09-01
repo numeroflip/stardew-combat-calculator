@@ -9,16 +9,27 @@ import type { Ring } from '../model/ring';
 import type { Weapon } from '../model/weapon';
 import { formatNumber } from './formatNumber';
 
+const DMG_PER_ATTACK_POINT = 3;
+
 type Options = {
 	gems?: GemName[];
 	rings?: Ring[];
 	enchantment?: SelectedEnchantment;
 	profession?: SelectedProfession;
+	attackBuff?: number;
+	critMultiplier?: number;
 };
 
 export function getDamageValues(
 	weapon: Weapon,
-	{ gems = [], rings = [], enchantment = undefined, profession = undefined }: Options = {}
+	{
+		gems = [],
+		rings = [],
+		enchantment = undefined,
+		profession = undefined,
+		attackBuff,
+		critMultiplier
+	}: Options = {}
 ) {
 	const baseDamage = weapon.damage;
 	let multiplier = 1;
@@ -60,8 +71,20 @@ export function getDamageValues(
 		}
 	}
 
-	return [
-		formatNumber(baseDamage[0] * multiplier + extraDamage),
-		formatNumber(baseDamage[1] * multiplier + extraDamage)
-	];
+	if (attackBuff) {
+		extraDamage += attackBuff * DMG_PER_ATTACK_POINT;
+	}
+
+	const min = baseDamage[0] * multiplier;
+	const max = baseDamage[1] * multiplier;
+
+	const minCrit = min * (critMultiplier || 1);
+	const maxCrit = max * (critMultiplier || 1);
+
+	return {
+		min: formatNumber(min + extraDamage),
+		max: formatNumber(max + extraDamage),
+		minCrit: formatNumber(minCrit + extraDamage),
+		maxCrit: formatNumber(maxCrit + extraDamage)
+	};
 }
