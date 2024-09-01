@@ -95,11 +95,11 @@
 					src={imgSrc.get(hideOsIcon ? activeMode : mode)}
 					alt=""
 				/>
-				<p class="sr-only">Set theme to {nextMode}</p>
+				<p class="sr-only">Set theme to "{nextMode}"</p>
 			</button>
 		</Tooltip.Trigger>
 		<Tooltip.Content>
-			<p>Set theme to {nextMode}</p>
+			<p>Set theme to "{nextMode}"</p>
 		</Tooltip.Content>
 	</Tooltip.Root>
 </div>

@@ -90,7 +90,7 @@
 						<img src={ring.icon} alt={ring.name} class="size-10" />
 						<div class=" text-2xl text-black">
 							{ring.name}
-							<div class="text-lg leading-3 text-slate-500">
+							<div class="text-lg leading-3 text-black/40">
 								{getRingDescription(ringKey)}
 							</div>
 						</div>
