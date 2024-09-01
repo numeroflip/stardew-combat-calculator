@@ -57,7 +57,7 @@
 			<Tooltip.Trigger class="">
 				<ToggleGroupItem
 					class={clsx(
-						' h-14 w-full rounded-none  text-amber-900 shadow-theme-item hover:bg-surface-400/40 active:bg-surface-400/60'
+						' relative h-14 w-full rounded-none font-sans  text-amber-900 shadow-theme-item hover:bg-surface-400/40 active:bg-surface-400/60'
 					)}
 					size="unset"
 					variant="default"
@@ -71,6 +71,9 @@
 							' relative  size-9  object-cover '
 						)}
 					/>
+					<div class="pointer-events-none absolute bottom-[-2px] left-[6px] capitalize opacity-50">
+						{blessing.value}
+					</div>
 				</ToggleGroupItem>
 			</Tooltip.Trigger>
 			<Tooltip.Content class="">
