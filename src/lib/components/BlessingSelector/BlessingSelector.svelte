@@ -49,7 +49,7 @@
 		const validated = blessingSchema.safeParse(val);
 		blessingStore.setSelected(validated.data || undefined);
 	}}
-	class=" mx-auto grid w-full max-w-96 grid-cols-3 gap-0 divide-x-3 divide-surface-300/60   "
+	class=" mx-auto grid w-full max-w-96 grid-cols-3 gap-0    "
 >
 	{#each blessings as blessing}
 		{@const isSelected = $blessingStore.selected === blessing.value}
@@ -57,7 +57,8 @@
 			<Tooltip.Trigger class="">
 				<ToggleGroupItem
 					class={clsx(
-						' relative h-14 w-full rounded-none font-sans  text-amber-900 shadow-theme-item hover:bg-surface-400/40 '
+						isSelected ? 'pixel-wrap-border z-10' : '',
+						'   relative h-14 w-full rounded-none  border-text font-sans  text-amber-900 shadow-theme-item  transition-all hover:bg-white/10  dark:hover:bg-surface-900/10 dark:hover:text-white '
 					)}
 					size="unset"
 					variant="default"

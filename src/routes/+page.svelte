@@ -6,6 +6,7 @@
 	import RingPairPicker from '$lib/components/RingPairPicker.svelte';
 	import SkillPicker from '$lib/components/SkillPicker.svelte';
 	import WeaponPicker from '$lib/components/WeaponPicker.svelte';
+	import { env } from '$env/dynamic/public';
 
 	import { calculatorStorage } from '$lib/calculatorOptionsStorage';
 	import AttackFromFoodSlider from '$lib/components/AttackFromFoodSlider.svelte';
@@ -28,6 +29,7 @@
 	import { onMount } from 'svelte';
 
 	let initialized = false;
+	const isOnClient = typeof window !== 'undefined';
 
 	onMount(() => {
 		const initialOptionsFromStorage = calculatorStorage.loadOptions();
@@ -60,31 +62,50 @@
 	}
 
 	$: {
-		if (typeof window !== 'undefined' && initialized) {
+		if (isOnClient && initialized) {
 			calculatorStorage.saveOptions($selectedCalculatorOptionsStore);
 		}
 	}
 
-	const isOnClient = typeof window !== 'undefined';
-
 	let innerWidth: number;
+
+	const title = 'Stardew Combat Calculator: Optimize Your Combat Stats';
+	const description =
+		"Easily see how buffs, rings, gems, and skills affect your combat stats in Stardew Valley. Optimize your character's fighting power now!";
+	const ogImgSrc = env.PUBLIC_BASE_URL ? `${env.PUBLIC_BASE_URL}/ogImg.png` : null;
 </script>
 
 <svelte:head>
-	<title>Stardew Combat Calculator</title>
+	<title>{title}</title>
+	<meta name="description" content={description} />
+	{#if env.PUBLIC_BASE_URL}
+		<meta property="url" content={env.PUBLIC_BASE_URL} />
+		<meta name="twitter:url" content={env.PUBLIC_BASE_URL} />
+	{/if}
+	{#if ogImgSrc}
+		<meta property="og:image" content={ogImgSrc} />
+		<meta name="twitter:image" content={ogImgSrc} />
+	{/if}
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content={title} />
+	<meta property="og:description" content={description} />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={title} />
+	<meta name="twitter:description" content={description} />
+	<meta name="twitter:creator" content="@aron_berenyi" />
 </svelte:head>
 <svelte:window bind:innerWidth />
-<Surface
-	class="main-grid main-grid  max-w:none container mx-auto flex min-h-dvh w-full  flex-col  border-transparent bg-blue-gradient  px-0   dark:bg-night-gradient md:min-h-0  md:border-[#b14e05] lg:max-w-[calc(100vw-3rem)] lg:border-solid xl:max-w-screen-xl "
->
-	<div class="absolute bottom-[1px] right-2 z-20 sm:bottom-2 sm:right-5">
-		<DarkModeSwitcher />
-	</div>
-	{#if isOnClient}
+{#if isOnClient}
+	<Surface
+		class="main-grid main-grid  max-w:none container mx-auto flex min-h-dvh w-full  flex-col  border-transparent bg-blue-gradient  px-0   dark:bg-night-gradient md:min-h-0  md:border-[#b14e05] lg:max-w-[calc(100vw-3rem)] lg:border-solid xl:max-w-screen-xl "
+	>
+		<div class="absolute bottom-[1px] right-2 z-20 sm:bottom-2 sm:right-5">
+			<DarkModeSwitcher />
+		</div>
 		<Header />
 
 		<main
-			class="flex h-full w-full grow snap-y snap-mandatory scroll-p-5 flex-col gap-7 overflow-y-auto px-3 py-5 pb-10 shadow-theme [grid-area:options] sm:grid sm:grid-cols-2 sm:px-3 sm:shadow-none md:gap-8 md:px-4 md:py-5 md:pb-8 lg:px-10 lg:py-10 lg:shadow-theme"
+			class="mt-3 flex h-full w-full grow snap-y snap-mandatory scroll-p-5 flex-col gap-7 overflow-y-auto px-3 py-5 pb-10 shadow-theme [grid-area:options] sm:grid sm:grid-cols-2 sm:px-3 sm:shadow-none md:gap-8 md:px-4 md:py-5 md:pb-8 lg:px-10 lg:py-10 lg:shadow-theme"
 		>
 			<div class="flex flex-col gap-[inherit] sm:order-2 lg:justify-between">
 				<Surface class="max-h-full snap-start px-5 py-3  ">
@@ -205,5 +226,5 @@
 		</main>
 
 		<CalculationResults />
-	{/if}
-</Surface>
+	</Surface>
+{/if}

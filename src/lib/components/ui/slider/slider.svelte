@@ -25,17 +25,8 @@
 
 <div
 	style={`--thumbWidth: ${thumbWidth}`}
-	class="relative -mx-4 h-4 w-[calc(100%_+_(var(--thumbWidth)))] border-3 border-[#44121c] bg-[#bdac8f] px-[calc(var(--thumbWidth)_/_2)] [box-shadow:inset_-3px_3px_0px_rgb(67_27_7_/20%)]"
+	class="pixel-wrap-border relative -mx-4 h-[10px] w-[calc(100%_+_(var(--thumbWidth)))] border-[#44121c] bg-[#bdac8f] px-[calc(var(--thumbWidth)_/_2)] [box-shadow:inset_-3px_3px_0px_rgb(67_27_7_/20%)]"
 >
-	<!-- CORNER PIXELS -->
-	<div class="absolute -left-[3px] -top-[3px] z-[1] size-[3px] bg-[#fbc275] dark:bg-[#c4955b]" />
-	<div class="absolute -bottom-[3px] -left-[3px] z-[1] size-[3px] bg-[#fbc275] dark:bg-[#c4955b]" />
-	<div class="absolute -right-[3px] -top-[3px] z-[1] size-[3px] bg-[#fbc275] dark:bg-[#c4955b]" />
-	<div
-		class="absolute -bottom-[3px] -right-[3px] z-[1] size-[3px] bg-[#fbc275] dark:bg-[#c4955b]"
-	/>
-	<!--  -->
-
 	<div class="relative h-full w-full">
 		{#if cap}
 			<div
@@ -61,7 +52,7 @@
 						use:builder.action
 						{...builder}
 						class={clsx(
-							' absolute block h-full w-[var(--thumbWidth)] translate-x-0 bg-[#dc7b05]    shadow-theme-item-reverse outline outline-[3px] outline-[#5b2b2a] transition-colors  disabled:pointer-events-none  disabled:opacity-50 ',
+							' pixel-wrap-border outline:none absolute block h-full w-[var(--thumbWidth)] translate-x-0    border-[#44121c] bg-[#dc7b05] shadow-theme-item-reverse transition-colors  focus:outline-none  disabled:pointer-events-none  disabled:opacity-50 ',
 							'cursor-pointer'
 						)}
 					>

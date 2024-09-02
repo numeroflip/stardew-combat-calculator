@@ -18,8 +18,8 @@
 	import clsx from 'clsx';
 	import Button from '../ui/Button.svelte';
 	import ShareNotificationToaster from './ShareNotificationToaster.svelte';
-	
-function onReset() {
+
+	function onReset() {
 		gemsStore.reset();
 		weaponNameStore.reset();
 		ringStore.reset();
@@ -73,7 +73,7 @@ function onReset() {
 		</Button>
 	</LoadConfigDialog>
 	<SaveConfigurationDialog>
-		<Button class="bg-green-600 ">
+		<Button class="bg-lime-600 dark:bg-green-600 ">
 			<img
 				src="/icons/save.svg"
 				alt=""

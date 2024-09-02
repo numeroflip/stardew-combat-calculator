@@ -624,4 +624,39 @@ html {
 	.pixel-border::after {
 		margin: -4px;
 	}
+
+	.pixel-wrap-border {
+		position: relative;
+		--width: var(--borderWidth, 3px);
+
+		&::after {
+			pointer-events: none;
+			content: '';
+			display: block;
+			position: absolute;
+			top: calc(0px - var(--width));
+			left: 0;
+			bottom: calc(0px - var(--width));
+			right: 0;
+			height: calc(100% + (var(--width) * 2));
+			border-block-width: var(--width);
+			border-style: solid;
+			border-color: inherit;
+		}
+
+		&::before {
+			pointer-events: none;
+			content: '';
+			display: block;
+			position: absolute;
+			left: calc(0px -var(--width));
+			top: 0;
+			right: calc(0px - var(--width));
+			bottom: 0;
+			width: calc(100% + (var(--width) * 2));
+			border-inline-width: var(--width);
+			border-style: solid;
+			border-color: inherit;
+		}
+	}
 }
