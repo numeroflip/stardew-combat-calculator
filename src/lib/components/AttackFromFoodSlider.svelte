@@ -6,12 +6,20 @@
 	$: focusedAttack = $attackFromFoodStore.dirty;
 
 	$: shownAttack = focusedAttack ?? selectedAttack;
+	const cap = 5;
 </script>
 
 <Slider
 	value={[shownAttack]}
-	onValueChange={(val) => attackFromFoodStore.setSelected(val[0])}
-	max={5}
+	onValueChange={(val) => {
+		if (val[0] > cap) {
+			return;
+		} else {
+			attackFromFoodStore.setSelected(val[0]);
+		}
+	}}
+	max={6}
+	cap={5}
 	min={0}
 	step={1}
 />

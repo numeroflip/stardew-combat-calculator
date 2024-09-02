@@ -11,7 +11,8 @@
 <Slider
 	value={[shownSpeed]}
 	onValueChange={(val) => speedFromFoodStore.setSelected(val[0])}
-	max={2}
+	max={6}
+	cap={2}
 	min={0}
 	step={0.5}
 />
