@@ -4,12 +4,10 @@
 	import clsx from 'clsx';
 
 	type $$Props = Omit<SliderPrimitive.Props, 'value'> & {
-		bg?: string;
 		value: number[];
 	};
 
 	let className: $$Props['class'] = undefined;
-	export let bg: string = 'bg-surface-900';
 
 	export let value: $$Props['value'];
 	export { className as class };

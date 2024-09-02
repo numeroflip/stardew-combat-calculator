@@ -5,7 +5,6 @@
 	} from '$lib/store/calculatorOptions';
 	import { DialogContent, DialogHeader, DialogTitle, Dialog, DialogTrigger } from '../ui/dialog';
 	import { calculatorStorage } from '$lib/calculatorOptionsStorage';
-	import { PinInput } from 'bits-ui';
 	import Input from '../ui/Input.svelte';
 	import Button from '../ui/Button.svelte';
 	import FlagText from '../ui/FlagText.svelte';
@@ -29,7 +28,7 @@
 
 	<DialogContent class="max-w-lg border-none bg-transparent p-0 shadow-none">
 		<div
-			class="dark:bg-surface-gradient-night bg-surface-gradient-light p-5 font-funky text-surface-900 shadow-theme"
+			class="bg-surface-gradient-light p-5 font-funky text-surface-900 shadow-theme dark:bg-surface-gradient-night"
 		>
 			<DialogHeader>
 				<DialogHeader>

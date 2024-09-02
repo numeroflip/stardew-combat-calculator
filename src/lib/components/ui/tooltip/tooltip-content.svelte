@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { Tooltip as TooltipPrimitive } from 'bits-ui';
 	import { cn, flyAndScale } from '$lib/utils.js';
-	import FlagText from '../FlagText.svelte';
 	import Surface from '../Surface.svelte';
 
 	type $$Props = TooltipPrimitive.ContentProps;

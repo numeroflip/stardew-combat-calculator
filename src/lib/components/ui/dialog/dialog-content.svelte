@@ -1,13 +1,10 @@
 <script lang="ts">
 	import { Dialog as DialogPrimitive } from 'bits-ui';
-	import X from 'lucide-svelte/icons/x';
 	import * as Dialog from './index.js';
 	import { cn, flyAndScale } from '$lib/utils.js';
 	import Surface from '../Surface.svelte';
-	import PixelBorders from '../PixelBorders.svelte';
-
-	import closeIcon from '$assets/icons/close.svg?raw';
-	import CloseIcon from '../CloseIcon.svelte';
+	
+import CloseIcon from '../CloseIcon.svelte';
 
 	type $$Props = DialogPrimitive.ContentProps;
 
@@ -25,7 +22,7 @@
 		{transition}
 		{transitionConfig}
 		class={cn(
-			'dark:bg-surface-gradient-night fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4  bg-surface-gradient-light p-6  sm:rounded-lg md:w-full',
+			'fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 bg-surface-gradient-light  p-6 dark:bg-surface-gradient-night  sm:rounded-lg md:w-full',
 			className
 		)}
 		{...$$restProps}

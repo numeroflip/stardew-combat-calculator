@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { cn } from '$lib/utils';
-	import type { HTMLAttributes, HTMLBaseAttributes } from 'svelte/elements';
+	import type { HTMLBaseAttributes } from 'svelte/elements';
 
 	type $$Props = HTMLBaseAttributes & {
 		borderWidth?: number;
@@ -18,7 +18,7 @@
 	bind:this={data}
 	style={`--bw: ${borderWidth}px; --shadowOffset: ${shadowOffset}px`}
 	class={cn(
-		'dark:bg-surface-gradient-night relative border-[#b14e05] bg-surface-gradient-light [border-width:var(--bw)] [box-shadow:inset_calc(0px_-_var(--bw))_var(--bw)_0_#00000020]',
+		'relative border-[#b14e05] bg-surface-gradient-light [border-width:var(--bw)] [box-shadow:inset_calc(0px_-_var(--bw))_var(--bw)_0_#00000020] dark:bg-surface-gradient-night',
 		$$props.class
 	)}
 >

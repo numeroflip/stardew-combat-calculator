@@ -13,5 +13,4 @@
 	max={6}
 	min={0}
 	step={1}
-	bg="bg-slate-500"
 />

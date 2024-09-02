@@ -1,13 +1,8 @@
 <script lang="ts">
 	import Menu from './Menu/Menu.svelte';
 	import Surface from './ui/Surface.svelte';
-
-	let innerWidth: number;
-
-	$: isLg = innerWidth >= 1024;
 </script>
 
-<svelte:window bind:innerWidth />
 <Surface
 	shadow={false}
 	class="  z-20 mx-[-3px] my-[-3px]  w-[calc(100%+6px)] shadow-theme  [grid-area:header]  md:flex md:items-center md:justify-between md:divide-none md:pr-4"

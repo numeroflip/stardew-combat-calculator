@@ -98,7 +98,7 @@
 		<div>
 			<Tabs.Root bind:value={activeTab}>
 				<Tabs.List
-					class="after:contents-[''] before:contents-[''] dark:bg-surface-gradient-night relative flex h-fit gap-1 rounded-none border-b-4 border-[#b14e05] bg-surface-gradient p-[3px] transition-colors before:absolute before:-bottom-[9px] before:left-0 before:right-0 before:z-10   before:h-[3px] before:bg-[#b14e05] after:absolute after:-bottom-[6px] after:left-[-3px] after:right-[-3px] after:z-10 after:h-[3px]  after:bg-[#dc7b05]"
+					class="after:contents-[''] before:contents-[''] relative flex h-fit gap-1 rounded-none border-b-4 border-[#b14e05] bg-surface-gradient p-[3px] transition-colors before:absolute before:-bottom-[9px] before:left-0 before:right-0 before:z-10 before:h-[3px]   before:bg-[#b14e05] after:absolute after:-bottom-[6px] after:left-[-3px] after:right-[-3px] after:z-10 after:h-[3px] after:bg-[#dc7b05]  dark:bg-surface-gradient-night"
 				>
 					{#each tabs as tab}
 						<Tabs.Trigger class="  text-xl shadow-theme-item" value={tab.value}>

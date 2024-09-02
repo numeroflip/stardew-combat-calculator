@@ -1,38 +1,33 @@
 <script lang="ts">
-	import GemPicker from '$lib/components/GemPicker.svelte';
-	import RingPairPicker from '$lib/components/RingPairPicker.svelte';
-	import WeaponPicker from '$lib/components/WeaponPicker.svelte';
-	import EnchantmentPicker from '$lib/components/EnchantmentPicker.svelte';
-	import SkillPicker from '$lib/components/SkillPicker.svelte';
 	import CalculationResults from '$lib/components/CalculationResults/CalculationResults.svelte';
+	import EnchantmentPicker from '$lib/components/EnchantmentPicker.svelte';
+	import GemPicker from '$lib/components/GemPicker.svelte';
 	import LuckFromFoodSlider from '$lib/components/LuckFromFoodSlider.svelte';
+	import RingPairPicker from '$lib/components/RingPairPicker.svelte';
+	import SkillPicker from '$lib/components/SkillPicker.svelte';
+	import WeaponPicker from '$lib/components/WeaponPicker.svelte';
 
-	import queryString from 'query-string';
-	import { calculatorOptionsSchema, type CalculatorOptions } from '$model/calculatorOptions';
-	import Header from '$lib/components/Header.svelte';
-	import { onMount } from 'svelte';
-	import {
-		setCalculatorOptions,
-		selectedCalculatorOptionsStore,
-		luckStore,
-		speedFromFoodStore,
-		attackFromFoodStore
-	} from '$lib/store/calculatorOptions';
-	import { get } from 'svelte/store';
 	import { calculatorStorage } from '$lib/calculatorOptionsStorage';
+	import AttackFromFoodSlider from '$lib/components/AttackFromFoodSlider.svelte';
 	import BlessingSelector from '$lib/components/BlessingSelector/BlessingSelector.svelte';
+	import DarkModeSwitcher from '$lib/components/DarkModeSwitcher.svelte';
+	import Header from '$lib/components/Header.svelte';
 	import SpeedFromFoodSlider from '$lib/components/SpeedFromFoodSlider.svelte';
-	import { parseJSON } from '$lib/json';
-	import Menu from '$lib/components/Menu/Menu.svelte';
 	import FlagText from '$lib/components/ui/FlagText.svelte';
 	import Surface from '$lib/components/ui/Surface.svelte';
-	import AttackFromFoodSlider from '$lib/components/AttackFromFoodSlider.svelte';
-	import DarkModeSwitcher from '$lib/components/DarkModeSwitcher.svelte';
+	import { parseJSON } from '$lib/json';
+	import {
+		attackFromFoodStore,
+		luckStore,
+		selectedCalculatorOptionsStore,
+		setCalculatorOptions,
+		speedFromFoodStore
+	} from '$lib/store/calculatorOptions';
+	import { calculatorOptionsSchema, type CalculatorOptions } from '$model/calculatorOptions';
+	import queryString from 'query-string';
+	import { onMount } from 'svelte';
 
 	let initialized = false;
-
-	let options = get(selectedCalculatorOptionsStore);
-	$: options = $selectedCalculatorOptionsStore;
 
 	onMount(() => {
 		const initialOptionsFromStorage = calculatorStorage.loadOptions();
@@ -73,7 +68,6 @@
 	const isOnClient = typeof window !== 'undefined';
 
 	let innerWidth: number;
-	$: isLg = innerWidth >= 1024;
 </script>
 
 <svelte:head>
@@ -81,7 +75,7 @@
 </svelte:head>
 <svelte:window bind:innerWidth />
 <Surface
-	class="main-grid main-grid  max-w:none dark:bg-night-gradient container mx-auto flex min-h-dvh  w-full  flex-col border-transparent  bg-blue-gradient   px-0 md:min-h-0  md:border-[#b14e05] lg:max-w-[calc(100vw-3rem)] lg:border-solid xl:max-w-screen-xl "
+	class="main-grid main-grid  max-w:none container mx-auto flex min-h-dvh w-full  flex-col  border-transparent bg-blue-gradient  px-0   dark:bg-night-gradient md:min-h-0  md:border-[#b14e05] lg:max-w-[calc(100vw-3rem)] lg:border-solid xl:max-w-screen-xl "
 >
 	<div class="absolute bottom-[1px] right-2 z-20 sm:bottom-2 sm:right-5">
 		<DarkModeSwitcher />

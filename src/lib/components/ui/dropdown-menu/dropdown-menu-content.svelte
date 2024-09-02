@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { DropdownMenu as DropdownMenuPrimitive } from 'bits-ui';
 	import { cn, flyAndScale } from '$lib/utils.js';
-	import { dropdownContentVariants } from '.';
 	import Surface from '../Surface.svelte';
 
 	type $$Props = DropdownMenuPrimitive.ContentProps;

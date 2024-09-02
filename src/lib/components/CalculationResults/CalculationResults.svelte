@@ -3,31 +3,30 @@
 	import { getCritChance, getWeaponBaseCritChance } from '$lib/getCritChance';
 	import { getBaseCritMultiplier, getCritMultiplier } from '$lib/getCritMultiplier';
 	import { getDamageValues } from '$lib/getDamageValues';
-	import { ringsData as ringData } from '$model/ring.data';
-	import {
-		weaponNameStore,
-		enchantmentStore,
-		gemsStore,
-		skillsStore,
-		ringStore,
-		luckStore,
-		blessingStore,
-		speedFromFoodStore,
-		attackFromFoodStore
-	} from '$lib/store/calculatorOptions';
-	import { weapons } from '$model/weapon.data';
-	import { skillSchema, type CalculatorOptions } from '$model/calculatorOptions';
 	import {
 		ABSOLUTE_MIN_WEAPON_SPEED_IN_MILLISECONDS,
 		getEffectiveSpeedLimit,
 		getSpeedValues,
 		weaponBaseSpeed
 	} from '$lib/getSpeedValues';
-	import CalculationResultSection from './CalculationResultSection.svelte';
-	import CalculationResultProgress from './CalculationResultProgress.svelte';
-	import type { Weapon } from '$model/weapon';
+	import {
+		attackFromFoodStore,
+		blessingStore,
+		enchantmentStore,
+		gemsStore,
+		luckStore,
+		ringStore,
+		skillsStore,
+		speedFromFoodStore,
+		weaponNameStore
+	} from '$lib/store/calculatorOptions';
+	import { skillSchema, type CalculatorOptions } from '$model/calculatorOptions';
+	import { ringsData as ringData } from '$model/ring.data';
+	import { weapons } from '$model/weapon.data';
 	import FlagText from '../ui/FlagText.svelte';
 	import Surface from '../ui/Surface.svelte';
+	import CalculationResultProgress from './CalculationResultProgress.svelte';
+	import CalculationResultSection from './CalculationResultSection.svelte';
 
 	$: activeWeaponName = $weaponNameStore.dirty || $weaponNameStore.selected;
 	$: weapon = weapons.find((w) => w.name === activeWeaponName) || weapons[0];
@@ -124,13 +123,8 @@
 		};
 	}
 
-	let previousResults: Results;
 	let results: Results;
-
 	$: {
-		if (results) {
-			previousResults = results;
-		}
 		results = getResults({
 			weapon: weapon.name,
 			enchantment,
@@ -144,29 +138,9 @@
 		});
 	}
 
-	$: diff = previousResults
-		? {
-				dmg: results.dmg.min - previousResults.dmg.min,
-				critDmg: results.critDmg.min - previousResults.critDmg.min,
-				critChance: results.critChance - previousResults.critChance,
-				normalAvg: results.normalAvg - previousResults.normalAvg,
-				avgWithCrits: results.avgWithCrits - previousResults.avgWithCrits,
-				critMultiplier: results.critMultiplier - previousResults.critMultiplier
-			}
-		: undefined;
 	const MAX_DMG = 270;
 
-	const critMaxDmgMapping: Record<Weapon['type'], number> = {
-		club: 3000,
-		dagger: 2000,
-		sword: 2500
-	};
-
 	$: MAX_CRIT_DMG = 1600;
-
-	$: avgBaseDmg = (weapon.damage[0] + weapon.damage[1]) / 2;
-	$: baseCritMultiplier = getBaseCritMultiplier(weapon);
-	$: weaponBaseCritChance = getWeaponBaseCritChance(weapon);
 
 	$: hitsPerSec = formatNumber(1000 / results.speed, 1);
 
@@ -175,7 +149,7 @@
 
 <Surface
 	shadow
-	class="dark:bg-surface-gradient-night-dark z-10 mx-[-7px] my-[-7px] mt-[-4px] border-surface-900 transition-all @container [grid-area:results] lg:mx-[-2px] lg:my-[-2px] lg:mt-[6px] lg:grid lg:items-center lg:border-l-4 lg:px-8 lg:py-10"
+	class="z-10 mx-[-7px] my-[-7px] mt-[-4px] border-surface-900 transition-all @container [grid-area:results] dark:bg-surface-gradient-night-dark lg:mx-[-2px] lg:my-[-2px] lg:mt-[6px] lg:grid lg:items-center lg:border-l-4 lg:px-8 lg:py-10"
 >
 	<Surface
 		class="mx-[-3px] -mb-[2px] flex snap-start flex-col items-center justify-center p-0 sm:gap-0 sm:pt-2 lg:gap-3 lg:px-3 lg:py-2 lg:pb-6"

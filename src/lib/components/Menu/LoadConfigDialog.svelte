@@ -1,22 +1,19 @@
 <script lang="ts">
 	import {
 		lastLoadedOptionsKey,
-		selectedCalculatorOptionsStore,
 		setCalculatorOptions
 	} from '$lib/store/calculatorOptions';
 	import {
 		DialogContent,
-		DialogClose,
 		DialogHeader,
 		DialogTitle,
 		Dialog,
 		DialogTrigger,
 		DialogOverlay
 	} from '../ui/dialog';
-	import { calculatorOptionsSchema, type CalculatorOptions } from '$model/calculatorOptions';
 	import { weapons } from '$model/weapon.data';
 	import { calculatorStorage } from '$lib/calculatorOptionsStorage';
-	import { toast, Toaster } from 'svelte-sonner';
+	import { toast } from 'svelte-sonner';
 	import DialogDescription from '../ui/dialog/dialog-description.svelte';
 	import Button from '../ui/Button.svelte';
 	import FlagText from '../ui/FlagText.svelte';

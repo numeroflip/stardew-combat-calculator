@@ -4,7 +4,7 @@
 	import { keysOf } from '$lib/objectUtils';
 	import { skillsStore } from '$lib/store/calculatorOptions';
 	import { skillSchema } from '$model/calculatorOptions';
-	import { skills, type Lvl10Skills, lvl10Skills, type LVL5Skill } from '$model/profession';
+	import { lvl10Skills, skills, type Lvl10Skills, type LVL5Skill } from '$model/profession';
 	import Surface from './ui/Surface.svelte';
 
 	$: activeSkills = {
@@ -153,10 +153,11 @@
 						class="mx-2 my-2 flex flex-col divide-y-2 divide-solid divide-white/20 text-text "
 					>
 						{#each keysOf(lvl5Skill.lvl10Skills) as _lvl10SkillKey}
-							{@const skill = lvl5Skill.lvl10Skills.hasOwnProperty(_lvl10SkillKey)
-								? /* @ts-expect-error */
-									lvl5Skill.lvl10Skills[_lvl10SkillKey]
-								: undefined}
+							{@const skill =
+								_lvl10SkillKey in lvl5Skill.lvl10Skills
+									? /* @ts-expect-error it would requite more robut TS typing, but we checked for data access on previous line already */
+										lvl5Skill.lvl10Skills[_lvl10SkillKey]
+									: undefined}
 
 							<DropdownMenu.Item
 								class="flex cursor-pointer flex-col px-4 text-xl"

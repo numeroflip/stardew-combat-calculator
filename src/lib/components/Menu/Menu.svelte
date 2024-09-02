@@ -17,11 +17,9 @@
 	import LoadConfigDialog from './LoadConfigDialog.svelte';
 	import clsx from 'clsx';
 	import Button from '../ui/Button.svelte';
-	import FlagText from '../ui/FlagText.svelte';
 	import ShareNotificationToaster from './ShareNotificationToaster.svelte';
-	import DarkModeSwitcher from '../DarkModeSwitcher.svelte';
-
-	function onReset() {
+	
+function onReset() {
 		gemsStore.reset();
 		weaponNameStore.reset();
 		ringStore.reset();

@@ -12,7 +12,6 @@
 	value={[shownAttack]}
 	onValueChange={(val) => attackFromFoodStore.setSelected(val[0])}
 	max={5}
-	bg="bg-surface-700"
 	min={0}
 	step={1}
 />

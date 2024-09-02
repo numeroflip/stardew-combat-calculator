@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { Progress as ProgressPrimitive } from 'bits-ui';
 	import { cn } from '$lib/utils.js';
-	import { number } from 'zod';
-
-	type $$Props = ProgressPrimitive.Props & {
+	
+type $$Props = ProgressPrimitive.Props & {
 		value: number;
 		baseValue?: number;
 		barClass?: string;
