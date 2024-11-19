@@ -521,7 +521,7 @@ export const clubsBase: WeaponBase[] = [
 		damage: [18, 27],
 		critStrikeChance: 0.02,
 		stats: {
-			speed: 4
+			speed: -4
 		},
 		icon: 'https://stardewvalleywiki.com/mediawiki/images/3/36/Lead_Rod.png'
 	},
@@ -531,7 +531,7 @@ export const clubsBase: WeaponBase[] = [
 		damage: [27, 40],
 		critStrikeChance: 0.02,
 		stats: {
-			speed: 1,
+			speed: -1,
 			critPower: 50,
 
 			weight: 2
@@ -544,7 +544,7 @@ export const clubsBase: WeaponBase[] = [
 		damage: [40, 55],
 		critStrikeChance: 0.02,
 		stats: {
-			speed: 2
+			speed: -2
 		},
 		icon: 'https://stardewvalleywiki.com/mediawiki/images/c/c7/The_Slammer.png'
 	},
